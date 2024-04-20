@@ -6,5 +6,6 @@ export 'package:flutter_modular/flutter_modular.dart';
 //MODULES
 export 'package:ibnt/src/modules/auth/auth_imports.dart';
 export 'package:ibnt/src/modules/bible_messages/bible_messages_imports.dart';
+export 'package:ibnt/src/modules/warnings/warnings_imports.dart';
 
 export 'package:ibnt/src/modules/splash/splash_page.dart';

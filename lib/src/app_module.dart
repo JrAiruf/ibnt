@@ -6,5 +6,6 @@ class AppModule extends Module {
     r.child('/', child: (_) => const SplashPage());
     r.module('auth', module: AuthModule(), transition: TransitionType.fadeIn);
     r.module('bible_messages', module: BibleMessagesModule(), transition: TransitionType.fadeIn);
+    r.module('warnings', module: WarningsModule(), transition: TransitionType.fadeIn);
   }
 }
