@@ -10,3 +10,4 @@ export 'package:ibnt/src/modules/home/home_imports.dart';
 export 'package:ibnt/src/modules/bible_messages/bible_messages_imports.dart';
 export 'package:ibnt/src/modules/warnings/warnings_imports.dart';
 export 'package:ibnt/src/modules/posts/posts_imports.dart';
+export 'package:ibnt/src/modules/departments/departments_imports.dart';
