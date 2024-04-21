@@ -1,5 +1,4 @@
 import 'package:ibnt/src/modules/auth/auth_imports.dart';
-import 'package:ibnt/src/shared/widgets/text_field_label.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,7 +13,6 @@ class LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -71,7 +69,9 @@ class LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: height * 0.12),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Modular.to.pushNamed('./register');
+                  },
                   child: const Text(
                     "Criar Conta",
                     style: TextStyle(
