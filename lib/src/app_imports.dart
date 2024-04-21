@@ -19,3 +19,5 @@ export 'package:ibnt/src/app_widget.dart';
 //SHARED
 export 'package:ibnt/src/shared/themes/app_themes.dart';
 export 'package:ibnt/src/shared/widgets/app_button.dart';
+export 'package:ibnt/src/shared/widgets/app_text_field.dart';
+export 'package:ibnt/src/shared/widgets/logo_component.dart';

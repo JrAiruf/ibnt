@@ -6,6 +6,7 @@ class ButtonWidget extends StatelessWidget {
     this.widget,
     this.elevation,
     this.borderRadius,
+    this.fontSize,
     this.onTap,
     this.primaryColor,
     this.height,
@@ -22,6 +23,7 @@ class ButtonWidget extends StatelessWidget {
   final String? text;
   final bool? showBorder;
   final double? borderRadius;
+  final double? fontSize;
   final double? elevation;
   final double? height;
   final double? width;
@@ -35,8 +37,9 @@ class ButtonWidget extends StatelessWidget {
           height: height ?? 55,
           width: width,
           decoration: BoxDecoration(
+            color: backgroundColor,
             borderRadius: BorderRadius.circular(borderRadius ?? 5),
-            border: Border.all(color: primaryColor ?? Colors.white),
+            border: Border.all(color: showBorder ?? false  ? primaryColor ?? Colors.white : Colors.transparent),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -44,10 +47,10 @@ class ButtonWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 widget != null ? widget! : Container(),
-                const SizedBox(width: 25),
+                widget != null ? const SizedBox(width: 25): Container(), 
                 Text(
                   text ?? "",
-                  style: TextStyle(color: primaryColor, fontSize: 15, fontWeight: FontWeight.w400),
+                  style: TextStyle(color: primaryColor, fontSize: fontSize, fontWeight: FontWeight.w400),
                 ),
               ],
             ),

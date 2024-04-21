@@ -34,12 +34,18 @@ class AuthOptionsPageState extends State<AuthOptionsPage> {
                 primaryColor: Colors.black,
                 widget: const Icon(Icons.email_outlined),
                 text: "Email e senha",
+                onTap: () {
+                  Modular.to.pushNamed('./login');
+                },
               ),
               SizedBox(height: height * 0.01),
               ButtonWidget(
                 width: width,
                 primaryColor: Colors.black,
-                widget: const Text("G",style: TextStyle(fontSize: 30),),
+                widget: const Text(
+                  "G",
+                  style: TextStyle(fontSize: 30),
+                ),
                 text: "Sua Conta do Google",
               ),
             ],
