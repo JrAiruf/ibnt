@@ -48,7 +48,7 @@ class LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => Modular.to.pushNamed('./send_email'),
                       child: const Text(
                         "Esqueci minha senha",
                         style: TextStyle(
@@ -69,9 +69,7 @@ class LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: height * 0.12),
                 TextButton(
-                  onPressed: () {
-                    Modular.to.pushNamed('./register');
-                  },
+                  onPressed: () => Modular.to.pushNamed('./register'),
                   child: const Text(
                     "Criar Conta",
                     style: TextStyle(
