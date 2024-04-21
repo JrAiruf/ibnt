@@ -29,3 +29,14 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Karma
+      fonts:
+        - asset: assets/Karma-Bold.ttf
+        - asset: assets/Karma-Light.ttf
+        - asset: assets/Karma-Medium.ttf
+        - asset: assets/Karma-Regular.ttf
+        - asset: assets/Karma-SemiBold.ttf
+
+  assets:
+    - assets/images/logo_image.jpg
