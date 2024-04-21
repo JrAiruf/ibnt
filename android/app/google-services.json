@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "683866552",
+    "project_id": "ibnt-316a7",
+    "storage_bucket": "ibnt-316a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683866552:android:8b1867f7bfe62904bab74d",
+        "android_client_info": {
+          "package_name": "com.example.ibnt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683866552-7ea9qdhtjsg8ef8e2gdpolgq39m05nmc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_lpBdhJ4KdqMzASreTEGcagfIMEwzV9U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683866552-7ea9qdhtjsg8ef8e2gdpolgq39m05nmc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
