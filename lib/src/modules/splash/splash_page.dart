@@ -5,6 +5,15 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return const Scaffold(
+      body: Center(
+        child: Text(
+          "HELLO",
+          style: TextStyle(
+            fontSize: 35,
+          ),
+        ),
+      ),
+    );
   }
 }
