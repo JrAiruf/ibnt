@@ -27,9 +27,15 @@ class AuthOptionsPageState extends State<AuthOptionsPage> {
               const Text(
                 "Para acessar o app, você pode \n usar as seguintes opções",
                 textAlign: TextAlign.center,
+                  style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
               SizedBox(height: height * 0.05),
               ButtonWidget(
+                showBorder: true,
                 width: width,
                 primaryColor: Colors.black,
                 widget: const Icon(Icons.email_outlined),
@@ -40,6 +46,7 @@ class AuthOptionsPageState extends State<AuthOptionsPage> {
               ),
               SizedBox(height: height * 0.01),
               ButtonWidget(
+                showBorder: true,
                 width: width,
                 primaryColor: Colors.black,
                 widget: const Text(

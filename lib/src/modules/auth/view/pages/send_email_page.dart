@@ -46,6 +46,7 @@ class SendEmailPageState extends State<SendEmailPage> {
                     ),
                     SizedBox(height: height * 0.025),
                     ButtonWidget(
+                      onTap: () => Modular.to.pushNamed('./recovery_password'),
                       height: 60,
                       width: width,
                       primaryColor: Colors.white,

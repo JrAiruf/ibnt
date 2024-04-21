@@ -58,7 +58,7 @@ class RegisterPageState extends State<RegisterPage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: height * 0.01),
+                    SizedBox(height: height * 0.025),
                     ButtonWidget(
                       height: 60,
                       width: width,
