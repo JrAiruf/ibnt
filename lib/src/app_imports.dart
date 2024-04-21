@@ -1,9 +1,16 @@
 //LIBS
+// ignore_for_file: depend_on_referenced_packages
+
 export 'package:flutter/material.dart';
 export 'package:ibnt/firebase_options.dart';
+export 'package:flutter_test/flutter_test.dart';
 //PACKAGES
 export 'package:firebase_core/firebase_core.dart';
-export 'package:flutter_modular/flutter_modular.dart';
+export 'package:flutter_modular/flutter_modular.dart' hide ModularWatchExtension;
+export 'package:dartz/dartz.dart' hide State, Evaluation;
+export 'package:equatable/equatable.dart';
+export 'package:bloc/bloc.dart';
+export 'package:flutter_bloc/flutter_bloc.dart';
 //MODULES
 export 'package:ibnt/src/modules/splash/splash_imports.dart';
 export 'package:ibnt/src/modules/auth/auth_imports.dart';
@@ -22,3 +29,4 @@ export 'package:ibnt/src/shared/widgets/app_button.dart';
 export 'package:ibnt/src/shared/widgets/app_text_field.dart';
 export 'package:ibnt/src/shared/widgets/logo_component.dart';
 export 'package:ibnt/src/shared/widgets/text_field_label.dart';
+export 'package:ibnt/src/shared/errors/base_exception.dart';

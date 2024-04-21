@@ -10,6 +10,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
+    super.initState();
     Future.microtask(() async {
       await Future.delayed(const Duration(seconds: 3));
       Modular.to.navigate('/auth/');

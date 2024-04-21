@@ -1,6 +1,15 @@
 import 'app_imports.dart';
 
 class AppModule extends Module {
+  final List<String> scopes = <String>[
+    'email',
+    'https://www.googleapis.com/auth/contacts.readonly',
+  ];
+  @override
+  void exportedBinds(Injector i) {
+    i.addSingleton<GoogleSignIn>(() => GoogleSignIn(scopes: scopes));
+  }
+
   @override
   void routes(RouteManager r) {
     r.module('/', module: SplasHModule(), transition: TransitionType.fadeIn);

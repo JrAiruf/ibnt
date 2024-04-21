@@ -10,6 +10,7 @@ class AuthOptionsPage extends StatefulWidget {
 class AuthOptionsPageState extends State<AuthOptionsPage> {
   @override
   Widget build(BuildContext context) {
+    final authBloc = context.read<AuthBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
@@ -27,7 +28,7 @@ class AuthOptionsPageState extends State<AuthOptionsPage> {
               const Text(
                 "Para acessar o app, você pode \n usar as seguintes opções",
                 textAlign: TextAlign.center,
-                  style: TextStyle(
+                style: TextStyle(
                   fontSize: 20,
                   color: Colors.black,
                   fontWeight: FontWeight.w400,
@@ -45,15 +46,29 @@ class AuthOptionsPageState extends State<AuthOptionsPage> {
                 },
               ),
               SizedBox(height: height * 0.01),
-              ButtonWidget(
-                showBorder: true,
-                width: width,
-                primaryColor: Colors.black,
-                widget: const Text(
-                  "G",
-                  style: TextStyle(fontSize: 30),
-                ),
-                text: "Sua Conta do Google",
+              BlocConsumer(
+                bloc: authBloc,
+                listener: (context, state) {
+                  if (state is AuthSuccessState) {
+                    Modular.to.navigate('/home');
+                  }
+                },
+                builder: (context, state) {
+                  if (state is AuthLoadingState) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return ButtonWidget(
+                    showBorder: true,
+                    width: width,
+                    primaryColor: Colors.black,
+                    widget: const Text(
+                      "G",
+                      style: TextStyle(fontSize: 30),
+                    ),
+                    onTap: () => authBloc.add(GoogleSignInEvent()),
+                    text: "Sua Conta do Google",
+                  );
+                },
               ),
             ],
           ),
