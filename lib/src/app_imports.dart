@@ -16,3 +16,6 @@ export 'package:ibnt/src/modules/scheduling/scheduling_imports.dart';
 //PROJECT
 export 'package:ibnt/src/app_module.dart';
 export 'package:ibnt/src/app_widget.dart';
+//SHARED
+export 'package:ibnt/src/shared/themes/app_themes.dart';
+export 'package:ibnt/src/shared/widgets/app_button.dart';
