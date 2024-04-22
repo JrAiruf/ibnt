@@ -28,7 +28,7 @@ class AppBarWidget extends PreferredSize {
       ),
       actions: [
         IconButton(
-          onPressed: () => Modular.to.pushNamed('./notifications'),
+          onPressed: () => Modular.to.pushNamed('/home/notifications'),
           icon: const Icon(
             Icons.notifications_none_outlined,
           ),

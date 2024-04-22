@@ -1,3 +1,4 @@
+// ignore_for_file: must_be_immutable
 import 'package:ibnt/src/app_imports.dart';
 
 class AppDrawer extends StatelessWidget {

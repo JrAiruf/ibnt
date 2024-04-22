@@ -18,7 +18,7 @@ class _MessagesPageState extends State<MessagesPage> {
       appBar: AppBarWidget(preferredSize: Size(width, 80)),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: height * 0.06),
-        child: FloatingActionButton.large(
+        child: FloatingActionButton(
           onPressed: () {},
           backgroundColor: AppThemes.primaryColor1,
           child: const Icon(
