@@ -1,7 +1,7 @@
 import 'package:ibnt/src/app_imports.dart';
 
-class ButtonWidget extends StatelessWidget {
-  const ButtonWidget({
+class AppButton extends StatelessWidget {
+  const AppButton({
     super.key,
     this.widget,
     this.elevation,
@@ -13,6 +13,7 @@ class ButtonWidget extends StatelessWidget {
     this.width,
     this.text,
     this.showBorder,
+    this.onlyIcon,
     this.backgroundColor,
   });
 
@@ -22,6 +23,7 @@ class ButtonWidget extends StatelessWidget {
   final Color? backgroundColor;
   final String? text;
   final bool? showBorder;
+  final bool? onlyIcon;
   final double? borderRadius;
   final double? fontSize;
   final double? elevation;
@@ -39,7 +41,7 @@ class ButtonWidget extends StatelessWidget {
           decoration: BoxDecoration(
             color: backgroundColor,
             borderRadius: BorderRadius.circular(borderRadius ?? 5),
-            border: Border.all(color: showBorder ?? false  ? primaryColor ?? Colors.white : Colors.transparent),
+            border: Border.all(color: showBorder ?? false ? primaryColor ?? Colors.white : Colors.transparent),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -47,11 +49,13 @@ class ButtonWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 widget != null ? widget! : Container(),
-                widget != null ? const SizedBox(width: 25): Container(), 
-                Text(
-                  text ?? "",
-                  style: TextStyle(color: primaryColor, fontSize: fontSize, fontWeight: FontWeight.w400),
-                ),
+                widget != null ? const SizedBox(width: 25) : Container(),
+                onlyIcon ?? false
+                    ? Container()
+                    : Text(
+                        text ?? "",
+                        style: TextStyle(color: primaryColor, fontSize: fontSize, fontWeight: FontWeight.w400),
+                      ),
               ],
             ),
           ),

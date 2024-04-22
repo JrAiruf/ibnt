@@ -59,7 +59,7 @@ class LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 SizedBox(height: height * 0.025),
-                ButtonWidget(
+                AppButton(
                   height: 60,
                   width: width,
                   primaryColor: Colors.white,

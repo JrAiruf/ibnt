@@ -6,6 +6,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvents, AuthStates> {
   AuthBloc(this._repository) : super(AuthInitialState()) {
     on<GoogleSignInEvent>(_mapGoogleSignInEventToState);
+    on<SignOutEvent>(_mapSignOutEventToState);
   }
 
   final IAuthRepository _repository;
@@ -17,5 +18,11 @@ class AuthBloc extends Bloc<AuthEvents, AuthStates> {
       (left) => state(AuthFailureState(left.exception)),
       (right) => state(AuthSuccessState(right)),
     );
+  }
+
+  _mapSignOutEventToState(SignOutEvent event, Emitter<AuthStates> state) async {
+    state(AuthLoadingState());
+    await _repository.signOut();
+    state(AuthSignOutState());
   }
 }

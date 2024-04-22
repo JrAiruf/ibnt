@@ -19,8 +19,12 @@ class AuthRepository implements IAuthRepository {
       final idToken = await signInResult.user?.getIdToken();
       return right(UserEntity(id: id ?? "", token: idToken ?? "Error", email: email ?? "Error"));
     } catch (e) {
-      final exce = e as Exception;
-      return left(AuthException(exception: "Não foi possível realizar o login.${exce.toString()}"));
+      return left(AuthException(exception: "Não foi possível realizar o login."));
     }
+  }
+
+  @override
+  Future<void> signOut() async {
+    await _googleSignIn.signOut();
   }
 }
