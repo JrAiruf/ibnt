@@ -33,3 +33,4 @@ export 'package:ibnt/src/shared/widgets/form/text_field_label.dart';
 export 'package:ibnt/src/shared/errors/base_exception.dart';
 export 'package:ibnt/src/shared/widgets/appbar/app_bar_widget.dart';
 export 'package:ibnt/src/shared/widgets/navigation/app_nav_bar_widget.dart';
+export 'package:ibnt/src/shared/widgets/navigation/app_drawer.dart';
