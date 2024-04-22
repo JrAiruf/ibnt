@@ -50,7 +50,7 @@ class AuthOptionsPageState extends State<AuthOptionsPage> {
                 bloc: authBloc,
                 listener: (context, state) {
                   if (state is AuthSuccessState) {
-                    Modular.to.navigate('/home');
+                    Modular.to.navigate('/home/');
                   }
                 },
                 builder: (context, state) {

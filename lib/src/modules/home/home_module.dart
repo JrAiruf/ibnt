@@ -5,6 +5,7 @@ class HomeModule extends Module {
   void routes(RouteManager r) {
     r.child('/', child: (_) => const HomePage());
     r.child('/add_events', child: (_) => const AddEventsPage());
+    r.child('/notifications', child: (_) => const NotificationsPage());
     r.child('/profile', child: (_) => const ProfilePage());
   }
 }
