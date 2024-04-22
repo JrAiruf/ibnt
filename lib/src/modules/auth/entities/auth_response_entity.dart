@@ -1,11 +1,11 @@
-class UserEntity {
+class AuthResponseEntity {
   final String id;
-  final String token;
   final String email;
+  final String token;
 
-  UserEntity({
+  AuthResponseEntity({
     required this.id,
-    required this.token,
     required this.email,
+    required this.token,
   });
 }

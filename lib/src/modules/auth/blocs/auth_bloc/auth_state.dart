@@ -20,7 +20,7 @@ final class AuthFailureState extends AuthStates {
 }
 
 final class AuthSuccessState extends AuthStates {
-  final UserEntity authEntity;
+  final AuthResponseEntity authEntity;
 
   AuthSuccessState(this.authEntity);
   @override

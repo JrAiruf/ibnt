@@ -12,6 +12,7 @@ export 'package:equatable/equatable.dart';
 export 'package:bloc/bloc.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
+export 'package:dio/dio.dart';
 //MODULES
 export 'package:ibnt/src/modules/splash/splash_imports.dart';
 export 'package:ibnt/src/modules/auth/auth_imports.dart';
@@ -21,16 +22,8 @@ export 'package:ibnt/src/modules/warnings/warnings_imports.dart';
 export 'package:ibnt/src/modules/posts/posts_imports.dart';
 export 'package:ibnt/src/modules/departments/departments_imports.dart';
 export 'package:ibnt/src/modules/scheduling/scheduling_imports.dart';
+export 'package:ibnt/src/shared/shared_imports.dart';
 //PROJECT
 export 'package:ibnt/src/app_module.dart';
 export 'package:ibnt/src/app_widget.dart';
-//SHARED
-export 'package:ibnt/src/shared/themes/app_themes.dart';
-export 'package:ibnt/src/shared/widgets/buttons/app_button.dart';
-export 'package:ibnt/src/shared/widgets/form/app_text_field.dart';
-export 'package:ibnt/src/shared/widgets/logo_component.dart';
-export 'package:ibnt/src/shared/widgets/form/text_field_label.dart';
-export 'package:ibnt/src/shared/errors/base_exception.dart';
-export 'package:ibnt/src/shared/widgets/appbar/app_bar_widget.dart';
-export 'package:ibnt/src/shared/widgets/navigation/app_nav_bar_widget.dart';
-export 'package:ibnt/src/shared/widgets/navigation/app_drawer.dart';
+export 'package:ibnt/src/backend/api.dart';

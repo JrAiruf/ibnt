@@ -4,10 +4,17 @@ part of 'auth_bloc.dart';
 sealed class AuthEvents {}
 
 final class AuthEvent extends AuthEvents {
-  final UserEntity authEntity;
+  final AuthResponseEntity authEntity;
 
   AuthEvent(this.authEntity);
 }
 
+final class SignInWithAuthEntityEvent extends AuthEvents {
+  final AuthEntity authEntity;
+
+  SignInWithAuthEntityEvent(this.authEntity);
+}
+
 final class GoogleSignInEvent extends AuthEvents {}
+
 final class SignOutEvent extends AuthEvents {}
