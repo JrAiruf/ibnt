@@ -8,20 +8,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late AuthBloc authBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    authBloc = context.read<AuthBloc>();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final authBloc = context.watch<AuthBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
-      drawer:AppDrawer(authBloc: authBloc),
+      drawer: AppDrawer(authBloc: authBloc),
       appBar: AppBarWidget(preferredSize: Size(width, 80)),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: height * 0.06),
