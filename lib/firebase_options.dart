@@ -63,6 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '683866552',
     projectId: 'ibnt-316a7',
     storageBucket: 'ibnt-316a7.appspot.com',
+    androidClientId: '683866552-7prj47oc9bvu3bk10j98jdv6lp0mnstb.apps.googleusercontent.com',
     iosClientId: '683866552-q580g4dod1rfgfe1iikf77goul6d0khr.apps.googleusercontent.com',
     iosBundleId: 'com.example.ibnt',
   );

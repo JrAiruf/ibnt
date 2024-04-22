@@ -10,6 +10,7 @@ export 'package:flutter_modular/flutter_modular.dart' hide ModularWatchExtension
 export 'package:dartz/dartz.dart' hide State, Evaluation;
 export 'package:equatable/equatable.dart';
 export 'package:bloc/bloc.dart';
+export 'package:firebase_auth/firebase_auth.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 //MODULES
 export 'package:ibnt/src/modules/splash/splash_imports.dart';
