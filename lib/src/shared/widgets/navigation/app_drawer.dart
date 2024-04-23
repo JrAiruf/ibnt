@@ -17,6 +17,7 @@ class AppDrawer extends StatelessWidget {
       },
       builder: (context, state) {
         return Drawer(
+          backgroundColor: Colors.white,
           width: width * 0.75,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 55, horizontal: 15),

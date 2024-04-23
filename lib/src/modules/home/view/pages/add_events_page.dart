@@ -10,6 +10,14 @@ class AddEventsPage extends StatefulWidget {
 class _AddEventsPageState extends State<AddEventsPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    final authBloc = context.watch<AuthBloc>();
+    final height = MediaQuery.sizeOf(context).height;
+    final width = MediaQuery.sizeOf(context).width;
+    return Scaffold(
+      backgroundColor: Colors.white,
+      drawer: AppDrawer(authBloc: authBloc),
+      appBar: AppBarWidget(preferredSize: Size(width, height * 0.08)),
+      bottomNavigationBar: AppNavBarWidget(pageIndex: 1),
+    );
   }
 }

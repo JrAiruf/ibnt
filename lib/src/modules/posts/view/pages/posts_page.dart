@@ -15,6 +15,7 @@ class PostsPageState extends State<PostsPage> {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
+      backgroundColor: Colors.white,
       drawer: AppDrawer(authBloc: authBloc),
       appBar: AppBarWidget(preferredSize: Size(width, 80)),
       floatingActionButton: Padding(

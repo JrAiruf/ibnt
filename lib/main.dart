@@ -5,10 +5,11 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     ModularApp(
-        module: AppModule(),
-        child: BlocProvider(
-          create: (_) => Modular.get<AuthBloc>(),
-          child: const AppWidget(),
-        )),
+      module: AppModule(),
+      child: BlocProvider(
+        create: (_) => Modular.get<AuthBloc>(),
+        child: const AppWidget(),
+      ),
+    ),
   );
 }

@@ -6,6 +6,7 @@ class AppBarWidget extends PreferredSize {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Colors.white,
       elevation: 0,
       centerTitle: true,
       title: SizedBox(

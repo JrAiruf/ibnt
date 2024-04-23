@@ -43,7 +43,7 @@ class LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: height * 0.01),
+                SizedBox(height: height * 0.015),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -58,7 +58,7 @@ class LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: height * 0.025),
+                SizedBox(height: height * 0.015),
                 AppButton(
                   height: 60,
                   width: width,
