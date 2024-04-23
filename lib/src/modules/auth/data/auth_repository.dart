@@ -4,7 +4,7 @@ import 'package:ibnt/src/modules/auth/auth_imports.dart';
 
 class AuthRepository implements IAuthRepository {
   AuthRepository(this._googleSignIn, this._firebaseAuth, this._dio);
-  
+
   final GoogleSignIn _googleSignIn;
   final FirebaseAuth _firebaseAuth;
   final Dio _dio;
@@ -22,7 +22,7 @@ class AuthRepository implements IAuthRepository {
       final id = signInResult.user?.uid;
       final email = signInResult.user?.email;
       final idToken = await signInResult.user?.getIdToken();
-      return right(AuthResponseEntity(id: id ?? "", token: idToken ?? "Error", email: email ?? "Error"));
+      return right(AuthResponseEntity(id: id ?? "", token: idToken ?? "Error", role: "",  email: email ?? "Error"));
     } catch (e) {
       return left(AuthException(exception: "Não foi possível realizar o login."));
     }
@@ -35,7 +35,7 @@ class AuthRepository implements IAuthRepository {
       final response = await _dio.post('${API_URL}auth', data: authJson);
       if (response.statusCode == 200) {
         final body = response.data as Map<String, dynamic>;
-        return right(AuthResponseEntity(id: body["id"], email: body["email"], token: body["token"]));
+        return right(AuthResponseEntity(id: body["id"], email: body["email"], role: body["role"], token: body["token"]));
       } else {
         return left(AuthException(exception: "Não foi possível realizar o login."));
       }
