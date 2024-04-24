@@ -8,6 +8,11 @@ class AppDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
+    final menuFontSize = height * 0.045;
+    final menuHorizontalPadding = height * 0.01;
+    final verticalDrawerPdding = height * 0.07;
+    final horizontalDrawerPdding = width * 0.035;
+    final verticalTilePadding = width * 0.045;
     return BlocConsumer(
       bloc: authBloc,
       listener: (context, state) {
@@ -20,25 +25,28 @@ class AppDrawer extends StatelessWidget {
           backgroundColor: Colors.white,
           width: width * 0.75,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 55, horizontal: 15),
+            padding: EdgeInsets.symmetric(vertical: verticalDrawerPdding, horizontal: horizontalDrawerPdding),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Menu",
-                  style: TextStyle(
-                    fontSize: 35,
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: verticalTilePadding,horizontal: menuHorizontalPadding),
+                  child: Text(
+                    "Menu",
+                    style: TextStyle(
+                      fontSize: menuFontSize,
+                    ),
                   ),
                 ),
-                SizedBox(height: height * 0.2),
+                const Spacer(),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  padding: EdgeInsets.symmetric(vertical: verticalTilePadding),
                   child: ListTile(
                     onTap: () {},
                     title: const Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Icon(Icons.person_2_outlined, size: 35),
-                        SizedBox(width: 20),
                         Text(
                           "Perfil",
                           style: TextStyle(
@@ -50,13 +58,13 @@ class AppDrawer extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  padding: EdgeInsets.symmetric(vertical: verticalTilePadding),
                   child: ListTile(
                     onTap: () {},
                     title: const Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Icon(Icons.file_copy_outlined, size: 35),
-                        SizedBox(width: 20),
                         Text(
                           "Departamentos",
                           style: TextStyle(
@@ -71,29 +79,25 @@ class AppDrawer extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: ListTile(
                     onTap: () {},
-                    title: const Row(
-                      children: [
-                        Icon(Icons.workspaces_outline, size: 35),
-                        SizedBox(width: 20),
-                        Text(
-                          "Escalas",
-                          style: TextStyle(
-                            fontSize: 25,
-                          ),
-                        ),
-                      ],
+                    leading: const Icon(Icons.workspaces_outline, size: 35),
+                    title: const Text(
+                      "Escalas",
+                      style: TextStyle(
+                        fontSize: 25,
+                      ),
                     ),
                   ),
                 ),
                 const Spacer(),
                 TextButton(
-                  onPressed: () => authBloc.add(SignOutEvent()),
+                  // onPressed: () => authBloc.add(SignOutEvent()),
+                  onPressed: () {},
                   child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         "Sair do App",
-                        style: TextStyle(fontSize: 25, color: Colors.black),
+                        style: TextStyle(fontSize: 20, color: Colors.black),
                       ),
                       SizedBox(width: 10),
                       Icon(

@@ -88,8 +88,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               SizedBox(height: height * 0.02),
-              SizedBox(
-                height: height * 0.73,
+              Expanded(
                 child: ListView.builder(
                   itemCount: timeline.length,
                   itemBuilder: (_, i) {

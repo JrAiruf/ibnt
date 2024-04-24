@@ -22,11 +22,11 @@ class AppBarWidget extends PreferredSize {
             const SizedBox(width: 15),
             Padding(
               padding: EdgeInsets.only(top: height * 0.015),
-              child: const Text(
+              child: Text(
                 "IBNT",
                 style: TextStyle(
                   fontFamily: 'Karma',
-                  fontSize: 35,
+                  fontSize: height * 0.035,
                 ),
               ),
             ),
