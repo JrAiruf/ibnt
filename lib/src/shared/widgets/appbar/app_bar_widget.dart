@@ -5,23 +5,29 @@ class AppBarWidget extends PreferredSize {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.sizeOf(context).height;
+    final width = MediaQuery.sizeOf(context).width;
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
       centerTitle: true,
       title: SizedBox(
-        height: 45,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.end,
+        height: height * 0.045,
+        width: width * 0.25,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          physics: const NeverScrollableScrollPhysics(),
           children: [
             Image.asset("assets/images/logo_image.jpg"),
             const SizedBox(width: 15),
-            const Text(
-              "IBNT",
-              style: TextStyle(
-                fontFamily: 'Karma',
-                fontSize: 35,
+            Padding(
+              padding: EdgeInsets.only(top: height * 0.015),
+              child: const Text(
+                "IBNT",
+                style: TextStyle(
+                  fontFamily: 'Karma',
+                  fontSize: 35,
+                ),
               ),
             ),
           ],

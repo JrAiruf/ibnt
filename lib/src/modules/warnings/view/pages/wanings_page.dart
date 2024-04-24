@@ -8,16 +8,10 @@ class WarningsPage extends StatefulWidget {
 }
 
 class _WarningsPageState extends State<WarningsPage> {
-  late AuthBloc authBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    authBloc = context.read<AuthBloc>();
-  }
 
   @override
   Widget build(BuildContext context) {
+    final authBloc = context.read<AuthBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(

@@ -8,7 +8,7 @@ class AuthModule extends Module {
   @override
   void binds(Injector i) {
     i.addSingleton<IAuthRepository>(AuthRepository.new);
-    i.addLazySingleton<AuthBloc>(AuthBloc.new);
+    i.add<AuthBloc>(AuthBloc.new);
     i.addLazySingleton<CreateUserBloc>(CreateUserBloc.new);
   }
 
