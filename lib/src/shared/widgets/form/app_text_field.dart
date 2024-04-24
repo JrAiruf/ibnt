@@ -27,7 +27,7 @@ class AppTextField extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       maxLines: maxLines ?? 1,
       controller: controller,
-      validator: validator,
+      validator: fieldValidator,
       obscureText: visible ?? false,
       style: const TextStyle(color: Colors.black),
       onChanged: onChanged,

@@ -1,6 +1,6 @@
-//LIBS
 // ignore_for_file: depend_on_referenced_packages
-
+//LIBS
+export 'dart:io';
 export 'package:flutter/material.dart';
 export 'package:ibnt/firebase_options.dart';
 export 'package:flutter_test/flutter_test.dart';
@@ -12,7 +12,7 @@ export 'package:equatable/equatable.dart';
 export 'package:bloc/bloc.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
-export 'package:dio/dio.dart';
+export 'package:uno/uno.dart';
 //MODULES
 export 'package:ibnt/src/modules/splash/splash_imports.dart';
 export 'package:ibnt/src/modules/auth/auth_imports.dart';

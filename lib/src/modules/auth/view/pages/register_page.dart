@@ -8,10 +8,16 @@ class RegisterPage extends StatefulWidget {
 }
 
 class RegisterPageState extends State<RegisterPage> {
+  final formKey = GlobalKey<FormState>();
   bool visible = false;
   bool passwordConfirmationVisible = false;
+  String passwordConfirmation = "";
+
+  CreateUserEntity newUserEntity = CreateUserEntity(fullName: '', authEntity: AuthEntity(email: "", password: ""));
+
   @override
   Widget build(BuildContext context) {
+    final createUserBloc = context.watch<CreateUserBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
@@ -29,43 +35,93 @@ class RegisterPageState extends State<RegisterPage> {
                     SizedBox(height: height * 0.15),
                     LogoComponent(logoHeight: height * 0.15),
                     SizedBox(height: height * 0.1),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const TextFieldLabel(label: "Nome Completo"),
-                        AppTextField(),
-                        const TextFieldLabel(label: "E-mail"),
-                        AppTextField(),
-                        const TextFieldLabel(label: "Senha"),
-                        AppTextField(
-                          visible: visible,
-                          passwordField: true,
-                          iconTap: () {
-                            setState(() {
-                              visible = !visible;
-                            });
-                          },
-                        ),
-                        const TextFieldLabel(label: "Confirmar Senha"),
-                        AppTextField(
-                          visible: passwordConfirmationVisible,
-                          passwordField: true,
-                          iconTap: () {
-                            setState(() {
-                              passwordConfirmationVisible = !passwordConfirmationVisible;
-                            });
-                          },
-                        ),
-                      ],
+                    Form(
+                      key: formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TextFieldLabel(label: "Nome Completo"),
+                          AppTextField(
+                            onChanged: (value) => newUserEntity.fullName = value,
+                          ),
+                          const TextFieldLabel(label: "E-mail"),
+                          AppTextField(
+                            onChanged: (value) => newUserEntity.authEntity.email = value,
+                          ),
+                          const TextFieldLabel(label: "Senha"),
+                          AppTextField(
+                            visible: visible,
+                            onChanged: (value) => newUserEntity.authEntity.password = value,
+                            passwordField: true,
+                            iconTap: () {
+                              setState(() {
+                                visible = !visible;
+                              });
+                            },
+                          ),
+                          const TextFieldLabel(label: "Confirmar Senha"),
+                          AppTextField(
+                            visible: passwordConfirmationVisible,
+                            onChanged: (value) => passwordConfirmation = value,
+                            passwordField: true,
+                            iconTap: () {
+                              setState(() {
+                                passwordConfirmationVisible = !passwordConfirmationVisible;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(height: height * 0.025),
-                    AppButton(
-                      height: 60,
-                      width: width,
-                      primaryColor: Colors.white,
-                      backgroundColor: AppThemes.primaryColor1,
-                      fontSize: 18,
-                      text: "Criar Conta",
+                    BlocConsumer(
+                      bloc: createUserBloc,
+                      listener: (context, state) {
+                        if (state is CreateUserFailureState) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              margin: EdgeInsets.symmetric(vertical: height * 0.116, horizontal: 10),
+                              behavior: SnackBarBehavior.floating,
+                              backgroundColor: AppThemes.secondaryColor1,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                              content: Center(child: Text(state.message)),
+                            ),
+                          );
+                        }
+                        if (state is CreateUserSuccessState) {
+                          Modular.to.navigate('/home/');
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is CreateUserLoadingState) {
+                          return const CircularProgressIndicator();
+                        }
+                        return AppButton(
+                          onTap: () {
+                            if (formKey.currentState!.validate()) {
+                              if (newUserEntity.authEntity.password == passwordConfirmation) {
+                                createUserBloc.add(CreateUserEvent(newUserEntity));
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    margin: EdgeInsets.symmetric(vertical: height * 0.12, horizontal: 10),
+                                    behavior: SnackBarBehavior.floating,
+                                    backgroundColor: AppThemes.secondaryColor1,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                                    content: const Center(child: Text("As senhas não podem ser divergentes.")),
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          height: 60,
+                          width: width,
+                          primaryColor: Colors.white,
+                          backgroundColor: AppThemes.primaryColor1,
+                          fontSize: 18,
+                          text: "Criar Conta",
+                        );
+                      },
                     ),
                   ],
                 ),

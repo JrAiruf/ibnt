@@ -1,6 +1,6 @@
 class AuthEntity {
-  final String email;
-  final String password;
+  String email;
+  String password;
 
   AuthEntity({required this.email, required this.password});
 }

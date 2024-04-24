@@ -3,7 +3,7 @@ import 'app_imports.dart';
 class AppModule extends Module {
   @override
   void exportedBinds(Injector i) {
-    i.addSingleton<Dio>(() => Dio());
+    i.addSingleton<Uno>(() => Uno());
     i.addSingleton<GoogleSignIn>(() => GoogleSignIn());
     i.addInstance<FirebaseAuth>(FirebaseAuth.instance);
   }

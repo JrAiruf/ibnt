@@ -1,13 +1,34 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:ibnt/src/modules/auth/auth_imports.dart';
 
 class AuthRepository implements IAuthRepository {
-  AuthRepository(this._googleSignIn, this._firebaseAuth, this._dio);
+  AuthRepository(this._googleSignIn, this._firebaseAuth, this._uno);
 
   final GoogleSignIn _googleSignIn;
   final FirebaseAuth _firebaseAuth;
-  final Dio _dio;
+  final Uno _uno;
+
+  @override
+  Future<Either<AuthException, AuthResponseEntity>> createAccount(CreateUserEntity newUserEntity) async {
+    try {
+      final authJson = jsonEncode({
+        "fullName": newUserEntity.fullName,
+        "auth": {"email": newUserEntity.authEntity.email, "password": newUserEntity.authEntity.password, "role": "user"}
+      });
+      final response = await _uno.post('http://127.0.0.1:5099/api/users', data: authJson);
+      if (response.status == 201) {
+        final body = response.data as Map<String, dynamic>;
+        return right(AuthResponseEntity(id: body["id"], email: body["email"], role: body["role"], token: body["token"]));
+      } else {
+        return left(AuthException(exception: "Não foi possível realizar o login."));
+      }
+    } catch (e) {
+      log(e.toString());
+      return left(AuthException(exception: "Erro ao criar conta."));
+    }
+  }
 
   @override
   Future<Either<AuthException, AuthResponseEntity>> signInWithGoogleAccount() async {
@@ -22,7 +43,7 @@ class AuthRepository implements IAuthRepository {
       final id = signInResult.user?.uid;
       final email = signInResult.user?.email;
       final idToken = await signInResult.user?.getIdToken();
-      return right(AuthResponseEntity(id: id ?? "", token: idToken ?? "Error", role: "",  email: email ?? "Error"));
+      return right(AuthResponseEntity(id: id ?? "", token: idToken ?? "Error", role: "", email: email ?? "Error"));
     } catch (e) {
       return left(AuthException(exception: "Não foi possível realizar o login."));
     }
@@ -32,8 +53,8 @@ class AuthRepository implements IAuthRepository {
   Future<Either<AuthException, AuthResponseEntity>> signInWithAuthEntity(AuthEntity auth) async {
     try {
       final authJson = jsonEncode({"email": auth.email, "password": auth.password});
-      final response = await _dio.post('${API_URL}auth', data: authJson);
-      if (response.statusCode == 200) {
+      final response = await _uno.post('${API_URL}auth', data: authJson);
+      if (response.status == 200) {
         final body = response.data as Map<String, dynamic>;
         return right(AuthResponseEntity(id: body["id"], email: body["email"], role: body["role"], token: body["token"]));
       } else {

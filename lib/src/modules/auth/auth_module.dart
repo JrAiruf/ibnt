@@ -9,13 +9,14 @@ class AuthModule extends Module {
   void binds(Injector i) {
     i.addSingleton<IAuthRepository>(AuthRepository.new);
     i.addLazySingleton<AuthBloc>(AuthBloc.new);
+    i.addLazySingleton<CreateUserBloc>(CreateUserBloc.new);
   }
 
   @override
   void routes(RouteManager r) {
     r.child('/', child: (_) => const AuthOptionsPage());
     r.child('/login', child: (_) => const LoginPage());
-    r.child('/register', child: (_) => const RegisterPage());
+    r.child('/register', child: (_) => BlocProvider(create: (context) => Modular.get<CreateUserBloc>(), child: const RegisterPage()));
     r.child('/send_email', child: (_) => const SendEmailPage());
     r.child('/recovery_password', child: (_) => const RecoveryPasswordPage());
   }
