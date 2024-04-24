@@ -35,28 +35,30 @@ class AppButton extends StatelessWidget {
     return SizedBox(
       child: GestureDetector(
         onTap: onTap,
-        child: Container(
-          height: height ?? 55,
-          width: width,
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(borderRadius ?? 5),
-            border: Border.all(color: showBorder ?? false ? primaryColor ?? Colors.white : Colors.transparent),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                widget != null ? widget! : Container(),
-                widget != null ? const SizedBox(width: 25) : Container(),
-                onlyIcon ?? false
-                    ? Container()
-                    : Text(
-                        text ?? "",
-                        style: TextStyle(color: primaryColor, fontSize: fontSize, fontWeight: FontWeight.w400),
-                      ),
-              ],
+        child: Center(
+          child: Container(
+            height: height ?? 55,
+            width: width,
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(borderRadius ?? 5),
+              border: Border.all(color: showBorder ?? false ? primaryColor ?? Colors.white : Colors.transparent),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  widget != null ? widget! : Container(),
+                  widget != null ? const SizedBox(width: 25) : Container(),
+                  onlyIcon ?? false
+                      ? Container()
+                      : Text(
+                          text ?? "",
+                          style: TextStyle(color: primaryColor, fontSize: fontSize, fontWeight: FontWeight.w400),
+                        ),
+                ],
+              ),
             ),
           ),
         ),

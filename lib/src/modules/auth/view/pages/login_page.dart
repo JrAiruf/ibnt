@@ -9,13 +9,18 @@ class LoginPage extends StatefulWidget {
 
 class LoginPageState extends State<LoginPage> {
   bool visible = false;
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
+    double buttonHeight = 60;
+    double buttonFontSize = 18;
+    double horizontalPadding = 10;
+    double mainHeightSpacing = height * 0.015;
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
         child: SingleChildScrollView(
           child: SizedBox(
             height: height,
@@ -23,51 +28,58 @@ class LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: height * 0.15),
-                LogoComponent(logoHeight: height * 0.15),
-                SizedBox(height: height * 0.15),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const TextFieldLabel(label: "E-mail"),
-                    AppTextField(),
-                    const TextFieldLabel(label: "Senha"),
-                    AppTextField(
-                      iconTap: () {
-                        setState(() {
-                          visible = !visible;
-                        });
-                      },
-                      visible: visible,
-                      passwordField: true,
-                    ),
-                  ],
-                ),
-                SizedBox(height: height * 0.015),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () => Modular.to.pushNamed('./send_email'),
-                      child: const Text(
-                        "Esqueci minha senha",
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
+                LogoComponent(logoHeight: height * 0.15, verticalPadding: height * 0.13),
+                Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextFieldLabel(label: "E-mail"),
+                      AppTextField(fieldName: "e-mail"),
+                      TextFieldLabel(label: "Senha"),
+                      AppTextField(
+                        fieldName: "campo senha",
+                        iconTap: () {
+                          setState(() {
+                            visible = !visible;
+                          });
+                        },
+                        visible: visible,
+                        passwordField: true,
                       ),
-                    ),
-                  ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () => Modular.to.pushNamed('./send_email'),
+                            child: const Text(
+                              "Esqueci minha senha",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      AppButton(
+                        onTap: () {
+                          if (formKey.currentState!.validate()) {
+                            //LOGIN LOGIC WILL BE IMPLEMENTED HERE
+                            log("Válido!");
+                          }
+                        },
+                        height: buttonHeight,
+                        width: width,
+                        primaryColor: Colors.white,
+                        backgroundColor: AppThemes.primaryColor1,
+                        fontSize: buttonFontSize,
+                        text: "Entrar",
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(height: height * 0.015),
-                AppButton(
-                  height: 60,
-                  width: width,
-                  primaryColor: Colors.white,
-                  backgroundColor: AppThemes.primaryColor1,
-                  fontSize: 18,
-                  text: "Entrar",
-                ),
-                SizedBox(height: height * 0.12),
+                const Spacer(),
                 TextButton(
                   onPressed: () => Modular.to.pushNamed('./register'),
                   child: const Text(
@@ -79,6 +91,7 @@ class LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+                SizedBox(height: mainHeightSpacing),
               ],
             ),
           ),

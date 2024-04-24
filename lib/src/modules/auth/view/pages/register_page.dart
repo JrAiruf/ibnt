@@ -40,15 +40,15 @@ class RegisterPageState extends State<RegisterPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const TextFieldLabel(label: "Nome Completo"),
+                          TextFieldLabel(label: "Nome Completo"),
                           AppTextField(
                             onChanged: (value) => newUserEntity.fullName = value,
                           ),
-                          const TextFieldLabel(label: "E-mail"),
+                          TextFieldLabel(label: "E-mail"),
                           AppTextField(
                             onChanged: (value) => newUserEntity.authEntity.email = value,
                           ),
-                          const TextFieldLabel(label: "Senha"),
+                          TextFieldLabel(label: "Senha"),
                           AppTextField(
                             visible: visible,
                             onChanged: (value) => newUserEntity.authEntity.password = value,
@@ -59,7 +59,7 @@ class RegisterPageState extends State<RegisterPage> {
                               });
                             },
                           ),
-                          const TextFieldLabel(label: "Confirmar Senha"),
+                          TextFieldLabel(label: "Confirmar Senha"),
                           AppTextField(
                             visible: passwordConfirmationVisible,
                             onChanged: (value) => passwordConfirmation = value,

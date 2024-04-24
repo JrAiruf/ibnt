@@ -4,6 +4,7 @@ export 'dart:io';
 export 'package:flutter/material.dart';
 export 'package:ibnt/firebase_options.dart';
 export 'package:flutter_test/flutter_test.dart';
+export 'dart:developer' hide Flow;
 //PACKAGES
 export 'package:firebase_core/firebase_core.dart';
 export 'package:flutter_modular/flutter_modular.dart' hide ModularWatchExtension;

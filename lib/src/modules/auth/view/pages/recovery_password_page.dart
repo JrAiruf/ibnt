@@ -10,60 +10,69 @@ class RecoveryPasswordPage extends StatefulWidget {
 class RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
   bool visible = false;
   bool passwordConfirmationVisible = false;
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
+    double buttonHeight = 60;
+    double buttonFontSize = 18;
+    double horizontalPadding = 10;
     return Scaffold(
       body: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             child: SingleChildScrollView(
               child: SizedBox(
                 height: height,
                 width: width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                child: ListView(
                   children: [
-                    SizedBox(height: height * 0.15),
-                    LogoComponent(logoHeight: height * 0.15),
-                    SizedBox(height: height * 0.1),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const TextFieldLabel(label: "Código de Verificação"),
-                        AppTextField(),
-                        const TextFieldLabel(label: "Senha"),
-                        AppTextField(
-                          visible: visible,
-                          passwordField: true,
-                          iconTap: () {
-                            setState(() {
-                              visible = !visible;
-                            });
-                          },
-                        ),
-                        const TextFieldLabel(label: "Confirmar Senha"),
-                        AppTextField(
-                          visible: passwordConfirmationVisible,
-                          passwordField: true,
-                          iconTap: () {
-                            setState(() {
-                              passwordConfirmationVisible = !passwordConfirmationVisible;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: height * 0.025),
-                    AppButton(
-                      height: 60,
-                      width: width,
-                      primaryColor: Colors.white,
-                      backgroundColor: AppThemes.primaryColor1,
-                      fontSize: 18,
-                      text: "Recuperar Senha",
+                    LogoComponent(logoHeight: height * 0.15,verticalPadding: height * 0.085),
+                    Form(
+                      key: formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextFieldLabel(label: "Código de Verificação"),
+                          AppTextField(),
+                          TextFieldLabel(label: "Senha"),
+                          AppTextField(
+                            visible: visible,
+                            passwordField: true,
+                            iconTap: () {
+                              setState(() {
+                                visible = !visible;
+                              });
+                            },
+                          ),
+                          TextFieldLabel(label: "Confirmar Senha"),
+                          AppTextField(
+                            visible: passwordConfirmationVisible,
+                            passwordField: true,
+                            iconTap: () {
+                              setState(() {
+                                passwordConfirmationVisible = !passwordConfirmationVisible;
+                              });
+                            },
+                          ),
+                          SizedBox(height: height * 0.02),
+                          AppButton(
+                            onTap: () {
+                              if (formKey.currentState!.validate()) {
+                                log("Válido!");
+                              }
+                            },
+                            height: buttonHeight,
+                            width: width,
+                            primaryColor: Colors.white,
+                            backgroundColor: AppThemes.primaryColor1,
+                            fontSize: buttonFontSize,
+                            text: "Recuperar Senha",
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -74,7 +83,7 @@ class RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
             top: height * 0.05,
             left: 10,
             child: const Text(
-              "Recuper Senha",
+              "Recuperar Senha",
               style: TextStyle(
                 fontSize: 35,
                 color: Colors.black,

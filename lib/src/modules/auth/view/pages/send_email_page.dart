@@ -8,51 +8,59 @@ class SendEmailPage extends StatefulWidget {
 }
 
 class SendEmailPageState extends State<SendEmailPage> {
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
+    double horizontalPadding = 10;
+    double buttonHeight = 60;
+    double buttonFontSize = 18;
     return Scaffold(
       body: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             child: SingleChildScrollView(
               child: SizedBox(
                 height: height,
                 width: width,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: height * 0.15),
-                    LogoComponent(logoHeight: height * 0.15),
-                    SizedBox(height: height * 0.1),
-                    const Text(
-                      "Informe o e-mail da sua conta e receba um código \n de verificação para recuperar sua senha.",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
+                    LogoComponent(logoHeight: height * 0.15, verticalPadding: height * 0.13),
+                    Form(
+                      key: formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Informe o e-mail da sua conta e receba um código \n de verificação para recuperar sua senha.",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: height * 0.02),
+                          TextFieldLabel(label: "Email"),
+                          AppTextField(fieldName: "e-mail"),
+                          SizedBox(height: height * 0.02),
+                          AppButton(
+                            onTap: () {
+                              if (formKey.currentState!.validate()) {
+                                Modular.to.pushNamed('./recovery_password');
+                              }
+                            },
+                            height: buttonHeight,
+                            width: width,
+                            primaryColor: Colors.white,
+                            backgroundColor: AppThemes.primaryColor1,
+                            fontSize: buttonFontSize,
+                            text: "Enviar Código",
+                          ),
+                        ],
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: height * 0.1),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const TextFieldLabel(label: "Email"),
-                        AppTextField(),
-                      ],
-                    ),
-                    SizedBox(height: height * 0.025),
-                    AppButton(
-                      onTap: () => Modular.to.pushNamed('./recovery_password'),
-                      height: 60,
-                      width: width,
-                      primaryColor: Colors.white,
-                      backgroundColor: AppThemes.primaryColor1,
-                      fontSize: 18,
-                      text: "Enviar Código",
                     ),
                   ],
                 ),

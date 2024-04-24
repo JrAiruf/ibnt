@@ -5,6 +5,7 @@ class AppTextField extends StatelessWidget {
   AppTextField({
     super.key,
     this.label,
+    this.fieldName,
     this.onChanged,
     this.visible,
     this.passwordField,
@@ -14,6 +15,7 @@ class AppTextField extends StatelessWidget {
     this.controller,
   });
   String? label;
+  String? fieldName;
   bool? visible;
   bool? passwordField;
   Function(String)? onChanged;
@@ -62,11 +64,11 @@ class AppTextField extends StatelessWidget {
       ),
     );
   }
-}
 
-String? fieldValidator(String? value) {
-  if (value == null || value.isEmpty) {
-    return "Por favor, informe os dados.";
+  String? fieldValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Por favor, informe o ${fieldName ?? "campo"}.";
+    }
+    return null;
   }
-  return null;
 }
