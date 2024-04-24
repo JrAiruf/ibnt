@@ -12,8 +12,14 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     Future.microtask(() async {
+      var prefereces = await SharedPreferences.getInstance();
+      var token = prefereces.get("token");
       await Future.delayed(const Duration(seconds: 3));
-      Modular.to.navigate('/auth/');
+      if (token != null) {
+        Modular.to.navigate('/home/');
+      } else {
+        Modular.to.navigate('/auth/');
+      }
     });
   }
 

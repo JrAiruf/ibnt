@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:ibnt/src/modules/auth/auth_imports.dart';
 
 class AuthRepository implements IAuthRepository {
@@ -33,6 +30,8 @@ class AuthRepository implements IAuthRepository {
   @override
   Future<Either<AuthException, AuthResponseEntity>> signInWithGoogleAccount() async {
     try {
+      var prefereces = await SharedPreferences.getInstance();
+
       final googleUser = await _googleSignIn.signIn();
       final auth = await googleUser?.authentication;
       final credential = GoogleAuthProvider.credential(
@@ -40,10 +39,13 @@ class AuthRepository implements IAuthRepository {
         accessToken: auth?.accessToken,
       );
       final signInResult = await _firebaseAuth.signInWithCredential(credential);
-      final id = signInResult.user?.uid;
-      final email = signInResult.user?.email;
-      final idToken = await signInResult.user?.getIdToken();
-      return right(AuthResponseEntity(id: id ?? "", token: idToken ?? "Error", role: "", email: email ?? "Error"));
+      final authResponseEntity = AuthResponseEntity(
+        id: signInResult.user?.uid ?? "",
+        token: await signInResult.user?.getIdToken() ?? "Error",
+        email: signInResult.user?.email ?? "Error",
+      );
+      await prefereces.setString("token", authResponseEntity.token);
+      return right(authResponseEntity);
     } catch (e) {
       return left(AuthException(exception: "Não foi possível realizar o login."));
     }
@@ -67,6 +69,8 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future<void> signOut() async {
+    var prefereces = await SharedPreferences.getInstance();
+    prefereces.remove("token");
     await _googleSignIn.signOut();
   }
 }

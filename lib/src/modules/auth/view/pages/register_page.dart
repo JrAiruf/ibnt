@@ -29,12 +29,9 @@ class RegisterPageState extends State<RegisterPage> {
               child: SizedBox(
                 height: height,
                 width: width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                child: ListView(
                   children: [
-                    SizedBox(height: height * 0.15),
-                    LogoComponent(logoHeight: height * 0.15),
-                    SizedBox(height: height * 0.1),
+                    LogoComponent(logoHeight: height * 0.15, verticalPadding: height * 0.085),
                     Form(
                       key: formKey,
                       child: Column(
@@ -70,58 +67,58 @@ class RegisterPageState extends State<RegisterPage> {
                               });
                             },
                           ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: height * 0.025),
-                    BlocConsumer(
-                      bloc: createUserBloc,
-                      listener: (context, state) {
-                        if (state is CreateUserFailureState) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              margin: EdgeInsets.symmetric(vertical: height * 0.116, horizontal: 10),
-                              behavior: SnackBarBehavior.floating,
-                              backgroundColor: AppThemes.secondaryColor1,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-                              content: Center(child: Text(state.message)),
-                            ),
-                          );
-                        }
-                        if (state is CreateUserSuccessState) {
-                          Modular.to.navigate('/home/');
-                        }
-                      },
-                      builder: (context, state) {
-                        if (state is CreateUserLoadingState) {
-                          return const CircularProgressIndicator();
-                        }
-                        return AppButton(
-                          onTap: () {
-                            if (formKey.currentState!.validate()) {
-                              if (newUserEntity.authEntity.password == passwordConfirmation) {
-                                createUserBloc.add(CreateUserEvent(newUserEntity));
-                              } else {
+                          SizedBox(height: height * 0.025),
+                          BlocConsumer(
+                            bloc: createUserBloc,
+                            listener: (context, state) {
+                              if (state is CreateUserFailureState) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    margin: EdgeInsets.symmetric(vertical: height * 0.12, horizontal: 10),
+                                    margin: EdgeInsets.symmetric(vertical: height * 0.116, horizontal: 10),
                                     behavior: SnackBarBehavior.floating,
                                     backgroundColor: AppThemes.secondaryColor1,
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-                                    content: const Center(child: Text("As senhas não podem ser divergentes.")),
+                                    content: Center(child: Text(state.message)),
                                   ),
                                 );
                               }
-                            }
-                          },
-                          height: 60,
-                          width: width,
-                          primaryColor: Colors.white,
-                          backgroundColor: AppThemes.primaryColor1,
-                          fontSize: 18,
-                          text: "Criar Conta",
-                        );
-                      },
+                              if (state is CreateUserSuccessState) {
+                                Modular.to.navigate('/home/');
+                              }
+                            },
+                            builder: (context, state) {
+                              if (state is CreateUserLoadingState) {
+                                return const CircularProgressIndicator();
+                              }
+                              return AppButton(
+                                onTap: () {
+                                  if (formKey.currentState!.validate()) {
+                                    if (newUserEntity.authEntity.password == passwordConfirmation) {
+                                      createUserBloc.add(CreateUserEvent(newUserEntity));
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          margin: EdgeInsets.symmetric(vertical: height * 0.12, horizontal: 10),
+                                          behavior: SnackBarBehavior.floating,
+                                          backgroundColor: AppThemes.secondaryColor1,
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                                          content: const Center(child: Text("As senhas não podem ser divergentes.")),
+                                        ),
+                                      );
+                                    }
+                                  }
+                                },
+                                height: 60,
+                                width: width,
+                                primaryColor: Colors.white,
+                                backgroundColor: AppThemes.primaryColor1,
+                                fontSize: 18,
+                                text: "Criar Conta",
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

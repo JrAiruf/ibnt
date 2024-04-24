@@ -5,6 +5,7 @@ export 'package:flutter/material.dart';
 export 'package:ibnt/firebase_options.dart';
 export 'package:flutter_test/flutter_test.dart';
 export 'dart:developer' hide Flow;
+export 'dart:convert';
 //PACKAGES
 export 'package:firebase_core/firebase_core.dart';
 export 'package:flutter_modular/flutter_modular.dart' hide ModularWatchExtension;
@@ -14,6 +15,7 @@ export 'package:bloc/bloc.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:uno/uno.dart';
+export 'package:shared_preferences/shared_preferences.dart';
 //MODULES
 export 'package:ibnt/src/modules/splash/splash_imports.dart';
 export 'package:ibnt/src/modules/auth/auth_imports.dart';
