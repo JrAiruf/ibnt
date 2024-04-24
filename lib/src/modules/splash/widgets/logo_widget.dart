@@ -11,7 +11,7 @@ class LogoWidget extends StatelessWidget {
       children: [
         SizedBox(
           height: height * 0.26,
-          child: Image.asset("assets/images/logo_image.jpg"),
+          child: Image.asset("assets/images/ibnt_logo.png"),
         ),
         SizedBox(height: height * 0.015),
         const Text(

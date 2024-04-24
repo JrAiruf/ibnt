@@ -18,7 +18,7 @@ class AppBarWidget extends PreferredSize {
           scrollDirection: Axis.horizontal,
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            Image.asset("assets/images/logo_image.jpg"),
+            Image.asset("assets/images/ibnt_logo.png"),
             const SizedBox(width: 15),
             Padding(
               padding: EdgeInsets.only(top: height * 0.015),

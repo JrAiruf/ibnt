@@ -15,7 +15,7 @@ class LogoComponent extends StatelessWidget {
         children: [
           SizedBox(
             height: logoHeight * 0.8,
-            child: Image.asset("assets/images/logo_image.jpg")),
+            child: Image.asset("assets/images/ibnt_logo.png")),
           const Text(
             "IBNT",
             style: TextStyle(
