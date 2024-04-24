@@ -23,6 +23,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
           ),
         ),
       ),
+      body: SizedBox(
+        height: height,
+        width: width,
+      ),
     );
   }
 }

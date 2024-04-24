@@ -1,5 +1,6 @@
 import 'package:ibnt/src/app_imports.dart';
 
+// ignore: must_be_immutable
 class TextFieldLabel extends StatelessWidget {
   TextFieldLabel({required this.label, this.fontSize,super.key});
   double? fontSize = 15;

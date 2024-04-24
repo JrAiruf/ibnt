@@ -1,4 +1,12 @@
+import 'package:ibnt/src/modules/home/entities/entity_type.dart';
+import 'package:ibnt/src/modules/home/entities/home_event_entity.dart';
+import 'package:ibnt/src/modules/home/entities/home_message_entity.dart';
+import 'package:ibnt/src/modules/home/entities/home_post_entity.dart';
+import 'package:ibnt/src/modules/home/entities/time_line_content.dart';
 import 'package:ibnt/src/modules/home/home_imports.dart';
+import 'package:ibnt/src/modules/home/view/widgets/event_type_widget.dart';
+import 'package:ibnt/src/modules/home/view/widgets/message_type_widget.dart';
+import 'package:ibnt/src/modules/home/view/widgets/post_type_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -6,6 +14,52 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
+List<TimeLineContent> timeline = [
+  HomeEventEntity(),
+  HomePostEntity(),
+  HomeMessageEntity(),
+  HomeEventEntity(),
+  HomePostEntity(),
+  HomeMessageEntity(),
+  HomeEventEntity(),
+  HomeMessageEntity(),
+  HomeEventEntity(),
+  HomeEventEntity(),
+  HomeEventEntity(),
+  HomePostEntity(),
+  HomeEventEntity(),
+  HomeMessageEntity(),
+  HomeEventEntity(),
+  HomePostEntity(),
+  HomeEventEntity(),
+  HomeEventEntity(),
+  HomePostEntity(),
+  HomePostEntity(),
+  HomeEventEntity(),
+  HomeEventEntity(),
+  HomePostEntity(),
+  HomeEventEntity(),
+  HomeMessageEntity(),
+  HomePostEntity(),
+  HomeEventEntity(),
+  HomeMessageEntity(),
+  HomeEventEntity(),
+  HomeMessageEntity(),
+  HomeEventEntity(),
+  HomeEventEntity(),
+  HomeEventEntity(),
+  HomePostEntity(),
+  HomeEventEntity(),
+  HomeMessageEntity(),
+  HomeEventEntity(),
+  HomeEventEntity(),
+  HomeEventEntity(),
+  HomePostEntity(),
+  HomeEventEntity(),
+  HomeEventEntity(),
+  HomePostEntity(),
+];
 
 class _HomePageState extends State<HomePage> {
   @override
@@ -37,12 +91,22 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: height * 0.73,
                 child: ListView.builder(
+                  itemCount: timeline.length,
                   itemBuilder: (_, i) {
-                    return Container(
-                      height: 450,
-                      width: width,
-                      color: Colors.grey,
-                    );
+                    var timeLineData = timeline[i];
+                    if (timeLineData.type == EntityType.event) {
+                      final event = timeLineData as HomeEventEntity;
+                      return EventTypeWidget(event: event);
+                    }
+                    if (timeLineData.type == EntityType.message) {
+                      final message = timeLineData as HomeMessageEntity;
+                      return MessageTypeWidget(message: message);
+                    }
+                    if (timeLineData.type == EntityType.post) {
+                      final post = timeLineData as HomePostEntity;
+                      return PostTypeWidget(post: post);
+                    }
+                    return Container();
                   },
                 ),
               ),
