@@ -12,7 +12,7 @@ class PostTypeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
-    final widgetHeight = height * 0.27;
+    final widgetHeight = height * 0.3;
     final imageContainerSize = height * 0.075;
     final memberNameFontSize = height * 0.025;
     final postContentFontSize = height * 0.019;

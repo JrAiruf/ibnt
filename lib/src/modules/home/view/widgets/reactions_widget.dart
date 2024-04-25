@@ -15,43 +15,43 @@ class ReactionsWidget extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {},
-            icon: const Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            icon: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Icon(
                   Icons.front_hand_sharp,
-                  color: AppThemes.secondaryColor2,
+                  color: Colors.indigo.shade700,
                 ),
-                Text("Glória"),
-                Text("0"),
+                const Text("Glória"),
+                const Text("0"),
               ],
             ),
           ),
           IconButton(
             onPressed: () {},
-            icon: const Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            icon: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Icon(
                   Icons.waving_hand_sharp,
-                  color: AppThemes.secondaryColor2,
+                  color: Colors.purpleAccent.shade700,
                 ),
-                Text("Aleluia"),
-                Text("0"),
+                const Text("Aleluia"),
+                const Text("0"),
               ],
             ),
           ),
           IconButton(
             onPressed: () {},
-            icon: const Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            icon: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Icon(
                   Icons.sunny,
-                  color: AppThemes.secondaryColor2,
+                  color: Colors.amber.shade700,
                 ),
-                Text("Benção"),
-                Text("0"),
+                const Text("Benção"),
+                const Text("0"),
               ],
             ),
           ),

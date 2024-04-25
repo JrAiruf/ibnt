@@ -12,7 +12,7 @@ class MessageTypeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
-    final widgetHeight = height * 0.35;
+    final widgetHeight = height * 0.3;
     final imageContainerSize = height * 0.075;
     final iconSize = height * 0.045;
     final memberNameFontSize = height * 0.025;
