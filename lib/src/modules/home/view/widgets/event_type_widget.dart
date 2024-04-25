@@ -12,8 +12,8 @@ class EventTypeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
-    final widgetHeight = height * 0.45;
-    final verticalPadding = height * 0.01;
+    final widgetHeight = height * 0.5;
+    final verticalPadding = height * 0.009;
     final eventNameFontSize = height * 0.03;
     final eventContentFontSize = height * 0.019;
     return Padding(
@@ -24,6 +24,7 @@ class EventTypeWidget extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
+              flex: 3,
               child: Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
@@ -59,7 +60,7 @@ class EventTypeWidget extends StatelessWidget {
                 style: TextStyle(fontSize: eventContentFontSize),
               ),
             ),
-            const ReactionsWidget(),
+            const Expanded(child: ReactionsWidget()),
           ],
         ),
       ),
