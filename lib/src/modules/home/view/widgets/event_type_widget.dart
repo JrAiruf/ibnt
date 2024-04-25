@@ -12,7 +12,7 @@ class EventTypeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
-    final widgetHeight = height * 0.5;
+    final widgetHeight = height * 0.57;
     final verticalPadding = height * 0.009;
     final eventNameFontSize = height * 0.03;
     final eventContentFontSize = height * 0.019;
@@ -60,7 +60,7 @@ class EventTypeWidget extends StatelessWidget {
                 style: TextStyle(fontSize: eventContentFontSize),
               ),
             ),
-            const Expanded(child: ReactionsWidget()),
+            const ReactionsWidget(),
           ],
         ),
       ),

@@ -8,7 +8,7 @@ class ReactionsWidget extends StatelessWidget {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     return SizedBox(
-      height: height * 0.06,
+      height: height * 0.11,
       width: width,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -16,30 +16,42 @@ class ReactionsWidget extends StatelessWidget {
           IconButton(
             onPressed: () {},
             icon: const Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.front_hand_sharp),
-                SizedBox(height: 5),
+                Icon(
+                  Icons.front_hand_sharp,
+                  color: AppThemes.secondaryColor2,
+                ),
                 Text("Glória"),
+                Text("0"),
               ],
             ),
           ),
           IconButton(
             onPressed: () {},
             icon: const Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.waving_hand_sharp),
-                SizedBox(height: 5),
+                Icon(
+                  Icons.waving_hand_sharp,
+                  color: AppThemes.secondaryColor2,
+                ),
                 Text("Aleluia"),
+                Text("0"),
               ],
             ),
           ),
           IconButton(
             onPressed: () {},
             icon: const Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.sunny),
-                SizedBox(height: 5),
+                Icon(
+                  Icons.sunny,
+                  color: AppThemes.secondaryColor2,
+                ),
                 Text("Benção"),
+                Text("0"),
               ],
             ),
           ),

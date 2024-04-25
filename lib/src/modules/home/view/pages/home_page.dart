@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: height * 0.06),
+        padding: EdgeInsets.only(bottom: height * 0.025),
         child: FloatingActionButton(
           onPressed: () => Modular.to.pushNamed('./add_events'),
           backgroundColor: AppThemes.primaryColor1,

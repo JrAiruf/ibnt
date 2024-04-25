@@ -18,7 +18,7 @@ class PostsPageState extends State<PostsPage> {
       drawer: AppDrawer(authBloc: authBloc),
       appBar: AppBarWidget(preferredSize: Size(width, 80)),
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: height * 0.06),
+        padding: EdgeInsets.only(bottom: height * 0.025),
         child: FloatingActionButton(
           onPressed: () {},
           backgroundColor: AppThemes.primaryColor1,

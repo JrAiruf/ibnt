@@ -17,7 +17,7 @@ class _AppWidgetState extends State<AppWidget> {
         colorSchemeSeed: AppThemes.primaryColor1,
         floatingActionButtonTheme:  FloatingActionButtonThemeData(
           sizeConstraints: BoxConstraints(
-            minHeight:height * 0.07,
+            minHeight:height * 0.08,
             minWidth: width * 0.25,
           ),
         ),
