@@ -90,8 +90,7 @@ class AppDrawer extends StatelessWidget {
                 ),
                 const Spacer(),
                 TextButton(
-                  // onPressed: () => authBloc.add(SignOutEvent()),
-                  onPressed: () {},
+                  onPressed: () => authBloc.add(SignOutEvent()),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [

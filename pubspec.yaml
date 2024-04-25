@@ -34,6 +34,12 @@ dev_dependencies:
   mocktail: ^1.0.3
   flutter_launcher_icons: ^0.13.1
 
+flutter_icons: 
+  android: true
+  image_path_android: "assets/images/app_icon.png"
+  adaptative_icon_background: "#ffffff"
+  adaptative_icon_foreground: "assets/images/foreground_app_icon.png"
+
 flutter:
   uses-material-design: true
   fonts:
