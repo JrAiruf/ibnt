@@ -13,6 +13,7 @@ class _AppNavBarWidgetState extends State<AppNavBarWidget> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      backgroundColor: Colors.white,
       selectedItemColor: AppThemes.primaryColor1,
       currentIndex: widget.pageIndex,
       unselectedIconTheme: const IconThemeData(color: Colors.black),
@@ -34,6 +35,7 @@ class _AppNavBarWidgetState extends State<AppNavBarWidget> {
           ),
         ),
         BottomNavigationBarItem(
+          backgroundColor: Colors.white,
           label: "Mensagens",
           icon: Icon(
             Icons.menu_book_sharp,

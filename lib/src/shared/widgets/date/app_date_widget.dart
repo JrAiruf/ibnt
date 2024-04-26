@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:ibnt/src/shared/shared_imports.dart';
 
@@ -11,6 +13,7 @@ class AppDateWidget extends StatelessWidget {
     final weekDayContainerHeight = height * 0.06;
     final monthDayContainerSize = height * 0.055;
     final labelFontSize = height * 0.03;
+    final monthDayFontSize = height * 0.025;
     final list = getMonthDays();
     return SizedBox(
       height: height * 0.45,
@@ -80,12 +83,20 @@ class AppDateWidget extends StatelessWidget {
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
-                              border: monthDay == 0 ? null : Border.all(color: AppThemes.primaryColor1),
+                              border: monthDay == 0
+                                  ? null
+                                  : Border.all(
+                                      color: AppThemes.primaryColor1,
+                                    ),
                             ),
                             child: Center(
                               child: Text(
                                 monthDay == 0 ? "" : "$monthDay",
-                                style: const TextStyle(color: AppThemes.primaryColor1, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                  color: AppThemes.primaryColor1,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: monthDayFontSize
+                                ),
                               ),
                             ),
                           ),

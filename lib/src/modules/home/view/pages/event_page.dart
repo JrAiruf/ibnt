@@ -19,7 +19,7 @@ class _EventPageState extends State<EventPage> {
     final width = MediaQuery.sizeOf(context).width;
     final titleFontSize = height * 0.04;
     final iconSize = height * 0.04;
-    final labelFontSize = height * 0.025;
+    
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: AppDrawer(authBloc: authBloc),
