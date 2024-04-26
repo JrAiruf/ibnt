@@ -92,11 +92,7 @@ class AppDateWidget extends StatelessWidget {
                             child: Center(
                               child: Text(
                                 monthDay == 0 ? "" : "$monthDay",
-                                style: TextStyle(
-                                  color: AppThemes.primaryColor1,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: monthDayFontSize
-                                ),
+                                style: TextStyle(color: AppThemes.primaryColor1, fontWeight: FontWeight.w400, fontSize: monthDayFontSize),
                               ),
                             ),
                           ),
@@ -118,9 +114,9 @@ class AppDateWidget extends StatelessWidget {
     List<int> month = [];
     var monthSize = _getInDaysMonth(date.month);
     for (var i = 0; i < monthSize; i++) {
-      month.add(i);
+      month.add(i + 1);
     }
-    var dayInWeekIndex = DateTime(date.year, date.month).weekday;
+    var dayInWeekIndex = DateTime(date.year, date.month).weekday + 1;
     for (var i = 1; i < dayInWeekIndex; i++) {
       month.insert(0, 0);
     }
