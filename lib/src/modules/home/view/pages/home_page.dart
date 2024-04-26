@@ -67,6 +67,7 @@ class _HomePageState extends State<HomePage> {
     final authBloc = context.read<AuthBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
+    final titleFontSize = height * 0.045;
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: AppDrawer(authBloc: authBloc),
@@ -78,12 +79,12 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             children: [
-              const Align(
+              Align(
                 alignment: Alignment.topLeft,
                 child: Text(
                   "Início",
                   style: TextStyle(
-                    fontSize: 35,
+                    fontSize: titleFontSize,
                   ),
                 ),
               ),

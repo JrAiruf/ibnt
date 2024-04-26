@@ -51,6 +51,7 @@ class PostTypeWidget extends StatelessWidget {
                   "Postagem realizada por membro da igreja, contendo mensagens para os outros irmãos Postagem realizada por membro da igreja, contendo mensagens criadas.",
                   style: TextStyle(fontSize: postContentFontSize),
                 ),
+                const Spacer(),
                 const ReactionsWidget(),
               ],
             ),
