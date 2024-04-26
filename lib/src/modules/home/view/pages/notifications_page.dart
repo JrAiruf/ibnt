@@ -12,7 +12,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
-
     final titleFontSize = height * 0.022;
     final fontSize = height * 0.02;
     final horizontalNotificationPadding = height * 0.015;

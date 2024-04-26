@@ -13,6 +13,7 @@ class _WarningsPageState extends State<WarningsPage> {
     final authBloc = context.read<AuthBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
+    final listViewPadding = width * 0.03;
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: AppDrawer(authBloc: authBloc),
@@ -20,8 +21,18 @@ class _WarningsPageState extends State<WarningsPage> {
       body: SizedBox(
         height: height,
         width: width,
-        child: ListView(
-          children: [],
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: listViewPadding),
+          child: ListView(
+            children: const [
+              AnnouncementWidget(),
+              AnnouncementWidget(),
+              AnnouncementWidget(),
+              AnnouncementWidget(),
+              AnnouncementWidget(),
+              AnnouncementWidget(),
+            ],
+          ),
         ),
       ),
       floatingActionButton: Padding(
