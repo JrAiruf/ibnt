@@ -1,4 +1,5 @@
 import 'package:ibnt/src/modules/home/home_imports.dart';
+import 'package:ibnt/src/modules/home/view/widgets/month_title_widget.dart';
 
 class WarningsPage extends StatefulWidget {
   const WarningsPage({super.key});
@@ -14,6 +15,7 @@ class _WarningsPageState extends State<WarningsPage> {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final listViewPadding = width * 0.03;
+
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: AppDrawer(authBloc: authBloc),
@@ -23,14 +25,21 @@ class _WarningsPageState extends State<WarningsPage> {
         width: width,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: listViewPadding),
-          child: ListView(
-            children: const [
-              AnnouncementWidget(),
-              AnnouncementWidget(),
-              AnnouncementWidget(),
-              AnnouncementWidget(),
-              AnnouncementWidget(),
-              AnnouncementWidget(),
+          child: Column(
+            children: [
+              const MonthTitleWidget(),
+              Expanded(
+                child: ListView(
+                  children: const [
+                    AnnouncementWidget(),
+                    AnnouncementWidget(),
+                    AnnouncementWidget(),
+                    AnnouncementWidget(),
+                    AnnouncementWidget(),
+                    AnnouncementWidget(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
