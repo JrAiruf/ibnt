@@ -13,7 +13,7 @@ class _WarningsPageState extends State<WarningsPage> {
     final authBloc = context.read<AuthBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
-    final listViewPadding = width * 0.03;
+    final pagePadding = width * 0.035;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -23,7 +23,7 @@ class _WarningsPageState extends State<WarningsPage> {
         height: height,
         width: width,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: listViewPadding),
+          padding: EdgeInsets.symmetric(horizontal: pagePadding),
           child: Column(
             children: [
               const MonthTitleWidget(),

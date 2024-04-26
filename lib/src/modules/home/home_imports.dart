@@ -9,3 +9,4 @@ export 'package:ibnt/src/modules/home/view/widgets/reactions_widget.dart';
 export 'package:ibnt/src/modules/home/entities/home_event_entity.dart';
 export 'package:ibnt/src/modules/home/entities/home_message_entity.dart';
 export 'package:ibnt/src/modules/home/entities/home_post_entity.dart';
+export 'package:ibnt/src/modules/home/view/widgets/event_type_widget.dart';

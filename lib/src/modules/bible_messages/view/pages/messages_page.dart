@@ -17,6 +17,7 @@ class _MessagesPageState extends State<MessagesPage> {
       backgroundColor: Colors.white,
       drawer: AppDrawer(authBloc: authBloc),
       appBar: AppBarWidget(preferredSize: Size(width, 80)),
+      // body: ,
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: height * 0.025),
         child: FloatingActionButton(

@@ -1,10 +1,6 @@
 import 'package:ibnt/src/modules/home/entities/entity_type.dart';
-import 'package:ibnt/src/modules/home/entities/home_event_entity.dart';
-import 'package:ibnt/src/modules/home/entities/home_message_entity.dart';
-import 'package:ibnt/src/modules/home/entities/home_post_entity.dart';
 import 'package:ibnt/src/modules/home/entities/time_line_content.dart';
 import 'package:ibnt/src/modules/home/home_imports.dart';
-import 'package:ibnt/src/modules/home/view/widgets/event_type_widget.dart';
 import 'package:ibnt/src/modules/home/view/widgets/message_type_widget.dart';
 import 'package:ibnt/src/modules/home/view/widgets/post_type_widget.dart';
 
@@ -68,6 +64,7 @@ class _HomePageState extends State<HomePage> {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final titleFontSize = height * 0.045;
+    final pagePadding = width * 0.035;
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: AppDrawer(authBloc: authBloc),
@@ -76,7 +73,7 @@ class _HomePageState extends State<HomePage> {
         height: height,
         width: width,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+          padding: EdgeInsets.symmetric(horizontal: pagePadding),
           child: Column(
             children: [
               Align(

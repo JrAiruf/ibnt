@@ -1,7 +1,5 @@
-import 'package:ibnt/src/modules/home/entities/home_event_entity.dart';
 import 'package:ibnt/src/modules/home/home_imports.dart';
-import 'package:ibnt/src/modules/home/view/widgets/event_type_widget.dart';
-import 'package:ibnt/src/shared/widgets/date/app_date_widget.dart';
+
 
 class EventPage extends StatefulWidget {
   const EventPage({super.key});
@@ -19,7 +17,7 @@ class _EventPageState extends State<EventPage> {
     final width = MediaQuery.sizeOf(context).width;
     final titleFontSize = height * 0.04;
     final iconSize = height * 0.04;
-    
+    final pagePadding = width * 0.035;
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: AppDrawer(authBloc: authBloc),
@@ -28,7 +26,7 @@ class _EventPageState extends State<EventPage> {
         height: height,
         width: width,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+          padding: EdgeInsets.symmetric(horizontal: pagePadding),
           child: ListView(
             children: [
               Row(

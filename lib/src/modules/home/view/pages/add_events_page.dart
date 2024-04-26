@@ -17,6 +17,7 @@ class _AddEventsPageState extends State<AddEventsPage> {
     final titleFontSize = height * 0.04;
     final cameraIconSize = height * 0.04;
     final labelFontSize = height * 0.025;
+    final pagePadding = width * 0.035;
 
     //COMPONENT
     return Scaffold(
@@ -27,7 +28,7 @@ class _AddEventsPageState extends State<AddEventsPage> {
         height: height,
         width: width,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+          padding: EdgeInsets.symmetric(horizontal: pagePadding),
           child: ListView(
             children: [
               Row(

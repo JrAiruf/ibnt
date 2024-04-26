@@ -15,7 +15,7 @@ class _AddWarningsPageState extends State<AddWarningsPage> {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final labelFontSize = height * 0.025;
-
+    final pagePadding = width * 0.035;
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: AppDrawer(authBloc: authBloc),
@@ -24,7 +24,7 @@ class _AddWarningsPageState extends State<AddWarningsPage> {
         height: height,
         width: width,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+          padding: EdgeInsets.symmetric(horizontal: pagePadding),
           child: ListView(
             children: [
               const MonthTitleWidget(),
