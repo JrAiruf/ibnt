@@ -1,5 +1,4 @@
 import 'package:ibnt/src/modules/home/home_imports.dart';
-import 'package:ibnt/src/shared/widgets/date/app_date_widget.dart';
 
 class AddEventsPage extends StatefulWidget {
   const AddEventsPage({super.key});

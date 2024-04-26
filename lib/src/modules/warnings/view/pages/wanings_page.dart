@@ -1,5 +1,4 @@
 import 'package:ibnt/src/modules/home/home_imports.dart';
-import 'package:ibnt/src/modules/home/view/widgets/month_title_widget.dart';
 
 class WarningsPage extends StatefulWidget {
   const WarningsPage({super.key});
@@ -47,7 +46,9 @@ class _WarningsPageState extends State<WarningsPage> {
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: height * 0.025),
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Modular.to.pushNamed("./add_warnings");
+          },
           backgroundColor: AppThemes.primaryColor1,
           child: const Icon(
             Icons.add,

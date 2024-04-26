@@ -4,3 +4,5 @@ export 'package:ibnt/src/modules/warnings/view/pages/add_warnings_page.dart';
 export 'package:ibnt/src/modules/warnings/view/pages/wanings_page.dart';
 export 'package:ibnt/src/modules/warnings/view/widgets/announcement_widget.dart';
 export 'package:ibnt/src/shared/widgets/date/app_date_widget.dart';
+export 'package:ibnt/src/modules/home/view/widgets/month_title_widget.dart';
+export 'package:ibnt/src/modules/warnings/view/widgets/announcement_check_box.dart';
