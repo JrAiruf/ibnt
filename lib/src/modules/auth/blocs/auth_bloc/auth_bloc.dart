@@ -17,7 +17,7 @@ class AuthBloc extends Bloc<AuthEvents, AuthStates> {
     final result = await _repository.signInWithGoogleAccount();
     result.fold(
       (left) => state(AuthFailureState(left.exception)),
-      (right) => state(AuthSuccessState(right)),
+      (right) => state(AuthSuccessState(right as AuthResponseEntity)),
     );
   }
 
@@ -26,7 +26,7 @@ class AuthBloc extends Bloc<AuthEvents, AuthStates> {
     final result = await _repository.signInWithAuthEntity(event.authEntity);
     result.fold(
       (left) => state(AuthFailureState(left.exception)),
-      (right) => state(AuthSuccessState(right)),
+      (right) => state(AuthSuccessState(right as AuthResponseEntity)),
     );
   }
 

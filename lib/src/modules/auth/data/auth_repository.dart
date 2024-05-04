@@ -43,6 +43,7 @@ class AuthRepository implements IAuthRepository {
         id: signInResult.user?.uid ?? "",
         token: await signInResult.user?.getIdToken() ?? "Error",
         email: signInResult.user?.email ?? "Error",
+        role: UserRole.user
       );
       await prefereces.setString("token", authResponseEntity.token);
       return right(authResponseEntity);

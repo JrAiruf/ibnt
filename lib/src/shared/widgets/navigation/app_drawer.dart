@@ -13,6 +13,8 @@ class AppDrawer extends StatelessWidget {
     final verticalDrawerPdding = height * 0.07;
     final horizontalDrawerPdding = width * 0.035;
     final verticalTilePadding = width * 0.045;
+    final drawerTileFontSize = height * 0.03;
+    final drawerIconSize = height * 0.045;
     return BlocConsumer(
       bloc: authBloc,
       listener: (context, state) {
@@ -23,14 +25,14 @@ class AppDrawer extends StatelessWidget {
       builder: (context, state) {
         return Drawer(
           backgroundColor: Colors.white,
-          width: width * 0.75,
+          width: width * 0.8,
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: verticalDrawerPdding, horizontal: horizontalDrawerPdding),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: verticalTilePadding,horizontal: menuHorizontalPadding),
+                  padding: EdgeInsets.symmetric(vertical: verticalTilePadding, horizontal: menuHorizontalPadding),
                   child: Text(
                     "Menu",
                     style: TextStyle(
@@ -43,17 +45,12 @@ class AppDrawer extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: verticalTilePadding),
                   child: ListTile(
                     onTap: () {},
-                    title: const Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(Icons.person_2_outlined, size: 35),
-                        Text(
-                          "Perfil",
-                          style: TextStyle(
-                            fontSize: 25,
-                          ),
-                        ),
-                      ],
+                    leading: Icon(Icons.person_2_outlined, size: drawerIconSize),
+                    title: Text(
+                      "Perfil",
+                      style: TextStyle(
+                        fontSize: drawerTileFontSize,
+                      ),
                     ),
                   ),
                 ),
@@ -61,29 +58,24 @@ class AppDrawer extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: verticalTilePadding),
                   child: ListTile(
                     onTap: () {},
-                    title: const Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(Icons.file_copy_outlined, size: 35),
-                        Text(
-                          "Departamentos",
-                          style: TextStyle(
-                            fontSize: 25,
-                          ),
-                        ),
-                      ],
+                    leading: Icon(Icons.file_copy_outlined, size: drawerIconSize),
+                    title: Text(
+                      "Departamentos",
+                      style: TextStyle(
+                        fontSize: drawerTileFontSize,
+                      ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  padding: EdgeInsets.symmetric(vertical: verticalTilePadding),
                   child: ListTile(
                     onTap: () {},
-                    leading: const Icon(Icons.workspaces_outline, size: 35),
-                    title: const Text(
+                    leading: Icon(Icons.view_comfortable_outlined, size: drawerIconSize),
+                    title: Text(
                       "Escalas",
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: drawerTileFontSize,
                       ),
                     ),
                   ),

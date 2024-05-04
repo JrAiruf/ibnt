@@ -10,10 +10,10 @@ class PostTypeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
-    final widgetHeight = height * 0.3;
+    final widgetHeight = height * 0.25;
     final imageContainerSize = height * 0.075;
-    final memberNameFontSize = height * 0.025;
-    final postContentFontSize = height * 0.019;
+    final memberNameFontSize = height * 0.022;
+    final postContentFontSize = height * 0.017;
     return SizedBox(
       height: widgetHeight,
       width: width,
@@ -47,7 +47,10 @@ class PostTypeWidget extends StatelessWidget {
                 ),
                 Text(
                   "Postagem realizada por membro da igreja, contendo mensagens para os outros irmãos Postagem realizada por membro da igreja, contendo mensagens criadas.",
-                  style: TextStyle(fontSize: postContentFontSize),
+                  style: TextStyle(
+                    fontSize: postContentFontSize,
+                    height: 0,
+                  ),
                 ),
                 const Spacer(),
                 const ReactionsWidget(),

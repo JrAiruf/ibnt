@@ -15,7 +15,7 @@ class CreateUserBloc extends Bloc<CreateUserEvents, CreateUserStates> {
     final result = await _repository.createAccount(event.newUserEntity);
     result.fold(
       (left) => state(CreateUserFailureState(left.exception)),
-      (right) => state(CreateUserSuccessState(right)),
+      (right) => state(CreateUserSuccessState(right as AuthResponseEntity)),
     );
   }
 }

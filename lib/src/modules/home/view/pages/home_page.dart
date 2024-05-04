@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
     final authBloc = context.read<AuthBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
-    final titleFontSize = height * 0.045;
+    final titleFontSize = height * 0.035;
     final pagePadding = width * 0.035;
     return Scaffold(
       backgroundColor: Colors.white,

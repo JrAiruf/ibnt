@@ -13,7 +13,7 @@ class EventTypeWidget extends StatelessWidget {
     final widgetHeight = editable ? height * 0.4 : height * 0.57;
     final verticalPadding = height * 0.009;
     final iconSize = height * 0.04;
-    final eventNameFontSize = height * 0.03;
+    final eventNameFontSize = height * 0.025;
     final eventContentFontSize = height * 0.019;
     double stackOutlineMeasure = -10;
     return GestureDetector(

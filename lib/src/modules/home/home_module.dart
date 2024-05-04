@@ -10,7 +10,7 @@ class HomeModule extends Module {
     r.child('/', child: (_) => BlocProvider(create: (context) => Modular.get<AuthBloc>(), child: const HomePage()));
     r.child('/add_events', child: (_) => const AddEventsPage());
     r.child('/event', child: (_) => const EventPage());
-    r.child('/notifications', child: (_) => const NotificationsPage());
+    r.child('/notifications', child: (_) => const NotificationsPage(), transition: TransitionType.rightToLeft);
     r.child('/profile', child: (_) => const ProfilePage());
   }
 }

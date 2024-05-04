@@ -1,13 +1,5 @@
-class AuthResponseEntity {
-  final String id;
-  final String email;
-  final String? role;
-  final String token;
+import 'package:ibnt/src/shared/base_entities/base_user_entity.dart';
 
-  AuthResponseEntity({
-    required this.id,
-    required this.email,
-    required this.token,
-    this.role,
-  });
+class AuthResponseEntity extends BaseUserEntity {
+  AuthResponseEntity({required super.id, required super.email, required super.token, required super.role});
 }
