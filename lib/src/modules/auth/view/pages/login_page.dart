@@ -10,8 +10,10 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   bool visible = false;
   final formKey = GlobalKey<FormState>();
+  AuthEntity authEntity = AuthEntity(email: "", password: "");
   @override
   Widget build(BuildContext context) {
+    final authBloc = context.watch<AuthBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     double buttonHeight = 60;
@@ -36,9 +38,13 @@ class LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       TextFieldLabel(label: "E-mail"),
-                      AppTextField(fieldName: "e-mail"),
+                      AppTextField(
+                        onChanged: (value) => authEntity.email = value,
+                        fieldName: "e-mail",
+                      ),
                       TextFieldLabel(label: "Senha"),
                       AppTextField(
+                        onChanged: (value) => authEntity.password = value,
                         fieldName: "campo senha",
                         iconTap: () {
                           setState(() {
@@ -62,19 +68,46 @@ class LoginPageState extends State<LoginPage> {
                           ),
                         ],
                       ),
-                      AppButton(
-                        onTap: () {
-                          if (formKey.currentState!.validate()) {
-                            //LOGIN LOGIC WILL BE IMPLEMENTED HERE
-                            log("Válido!");
+                      BlocConsumer(
+                        bloc: authBloc,
+                        listener: (context, state) {
+                          if (state is AuthFailureState) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                margin: EdgeInsets.symmetric(vertical: height * 0.116, horizontal: 10),
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor: AppThemes.secondaryColor1,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                                content: Center(
+                                    child: Text(
+                                  state.message,
+                                  textAlign: TextAlign.center,
+                                )),
+                              ),
+                            );
+                          }
+                          if (state is AuthSuccessState) {
+                            Modular.to.navigate('/home/');
                           }
                         },
-                        height: buttonHeight,
-                        width: width,
-                        primaryColor: Colors.white,
-                        backgroundColor: AppThemes.primaryColor1,
-                        fontSize: buttonFontSize,
-                        text: "Entrar",
+                        builder: (context, state) {
+                          if (state is AuthLoadingState) {
+                            return const Center(child: CircularProgressIndicator());
+                          }
+                          return AppButton(
+                            onTap: () {
+                              if (formKey.currentState!.validate()) {
+                                authBloc.add(SignInWithAuthEntityEvent(authEntity));
+                              }
+                            },
+                            height: buttonHeight,
+                            width: width,
+                            primaryColor: Colors.white,
+                            backgroundColor: AppThemes.primaryColor1,
+                            fontSize: buttonFontSize,
+                            text: "Entrar",
+                          );
+                        },
                       ),
                     ],
                   ),
