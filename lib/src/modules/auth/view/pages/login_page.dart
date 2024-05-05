@@ -45,7 +45,7 @@ class LoginPageState extends State<LoginPage> {
                             visible = !visible;
                           });
                         },
-                        visible: visible,
+                        obscureText: visible,
                         passwordField: true,
                       ),
                       Row(

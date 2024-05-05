@@ -15,7 +15,7 @@ class _EventPageState extends State<EventPage> {
     final authBloc = context.watch<AuthBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
-    final titleFontSize = height * 0.04;
+    final titleFontSize = height * 0.035;
     final iconSize = height * 0.04;
     final pagePadding = width * 0.035;
     return Scaffold(

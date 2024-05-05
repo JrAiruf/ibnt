@@ -1,7 +1,7 @@
 import 'package:ibnt/src/modules/auth/auth_imports.dart';
 
-part 'auth_event.dart';
-part 'auth_state.dart';
+part 'auth_events.dart';
+part 'auth_states.dart';
 
 class AuthBloc extends Bloc<AuthEvents, AuthStates> {
   AuthBloc(this._repository) : super(AuthInitialState()) {

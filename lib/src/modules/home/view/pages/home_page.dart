@@ -1,8 +1,6 @@
-import 'package:ibnt/src/modules/home/entities/entity_type.dart';
-import 'package:ibnt/src/modules/home/entities/time_line_content.dart';
 import 'package:ibnt/src/modules/home/home_imports.dart';
-import 'package:ibnt/src/modules/home/view/widgets/message_type_widget.dart';
-import 'package:ibnt/src/modules/home/view/widgets/post_type_widget.dart';
+
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

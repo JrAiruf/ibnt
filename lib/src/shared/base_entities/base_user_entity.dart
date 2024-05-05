@@ -4,13 +4,14 @@ import 'package:ibnt/src/shared/shared_imports.dart';
 abstract class BaseUserEntity {
   String id;
   String email;
-  String token;
   UserRole role = UserRole.user;
+  bool? departmentAssociation;
 
-  BaseUserEntity({
+  BaseUserEntity(
+    {
     required this.id,
     required this.email,
-    required this.token,
     required this.role,
+    this.departmentAssociation = true,
   });
 }

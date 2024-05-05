@@ -10,7 +10,7 @@ class EventTypeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
-    final widgetHeight = editable ? height * 0.4 : height * 0.57;
+    final widgetHeight = editable ? height * 0.43 : height * 0.57;
     final verticalPadding = height * 0.009;
     final iconSize = height * 0.04;
     final eventNameFontSize = height * 0.025;

@@ -9,11 +9,16 @@ class RegisterPage extends StatefulWidget {
 
 class RegisterPageState extends State<RegisterPage> {
   final formKey = GlobalKey<FormState>();
-  bool visible = false;
-  bool passwordConfirmationVisible = false;
+  bool obscure = true;
+  bool passwordConfirmationObscured = true;
   String passwordConfirmation = "";
 
-  CreateUserEntity newUserEntity = CreateUserEntity(fullName: '', authEntity: AuthEntity(email: "", password: ""));
+  CreateUserEntity newUserEntity = CreateUserEntity(
+      fullName: "",
+      authEntity: AuthEntity(
+        email: "",
+        password: "",
+      ));
 
   @override
   Widget build(BuildContext context) {
@@ -47,23 +52,23 @@ class RegisterPageState extends State<RegisterPage> {
                           ),
                           TextFieldLabel(label: "Senha"),
                           AppTextField(
-                            visible: visible,
+                            obscureText: obscure,
                             onChanged: (value) => newUserEntity.authEntity.password = value,
                             passwordField: true,
                             iconTap: () {
                               setState(() {
-                                visible = !visible;
+                                obscure = !obscure;
                               });
                             },
                           ),
                           TextFieldLabel(label: "Confirmar Senha"),
                           AppTextField(
-                            visible: passwordConfirmationVisible,
+                            obscureText: passwordConfirmationObscured,
                             onChanged: (value) => passwordConfirmation = value,
                             passwordField: true,
                             iconTap: () {
                               setState(() {
-                                passwordConfirmationVisible = !passwordConfirmationVisible;
+                                passwordConfirmationObscured = !passwordConfirmationObscured;
                               });
                             },
                           ),
@@ -88,7 +93,7 @@ class RegisterPageState extends State<RegisterPage> {
                             },
                             builder: (context, state) {
                               if (state is CreateUserLoadingState) {
-                                return const CircularProgressIndicator();
+                                return const Center(child: CircularProgressIndicator());
                               }
                               return AppButton(
                                 onTap: () {

@@ -7,7 +7,7 @@ class AppTextField extends StatelessWidget {
     this.label,
     this.fieldName,
     this.onChanged,
-    this.visible,
+    this.obscureText = false,
     this.passwordField,
     this.validator,
     this.maxLines,
@@ -16,7 +16,7 @@ class AppTextField extends StatelessWidget {
   });
   String? label;
   String? fieldName;
-  bool? visible;
+  bool obscureText;
   bool? passwordField;
   Function(String)? onChanged;
   String? Function(String?)? validator;
@@ -30,7 +30,7 @@ class AppTextField extends StatelessWidget {
       maxLines: maxLines ?? 1,
       controller: controller,
       validator: fieldValidator,
-      obscureText: visible ?? false,
+      obscureText: obscureText,
       style: const TextStyle(color: Colors.black),
       onChanged: onChanged,
       decoration: InputDecoration(
@@ -55,7 +55,7 @@ class AppTextField extends StatelessWidget {
             ? IconButton(
                 onPressed: iconTap,
                 icon: Icon(
-                  visible ?? false ? Icons.visibility : Icons.visibility_off,
+                  obscureText ? Icons.visibility_off : Icons.visibility,
                   color: Colors.black,
                   size: 30,
                 ),

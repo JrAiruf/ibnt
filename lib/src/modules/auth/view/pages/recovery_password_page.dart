@@ -39,7 +39,7 @@ class RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                           AppTextField(),
                           TextFieldLabel(label: "Senha"),
                           AppTextField(
-                            visible: visible,
+                            obscureText: visible,
                             passwordField: true,
                             iconTap: () {
                               setState(() {
@@ -49,7 +49,7 @@ class RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                           ),
                           TextFieldLabel(label: "Confirmar Senha"),
                           AppTextField(
-                            visible: passwordConfirmationVisible,
+                            obscureText: passwordConfirmationVisible,
                             passwordField: true,
                             iconTap: () {
                               setState(() {

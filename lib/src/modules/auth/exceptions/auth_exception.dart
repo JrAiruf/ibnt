@@ -5,3 +5,7 @@ class AuthException extends AppException {
 
   final String exception;
 }
+
+class CreateMemberException extends AuthException {
+  CreateMemberException({required super.exception});
+}
