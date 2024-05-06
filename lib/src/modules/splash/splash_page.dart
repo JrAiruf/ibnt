@@ -27,7 +27,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: LogoWidget(),
+        child: LogoWidget(key: Key("logo_widget")),
       ),
     );
   }
