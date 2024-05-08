@@ -1,6 +1,6 @@
 import 'package:ibnt/src/modules/splash/splash_imports.dart';
 
-class SplasHModule extends Module {
+class SplashModule extends Module {
   @override
   void routes(RouteManager r) {
     r.child('/', child: (_) => const SplashPage());
