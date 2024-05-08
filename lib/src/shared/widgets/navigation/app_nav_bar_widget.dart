@@ -23,12 +23,14 @@ class _AppNavBarWidgetState extends State<AppNavBarWidget> {
       iconSize: 30,
       items: const [
         BottomNavigationBarItem(
+          backgroundColor: Colors.white,
           label: "Postagens",
           icon: Icon(
             Icons.add_circle,
           ),
         ),
         BottomNavigationBarItem(
+          backgroundColor: Colors.white,
           label: "Início",
           icon: Icon(
             Icons.home_sharp,
@@ -42,6 +44,7 @@ class _AppNavBarWidgetState extends State<AppNavBarWidget> {
           ),
         ),
         BottomNavigationBarItem(
+          backgroundColor: Colors.white,
           label: "Avisos",
           icon: Icon(
             Icons.dataset,
