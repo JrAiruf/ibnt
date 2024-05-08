@@ -5,6 +5,13 @@ sealed class RecoveryPasswordEvents extends Equatable {
   List<Object> get props => [];
 }
 
-final class RecoveryPasswordEvent extends RecoveryPasswordEvents {
-  RecoveryPasswordEvent();
+final class SendVerificationCodeEvent extends RecoveryPasswordEvents {
+  SendVerificationCodeEvent(this.recoveryEmail);
+
+  final String recoveryEmail;
+}
+final class RedefinePasswordEvent extends RecoveryPasswordEvents {
+  RedefinePasswordEvent(this.recoveryEntity);
+
+  final AuthRecoveryEntity recoveryEntity;
 }

@@ -9,8 +9,10 @@ class SendEmailPage extends StatefulWidget {
 
 class SendEmailPageState extends State<SendEmailPage> {
   final formKey = GlobalKey<FormState>();
+  String recoveryEmail = "";
   @override
   Widget build(BuildContext context) {
+    final recoveryPasswordBloc = context.watch<RecoveryPasswordBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     double horizontalPadding = 10;
@@ -44,20 +46,44 @@ class SendEmailPageState extends State<SendEmailPage> {
                           ),
                           SizedBox(height: height * 0.02),
                           TextFieldLabel(label: "Email"),
-                          AppTextField(fieldName: "e-mail"),
+                          AppTextField(onChanged: (value) => recoveryEmail = value, fieldName: "e-mail"),
                           SizedBox(height: height * 0.02),
-                          AppButton(
-                            onTap: () {
-                              if (formKey.currentState!.validate()) {
-                                Modular.to.pushNamed('./recovery_password');
+                          BlocConsumer(
+                            bloc: recoveryPasswordBloc,
+                            listener: (context, state) {
+                              if (state is RecoveryPasswordFailureState) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    margin: EdgeInsets.symmetric(vertical: height * 0.116, horizontal: 10),
+                                    behavior: SnackBarBehavior.floating,
+                                    backgroundColor: AppThemes.secondaryColor1,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                                    content: Center(child: Text(state.message)),
+                                  ),
+                                );
+                              }
+                              if (state is RecoveryPasswordSuccessState) {
+                                Modular.to.pushReplacementNamed("./recovery_password", arguments: state.recoveryEntity);
                               }
                             },
-                            height: buttonHeight,
-                            width: width,
-                            primaryColor: Colors.white,
-                            backgroundColor: AppThemes.primaryColor1,
-                            fontSize: buttonFontSize,
-                            text: "Enviar Código",
+                            builder: (context, state) {
+                              if (state is RecoveryPasswordLoadingState) {
+                                return const Center(child: CircularProgressIndicator());
+                              }
+                              return AppButton(
+                                onTap: () {
+                                  if (formKey.currentState!.validate()) {
+                                    recoveryPasswordBloc.add(SendVerificationCodeEvent(recoveryEmail));
+                                  }
+                                },
+                                height: buttonHeight,
+                                width: width,
+                                primaryColor: Colors.white,
+                                backgroundColor: AppThemes.primaryColor1,
+                                fontSize: buttonFontSize,
+                                text: "Enviar Código",
+                              );
+                            },
                           ),
                         ],
                       ),

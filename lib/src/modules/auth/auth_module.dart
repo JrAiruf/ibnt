@@ -10,6 +10,7 @@ class AuthModule extends Module {
     i.addSingleton<IAuthRepository>(AuthRepository.new);
     i.add<AuthBloc>(AuthBloc.new);
     i.add<CreateUserBloc>(CreateUserBloc.new);
+    i.add<RecoveryPasswordBloc>(RecoveryPasswordBloc.new);
   }
 
   @override
@@ -17,7 +18,7 @@ class AuthModule extends Module {
     r.child('/', child: (_) => const AuthOptionsPage());
     r.child('/login', child: (_) => const LoginPage(key: Key("login_page")));
     r.child('/register', child: (_) => BlocProvider(create: (context) => Modular.get<CreateUserBloc>(), child: const RegisterPage()));
-    r.child('/send_email', child: (_) => const SendEmailPage());
-    r.child('/recovery_password', child: (_) => const RecoveryPasswordPage());
+    r.child('/send_email', child: (_) => BlocProvider(create: (context) => Modular.get<RecoveryPasswordBloc>(), child: const SendEmailPage()));
+    r.child('/recovery_password', child: (_) => BlocProvider(create: (context) => Modular.get<RecoveryPasswordBloc>(), child: const RecoveryPasswordPage()));
   }
 }

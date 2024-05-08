@@ -8,7 +8,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  bool visible = false;
+  bool obscured = true;
   final formKey = GlobalKey<FormState>();
   AuthEntity authEntity = AuthEntity(email: "", password: "");
   @override
@@ -48,10 +48,10 @@ class LoginPageState extends State<LoginPage> {
                         fieldName: "campo senha",
                         iconTap: () {
                           setState(() {
-                            visible = !visible;
+                            obscured = !obscured;
                           });
                         },
-                        obscureText: visible,
+                        obscureText: obscured,
                         passwordField: true,
                       ),
                       Row(

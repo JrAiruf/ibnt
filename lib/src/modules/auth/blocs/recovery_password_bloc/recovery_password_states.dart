@@ -20,3 +20,11 @@ final class RecoveryPasswordSuccessState extends RecoveryPasswordStates {
 
   RecoveryPasswordSuccessState(this.recoveryEntity);
 }
+
+final class PasswordDefinitionFailureState extends RecoveryPasswordStates {
+  final String message;
+
+  PasswordDefinitionFailureState(this.message);
+}
+
+final class PasswordDefinitionSuccessState extends RecoveryPasswordStates {}

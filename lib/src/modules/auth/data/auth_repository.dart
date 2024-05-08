@@ -54,9 +54,12 @@ class AuthRepository implements IAuthRepository {
         idToken: auth?.idToken,
         accessToken: auth?.accessToken,
       );
+
       final signInResult = await _firebaseAuth.signInWithCredential(credential);
 
-      final apiSignInAttempt = await _appClient.post("$API_URL/auth", {"email": signInResult.user?.email, "password": signInResult.user?.uid}) as Response;
+      final userData = {"email": signInResult.user?.email, "password": signInResult.user?.uid};
+
+      final apiSignInAttempt = await _appClient.post("$API_URL/auth", userData) as Response;
 
       if (apiSignInAttempt.statusCode != 200) {
         CreateUserEntity newUserEntity = CreateUserEntity(
@@ -99,7 +102,9 @@ class AuthRepository implements IAuthRepository {
   Future<Either<AuthException, AuthResponseEntity>> signInWithAuthEntity(AuthEntity auth) async {
     var prefereces = await SharedPreferences.getInstance();
     try {
-      final response = await _appClient.post('$API_URL/auth', {"email": auth.email, "password": auth.password}) as Response;
+      final userData = {"email": auth.email, "password": auth.password};
+
+      final response = await _appClient.post('$API_URL/auth', userData) as Response;
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body) as Map<String, dynamic>;
         final userRole = body["role"] == "user" ? UserRole.user : UserRole.admin;
@@ -116,6 +121,44 @@ class AuthRepository implements IAuthRepository {
       }
     } catch (e) {
       return left(AuthException(exception: "Erro de autenticação."));
+    }
+  }
+
+  @override
+  Future<Either<AuthException, AuthRecoveryEntity>> sendVerificationCode(String email) async {
+    try {
+      final emailMap = {"email": email};
+      final response = await _appClient.post('$API_URL/auth/send-recovery-code', emailMap) as Response;
+      if (response.statusCode == 200) {
+        final body = jsonDecode(response.body) as Map<String, dynamic>;
+        final recoveryEntity = AuthRecoveryEntity(
+          fullName: body["fullName"],
+          verificationCode: body["verificationCode"],
+          verificationEmail: body["verificationEmail"],
+          newPassword: "",
+        );
+        return right(recoveryEntity);
+      } else {
+        final body = jsonDecode(response.body) as Map<String, dynamic>;
+        return left(AuthException(exception: body.values.first.toString()));
+      }
+    } catch (e) {
+      return left(AuthException(exception: "Erro ao solicitar código de verificação."));
+    }
+  }
+
+  @override
+  Future<Either<AuthException, void>> changePassword(AuthRecoveryEntity recoveryEntity) async {
+    try {
+      final recoveryData = {"email": recoveryEntity.verificationEmail, "password": recoveryEntity.newPassword};
+      final response = await _appClient.post('$API_URL/auth/password-definition/${recoveryEntity.verificationCode}', recoveryData) as Response;
+      if (response.statusCode == 200) {
+        return right(null);
+      } else {
+        return left(AuthException(exception:"Erro ao redefinir nova senha."));
+      }
+    } catch (e) {
+      return left(AuthException(exception: "Erro ao redefinir nova senha."));
     }
   }
 
