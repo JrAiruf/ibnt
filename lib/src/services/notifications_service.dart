@@ -19,6 +19,7 @@ class NotificationsService {
     }
     await firebaseMessaging.requestPermission(provisional: true);
     final fcmToken = await firebaseMessaging.getToken();
+    log("$fcmToken");
 
     FirebaseMessaging.onMessageOpenedApp.listen(_handleBackgroundNotification);
   }
