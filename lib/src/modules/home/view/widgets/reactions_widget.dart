@@ -7,51 +7,50 @@ class ReactionsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
+    final iconSpacing = width * 0.025;
+
     return SizedBox(
       height: height * 0.11,
       width: width,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconButton(
-            onPressed: () {},
-            icon: const Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          GestureDetector(
+            onTap: () {},
+            child: Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.front_hand_sharp,
-                  color: AppThemes.primaryColor1,
+                  color: AppThemes.secondaryColor1,
                 ),
-                Text("Glória"),
-                Text("0"),
+                SizedBox(width: iconSpacing),
+                const Text("Glória"),
               ],
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          GestureDetector(
+            onTap: () {},
+            child: Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.waving_hand_sharp,
                   color: AppThemes.secondaryColor1,
                 ),
-                Text("Aleluia"),
-                Text("0"),
+                SizedBox(width: iconSpacing),
+                const Text("Aleluia"),
               ],
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          GestureDetector(
+            onTap: () {},
+            child: Row(
               children: [
-                Icon(
-                  Icons.sunny,
+                const Icon(
+                  Icons.brightness_low_outlined,
                   color: AppThemes.secondaryColor1,
                 ),
-                Text("Benção"),
-                Text("0"),
+                SizedBox(width: iconSpacing),
+                const Text("Abençoado"),
               ],
             ),
           ),

@@ -1,7 +1,5 @@
 import 'package:ibnt/src/modules/home/home_imports.dart';
 
-
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -101,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                       final post = timeLineData as HomePostEntity;
                       return PostTypeWidget(post: post);
                     }
-                    return Container();
+                    return null;
                   },
                 ),
               ),

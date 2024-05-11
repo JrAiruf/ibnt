@@ -15,7 +15,7 @@ class RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final recoveryPasswordBloc = context.watch<RecoveryPasswordBloc>();
+    final recoveryPasswordBloc = context.read<RecoveryPasswordBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final emailFontSize = height * 0.02;

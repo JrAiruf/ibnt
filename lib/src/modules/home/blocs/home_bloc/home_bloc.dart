@@ -1,5 +1,4 @@
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:ibnt/src/modules/home/home_imports.dart';
 
 part 'home_events.dart';
 part 'home_states.dart';

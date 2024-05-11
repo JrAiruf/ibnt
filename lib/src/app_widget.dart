@@ -15,9 +15,10 @@ class _AppWidgetState extends State<AppWidget> {
     return MaterialApp.router(
       theme: ThemeData(
         colorSchemeSeed: AppThemes.primaryColor1,
-        floatingActionButtonTheme:  FloatingActionButtonThemeData(
+        appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
           sizeConstraints: BoxConstraints(
-            minHeight:height * 0.08,
+            minHeight: height * 0.08,
             minWidth: width * 0.25,
           ),
         ),

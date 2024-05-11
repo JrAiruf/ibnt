@@ -12,7 +12,7 @@ class SendEmailPageState extends State<SendEmailPage> {
   String recoveryEmail = "";
   @override
   Widget build(BuildContext context) {
-    final recoveryPasswordBloc = context.watch<RecoveryPasswordBloc>();
+    final recoveryPasswordBloc = context.read<RecoveryPasswordBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     double horizontalPadding = 10;

@@ -13,13 +13,18 @@ class LoginPageState extends State<LoginPage> {
   AuthEntity authEntity = AuthEntity(email: "", password: "");
   @override
   Widget build(BuildContext context) {
-    final authBloc = context.watch<AuthBloc>();
+    final authBloc = context.read<AuthBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     double buttonHeight = 60;
     double buttonFontSize = 18;
     double horizontalPadding = 10;
     double mainHeightSpacing = height * 0.015;
+
+    sendEmailPageNavigation() => Modular.to.pushNamed('./send_email');
+    registerPageNavigation() => Modular.to.pushNamed('./register');
+    setVisibility() => setState(() => obscured = !obscured);
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
@@ -46,11 +51,7 @@ class LoginPageState extends State<LoginPage> {
                       AppTextField(
                         onChanged: (value) => authEntity.password = value,
                         fieldName: "campo senha",
-                        iconTap: () {
-                          setState(() {
-                            obscured = !obscured;
-                          });
-                        },
+                        iconTap: setVisibility,
                         obscureText: obscured,
                         passwordField: true,
                       ),
@@ -58,7 +59,7 @@ class LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton(
-                            onPressed: () => Modular.to.pushNamed('./send_email'),
+                            onPressed: sendEmailPageNavigation,
                             child: const Text(
                               "Esqueci minha senha",
                               style: TextStyle(
@@ -79,10 +80,11 @@ class LoginPageState extends State<LoginPage> {
                                 backgroundColor: AppThemes.secondaryColor1,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                                 content: Center(
-                                    child: Text(
-                                  state.message,
-                                  textAlign: TextAlign.center,
-                                )),
+                                  child: Text(
+                                    state.message,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
                               ),
                             );
                           }
@@ -114,7 +116,7 @@ class LoginPageState extends State<LoginPage> {
                 ),
                 const Spacer(),
                 TextButton(
-                  onPressed: () => Modular.to.pushNamed('./register'),
+                  onPressed: registerPageNavigation,
                   child: const Text(
                     "Criar Conta",
                     style: TextStyle(

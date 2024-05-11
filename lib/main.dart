@@ -8,10 +8,7 @@ void main() async {
   runApp(
     ModularApp(
       module: AppModule(),
-      child: BlocProvider(
-        create: (_) => Modular.get<AuthBloc>(),
-        child: const AppWidget(),
-      ),
+      child: const AppWidget(),
     ),
   );
 }

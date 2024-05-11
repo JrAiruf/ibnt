@@ -17,6 +17,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
     final horizontalNotificationPadding = height * 0.015;
     final verticalNotificationPadding = height * 0.015;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,

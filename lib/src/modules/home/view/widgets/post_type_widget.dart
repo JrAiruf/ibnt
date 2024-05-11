@@ -17,46 +17,49 @@ class PostTypeWidget extends StatelessWidget {
     return SizedBox(
       height: widgetHeight,
       width: width,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.only(right: width * 0.02),
-            child: Container(
-              height: imageContainerSize,
-              width: imageContainerSize,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage("https://images.pexels.com/photos/1309052/pexels-photo-1309052.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(right: width * 0.02),
+                child: Container(
+                  height: imageContainerSize,
+                  width: imageContainerSize,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: NetworkImage("https://images.pexels.com/photos/1309052/pexels-photo-1309052.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(bottom: height * 0.01),
-                  child: Text(
-                    "Nome do Membro",
-                    style: TextStyle(fontSize: memberNameFontSize),
-                  ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: height * 0.01),
+                      child: Text(
+                        "Nome do Membro",
+                        style: TextStyle(fontSize: memberNameFontSize),
+                      ),
+                    ),
+                    Text(
+                      "Postagem realizada por membro da igreja, contendo mensagens para os outros irmãos Postagem realizada por membro da igreja, contendo mensagens criadas.",
+                      style: TextStyle(
+                        fontSize: postContentFontSize,
+                        height: 0,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  "Postagem realizada por membro da igreja, contendo mensagens para os outros irmãos Postagem realizada por membro da igreja, contendo mensagens criadas.",
-                  style: TextStyle(
-                    fontSize: postContentFontSize,
-                    height: 0,
-                  ),
-                ),
-                const Spacer(),
-                const ReactionsWidget(),
-              ],
-            ),
+              ),
+            ],
           ),
+          const ReactionsWidget(),
         ],
       ),
     );

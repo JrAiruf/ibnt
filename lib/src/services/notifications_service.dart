@@ -11,11 +11,14 @@ class NotificationsService {
 
   static Future<void> initializeNotifications() async {
     final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-    firebaseMessaging.requestPermission();
+    firebaseMessaging.setAutoInitEnabled(true);
+    await firebaseMessaging.requestPermission();
+    await firebaseMessaging.subscribeToTopic("bible_messages");
+    
     RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
-      _handleBackgroundNotification(initialMessage);
+      await _handleBackgroundNotification(initialMessage);
     }
     await firebaseMessaging.requestPermission(provisional: true);
     final fcmToken = await firebaseMessaging.getToken();

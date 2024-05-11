@@ -22,7 +22,7 @@ class RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final createUserBloc = context.watch<CreateUserBloc>();
+    final createUserBloc = context.read<CreateUserBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
