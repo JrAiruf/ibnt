@@ -1,3 +1,4 @@
+export 'package:ibnt/src/app_imports.dart';
 export 'package:ibnt/src/shared/themes/app_themes.dart';
 export 'package:ibnt/src/shared/errors/base_exception.dart';
 export 'package:ibnt/src/shared/enums/user_role.dart';

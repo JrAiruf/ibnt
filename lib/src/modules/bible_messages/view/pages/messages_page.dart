@@ -1,4 +1,5 @@
 import 'package:ibnt/src/modules/bible_messages/bible_messages_imports.dart';
+import 'package:ibnt/src/modules/bible_messages/view/widgets/message_menu_widget.dart';
 
 class MessagesPage extends StatefulWidget {
   const MessagesPage({super.key});
@@ -8,7 +9,6 @@ class MessagesPage extends StatefulWidget {
 }
 
 class _MessagesPageState extends State<MessagesPage> {
-  bool selected = true;
   @override
   Widget build(BuildContext context) {
     final authBloc = context.read<AuthBloc>();
@@ -40,60 +40,7 @@ class _MessagesPageState extends State<MessagesPage> {
                 ),
               ),
               SizedBox(height: height * 0.02),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: selected ? AppThemes.primaryColor1 : null,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(radius),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: buttonInnerPadding),
-                          child: Text(
-                            "Todas",
-                            style: TextStyle(
-                              fontFamily: "Karma",
-                              height: 0,
-                              fontSize: buttonFontSize,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: width * 0.01),
-                  Expanded(
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(color: AppThemes.primaryColor1),
-                          borderRadius: BorderRadius.circular(radius),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: buttonInnerPadding),
-                          child: Text(
-                            "Criadas",
-                            style: TextStyle(
-                              fontFamily: "Karma",
-                              height: 0,
-                              fontSize: buttonFontSize,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
+              const MessageMenuWidget()
             ],
           ),
         ),

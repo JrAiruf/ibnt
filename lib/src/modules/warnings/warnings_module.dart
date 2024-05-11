@@ -8,6 +8,6 @@ class WarningsModule extends Module {
   @override
   void routes(RouteManager r) {
     r.child('/', child: (_) => BlocProvider(create: (context) => Modular.get<AuthBloc>(), child: const WarningsPage()));
-    r.child('/add_warnings', child: (_) => const AddWarningsPage());
+    r.child('/add_warnings', child: (_) => BlocProvider(create: (context) => Modular.get<AuthBloc>(), child: const AddWarningsPage()));
   }
 }
