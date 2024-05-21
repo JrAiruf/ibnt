@@ -9,10 +9,12 @@ class MessageMenuWidget extends StatefulWidget {
   State<MessageMenuWidget> createState() => _MessageMenuWidgetState();
 }
 
-int _listIndex = 0;
+int _currentIndex = 0;
+int _initialPage = 0;
+int _seccondPage = 1;
 
 class _MessageMenuWidgetState extends State<MessageMenuWidget> {
-  PageController controller = PageController(initialPage: _listIndex);
+  PageController controller = PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
@@ -21,12 +23,13 @@ class _MessageMenuWidgetState extends State<MessageMenuWidget> {
     final buttonInnerPadding = height * 0.0041;
     final buttonRowPadding = height * 0.04;
 
-    bool selected = _listIndex == 0;
+    bool firstPageSelected = _currentIndex == _initialPage;
+    bool seccondPageSelected = _currentIndex == _seccondPage;
     int transitionDuration = 200;
-    Color allMessagesColor = selected ? AppThemes.primaryColor1 : Colors.white;
-    Color allMessagesTextColor = selected ? Colors.white : AppThemes.primaryColor1;
-    Color createdMessagesColor = !selected ? AppThemes.primaryColor1 : Colors.white;
-    Color createdMessagesTextColor = !selected ? Colors.white : AppThemes.primaryColor1;
+    Color allMessagesColor = firstPageSelected ? AppThemes.primaryColor1 : Colors.white;
+    Color allMessagesTextColor = firstPageSelected ? Colors.white : AppThemes.primaryColor1;
+    Color createdMessagesColor = seccondPageSelected ? AppThemes.primaryColor1 : Colors.white;
+    Color createdMessagesTextColor = seccondPageSelected ? Colors.white : AppThemes.primaryColor1;
     double radius = 5;
     return Expanded(
       child: Column(
@@ -47,10 +50,10 @@ class _MessageMenuWidgetState extends State<MessageMenuWidget> {
                     ),
                     onPressed: () {
                       setState(() {
-                        _listIndex--;
+                        _currentIndex = _initialPage;
                       });
                       controller.animateToPage(
-                        0,
+                        _initialPage,
                         duration: Duration(milliseconds: transitionDuration),
                         curve: Curves.easeIn,
                       );
@@ -79,10 +82,10 @@ class _MessageMenuWidgetState extends State<MessageMenuWidget> {
                     ),
                     onPressed: () {
                       setState(() {
-                        _listIndex++;
+                        _currentIndex = _seccondPage;
                       });
                       controller.animateToPage(
-                        1,
+                        _seccondPage,
                         duration: Duration(milliseconds: transitionDuration),
                         curve: Curves.easeIn,
                       );
