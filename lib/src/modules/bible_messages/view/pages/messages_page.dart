@@ -8,6 +8,8 @@ class MessagesPage extends StatefulWidget {
   State<MessagesPage> createState() => _MessagesPageState();
 }
 
+int _pageIndex = 2;
+
 class _MessagesPageState extends State<MessagesPage> {
   @override
   Widget build(BuildContext context) {
@@ -16,9 +18,6 @@ class _MessagesPageState extends State<MessagesPage> {
     final width = MediaQuery.sizeOf(context).width;
     final pagePadding = width * 0.035;
     final titleFontSize = height * 0.035;
-    final buttonFontSize = height * 0.025;
-    final buttonInnerPadding = height * 0.01;
-    double radius = 5;
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: AppDrawer(authBloc: authBloc),
@@ -57,7 +56,7 @@ class _MessagesPageState extends State<MessagesPage> {
           ),
         ),
       ),
-      bottomNavigationBar: AppNavBarWidget(pageIndex: 2),
+      bottomNavigationBar: AppNavBarWidget(pageIndex: _pageIndex),
     );
   }
 }

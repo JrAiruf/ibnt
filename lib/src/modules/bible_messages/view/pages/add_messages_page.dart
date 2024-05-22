@@ -56,6 +56,7 @@ class _AddMessagesPageState extends State<AddMessagesPage> {
                     widget: Icon(Icons.email_outlined, color: AppThemes.primaryColor1, size: iconSize),
                     fontSize: buttonFontSize,
                     text: "Gerar Mensagem",
+                    onTap: () => Modular.to.pushNamed('./message_generation'),
                   ),
                   SizedBox(height: buttonPadding),
                   AppButton(
