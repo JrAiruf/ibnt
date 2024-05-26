@@ -19,7 +19,11 @@ class AuthRepository implements IAuthRepository {
       if (admin) {
         authMap["credential"]["role"] = "admin";
       }
-      final response = await _appClient.post("$API_URL/members", authMap) as Response;
+      final response = await _appClient.post(
+        "$API_URL/members",
+        authMap,
+        headers: {"content-type": "application/json"},
+      ) as Response;
       if (response.statusCode == 400) {
         final message = jsonDecode(response.body);
         return left(CreateMemberException(exception: message));
@@ -33,6 +37,7 @@ class AuthRepository implements IAuthRepository {
           token: body["credential"]["token"],
         );
         await prefereces.setString("token", authResponseEntity.token!);
+        await prefereces.setString("user", authResponseEntity.toJson());
         return right(authResponseEntity);
       } else {
         final message = jsonDecode(response.body);
@@ -59,7 +64,11 @@ class AuthRepository implements IAuthRepository {
 
       final userData = {"email": signInResult.user?.email, "password": signInResult.user?.uid};
 
-      final apiSignInAttempt = await _appClient.post("$API_URL/auth", userData) as Response;
+      final apiSignInAttempt = await _appClient.post(
+        "$API_URL/auth",
+        userData,
+        headers: {"content-type": "application/json"},
+      ) as Response;
 
       if (apiSignInAttempt.statusCode != 200) {
         CreateUserEntity newUserEntity = CreateUserEntity(
@@ -77,6 +86,7 @@ class AuthRepository implements IAuthRepository {
 
         if (authResponseEntity != null) {
           await prefereces.setString("token", authResponseEntity.token!);
+          await prefereces.setString("user", authResponseEntity.toJson());
           return right(authResponseEntity);
         } else {
           return left(AuthException(exception: "Não foi possível realizar o login."));
@@ -91,6 +101,7 @@ class AuthRepository implements IAuthRepository {
           token: body["token"],
         );
         await prefereces.setString("token", authResponseEntity.token!);
+        await prefereces.setString("user", authResponseEntity.toJson());
         return right(authResponseEntity);
       }
     } catch (e) {
@@ -104,7 +115,11 @@ class AuthRepository implements IAuthRepository {
     try {
       final userData = {"email": auth.email, "password": auth.password};
 
-      final response = await _appClient.post('$API_URL/auth', userData) as Response;
+      final response = await _appClient.post(
+        '$API_URL/auth',
+        userData,
+        headers: {"content-type": "application/json"},
+      ) as Response;
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body) as Map<String, dynamic>;
         final userRole = body["role"] == "user" ? UserRole.user : UserRole.admin;
@@ -115,6 +130,7 @@ class AuthRepository implements IAuthRepository {
           token: body["token"],
         );
         await prefereces.setString("token", authResponseEntity.token!);
+        await prefereces.setString("user", authResponseEntity.toJson());
         return right(authResponseEntity);
       } else {
         return left(AuthException(exception: "Não foi possível realizar o login. Verifique os dados e tente novamente."));
@@ -128,7 +144,11 @@ class AuthRepository implements IAuthRepository {
   Future<Either<AuthException, AuthRecoveryEntity>> sendVerificationCode(String email) async {
     try {
       final emailMap = {"email": email};
-      final response = await _appClient.post('$API_URL/auth/send-recovery-code', emailMap) as Response;
+      final response = await _appClient.post(
+        '$API_URL/auth/send-recovery-code',
+        emailMap,
+        headers: {"content-type": "application/json"},
+      ) as Response;
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body) as Map<String, dynamic>;
         final recoveryEntity = AuthRecoveryEntity(
@@ -151,11 +171,15 @@ class AuthRepository implements IAuthRepository {
   Future<Either<AuthException, void>> changePassword(AuthRecoveryEntity recoveryEntity) async {
     try {
       final recoveryData = {"email": recoveryEntity.verificationEmail, "password": recoveryEntity.newPassword};
-      final response = await _appClient.post('$API_URL/auth/password-definition/${recoveryEntity.verificationCode}', recoveryData) as Response;
+      final response = await _appClient.put(
+        '$API_URL/auth/password-definition/${recoveryEntity.verificationCode}',
+        recoveryData,
+        headers: {"content-type": "application/json"},
+      ) as Response;
       if (response.statusCode == 200) {
         return right(null);
       } else {
-        return left(AuthException(exception:"Erro ao redefinir nova senha."));
+        return left(AuthException(exception: "Erro ao redefinir nova senha."));
       }
     } catch (e) {
       return left(AuthException(exception: "Erro ao redefinir nova senha."));

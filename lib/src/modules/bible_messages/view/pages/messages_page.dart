@@ -11,6 +11,7 @@ class MessagesPage extends StatefulWidget {
 int _pageIndex = 2;
 
 class _MessagesPageState extends State<MessagesPage> {
+  String memberId = Modular.args.params["memberId"];
   @override
   Widget build(BuildContext context) {
     final authBloc = context.read<AuthBloc>();
@@ -47,7 +48,7 @@ class _MessagesPageState extends State<MessagesPage> {
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: height * 0.025),
         child: FloatingActionButton(
-          onPressed: () => Modular.to.pushNamed('./add_messages'),
+          onPressed: () => Modular.to.pushNamed('./add_messages/$memberId'),
           backgroundColor: AppThemes.primaryColor1,
           child: const Icon(
             Icons.add,

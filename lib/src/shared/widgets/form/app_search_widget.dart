@@ -27,6 +27,7 @@ class _AppSearchWidgetState extends State<AppSearchWidget> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(radius),
           border: Border.all(
+            width: width* 0.0015,
             color: AppThemes.primaryColor1,
           ),
         ),
@@ -42,7 +43,6 @@ class _AppSearchWidgetState extends State<AppSearchWidget> {
                     const Icon(
                       color: AppThemes.primaryColor1,
                       Icons.search,
-                      weight: 0.5,
                     ),
                     SizedBox(
                       width: width * 0.03,

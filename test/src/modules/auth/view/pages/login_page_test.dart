@@ -1,5 +1,4 @@
 import 'package:ibnt/src/modules/auth/auth_imports.dart';
-import 'package:mocktail/mocktail.dart';
 
 class AuthRepositoryMock extends Mock implements IAuthRepository {}
 

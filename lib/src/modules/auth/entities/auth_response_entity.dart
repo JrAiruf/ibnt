@@ -1,4 +1,4 @@
-import 'package:ibnt/src/shared/base_entities/base_user_entity.dart';
+import 'package:ibnt/src/modules/bible_messages/bible_messages_imports.dart';
 
 class AuthResponseEntity extends BaseUserEntity {
   AuthResponseEntity({
@@ -9,4 +9,15 @@ class AuthResponseEntity extends BaseUserEntity {
   });
 
   String? token;
+
+  Map<String, dynamic> toMap() {
+    return {
+      "id": super.id,
+      "email": super.email,
+      "role": super.role.name,
+      "token": token,
+    };
+  }
+
+  String toJson() => jsonEncode(toMap());
 }

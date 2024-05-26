@@ -12,6 +12,6 @@ abstract class BaseUserEntity {
     required this.id,
     required this.email,
     required this.role,
-    this.departmentAssociation = true,
+    this.departmentAssociation = false,
   });
 }

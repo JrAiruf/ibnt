@@ -3,15 +3,19 @@
 export 'dart:convert';
 export 'dart:developer' hide Flow;
 export 'dart:io';
+export 'dart:math' hide log;
+export 'package:flutter/services.dart';
 
-export 'package:bloc/bloc.dart';
-export 'package:dartz/dartz.dart' hide State, Evaluation;
+//PACKAGES
 export 'package:equatable/equatable.dart';
 export 'package:firebase_auth/firebase_auth.dart';
-//PACKAGES
 export 'package:firebase_core/firebase_core.dart';
 export 'package:flutter/material.dart';
+export 'package:bloc/bloc.dart';
+export 'package:dartz/dartz.dart' hide State, Evaluation;
+export 'package:mocktail/mocktail.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
+export 'package:bloc_test/bloc_test.dart';
 export 'package:flutter_modular/flutter_modular.dart' hide ModularWatchExtension;
 export 'package:flutter_test/flutter_test.dart';
 export 'package:ibnt/firebase_options.dart';

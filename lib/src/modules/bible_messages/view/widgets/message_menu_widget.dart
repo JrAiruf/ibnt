@@ -12,9 +12,15 @@ class MessageMenuWidget extends StatefulWidget {
 int _currentIndex = 0;
 int _initialPage = 0;
 int _seccondPage = 1;
+PageController controller = PageController(initialPage: _initialPage);
 
 class _MessageMenuWidgetState extends State<MessageMenuWidget> {
-  PageController controller = PageController(initialPage: 0);
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = _initialPage;
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;

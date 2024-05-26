@@ -10,6 +10,7 @@ class AddMessagesPage extends StatefulWidget {
 class _AddMessagesPageState extends State<AddMessagesPage> {
   @override
   Widget build(BuildContext context) {
+    String? memberId = Modular.args.params["memberId"];
     final authBloc = context.read<AuthBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
@@ -56,7 +57,7 @@ class _AddMessagesPageState extends State<AddMessagesPage> {
                     widget: Icon(Icons.email_outlined, color: AppThemes.primaryColor1, size: iconSize),
                     fontSize: buttonFontSize,
                     text: "Gerar Mensagem",
-                    onTap: () => Modular.to.pushNamed('./message_generation'),
+                    onTap: () => Modular.to.pushNamed('../message_generation/$memberId'),
                   ),
                   SizedBox(height: buttonPadding),
                   AppButton(
@@ -65,6 +66,7 @@ class _AddMessagesPageState extends State<AddMessagesPage> {
                     widget: Icon(Icons.note_add_outlined, color: Colors.white, size: iconSize),
                     fontSize: buttonFontSize,
                     text: "Criar Mensagem",
+                    onTap: () => Modular.to.pushNamed('../create_message/$memberId'),
                   ),
                 ],
               ),

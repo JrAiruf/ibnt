@@ -11,6 +11,7 @@ class AppTextField extends StatelessWidget {
     this.passwordField,
     this.validator,
     this.maxLines,
+    this.maxLength,
     this.iconTap,
     this.controller,
   });
@@ -20,12 +21,14 @@ class AppTextField extends StatelessWidget {
   bool? passwordField;
   Function(String)? onChanged;
   String? Function(String?)? validator;
+  int? maxLength;
   int? maxLines;
   Function()? iconTap;
   TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLength: maxLength,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       maxLines: maxLines ?? 1,
       controller: controller,
@@ -67,7 +70,7 @@ class AppTextField extends StatelessWidget {
 
   String? fieldValidator(String? value) {
     if (value == null || value.isEmpty) {
-      return "Por favor, informe o ${fieldName ?? "campo"}.";
+      return "Por favor, informe ${fieldName ?? "campo"}.";
     }
     return null;
   }

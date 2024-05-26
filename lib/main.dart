@@ -5,6 +5,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await NotificationsService.initializeNotifications();
+  user_token = await getUserToken();
   runApp(
     ModularApp(
       module: AppModule(),
