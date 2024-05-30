@@ -21,6 +21,15 @@ class ComposeMessageContentException extends BibleMessageException {
 class CreateMessageException extends BibleMessageException {
   CreateMessageException({required super.exception});
 }
+
 class GenerateMessageException extends BibleMessageException {
   GenerateMessageException({required super.exception});
+}
+
+class GetMessagesException extends BibleMessageException {
+  GetMessagesException({required super.exception});
+}
+
+class UpdateMessageException extends BibleMessageException {
+  UpdateMessageException({required super.exception});
 }

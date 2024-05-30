@@ -15,43 +15,61 @@ class ReactionsWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          GestureDetector(
-            onTap: () {},
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.front_hand_sharp,
-                  color: AppThemes.secondaryColor1,
+          Expanded(
+            child: InkWell(
+              splashColor: AppThemes.primaryColor1.withOpacity(0.4),
+              onTap: () {},
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.front_hand_sharp,
+                      color: AppThemes.secondaryColor1,
+                    ),
+                    SizedBox(width: iconSpacing),
+                    const Text("Glória"),
+                  ],
                 ),
-                SizedBox(width: iconSpacing),
-                const Text("Glória"),
-              ],
+              ),
             ),
           ),
-          GestureDetector(
-            onTap: () {},
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.waving_hand_sharp,
-                  color: AppThemes.secondaryColor1,
+          Expanded(
+            child: InkWell(
+              splashColor: AppThemes.primaryColor1.withOpacity(0.4),
+              onTap: () {},
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.waving_hand_sharp,
+                      color: AppThemes.secondaryColor1,
+                    ),
+                    SizedBox(width: iconSpacing),
+                    const Text("Aleluia"),
+                  ],
                 ),
-                SizedBox(width: iconSpacing),
-                const Text("Aleluia"),
-              ],
+              ),
             ),
           ),
-          GestureDetector(
-            onTap: () {},
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.brightness_low_outlined,
-                  color: AppThemes.secondaryColor1,
-                ),
-                SizedBox(width: iconSpacing),
-                const Text("Abençoado"),
-              ],
+          Expanded(
+            child: InkWell(
+              splashColor: AppThemes.primaryColor1.withOpacity(0.4),
+              onTap: () {},
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child:  Row(
+                children: [
+                  const Icon(
+                    Icons.brightness_low_outlined,
+                    color: AppThemes.secondaryColor1,
+                  ),
+                  SizedBox(width: iconSpacing),
+                  const Text("Abençoado"),
+                ],
+              ),
+              ),
             ),
           ),
         ],

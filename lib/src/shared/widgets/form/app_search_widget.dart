@@ -3,7 +3,7 @@ import 'package:ibnt/src/shared/shared_imports.dart';
 class AppSearchWidget extends StatefulWidget {
   const AppSearchWidget({super.key, required this.onChanged});
 
-  final Function() onChanged;
+  final Function(String value) onChanged;
   @override
   State<AppSearchWidget> createState() => _AppSearchWidgetState();
 }
@@ -38,23 +38,31 @@ class _AppSearchWidgetState extends State<AppSearchWidget> {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
-                      color: AppThemes.primaryColor1,
-                      Icons.search,
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Icon(
+                        color: AppThemes.primaryColor1,
+                        Icons.search,
+                      ),
                     ),
                     SizedBox(
                       width: width * 0.03,
                     ),
                     Expanded(
-                      child: TextField(
-                        cursorWidth: cursorWidth,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.only(
-                            bottom: textBottomPadding,
+                      child: Baseline(
+                        baseline: height * 0.0245,
+                        baselineType: TextBaseline.alphabetic,
+                        child: TextField(
+                          onChanged: widget.onChanged,
+                          cursorWidth: cursorWidth,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.only(
+                              bottom: textBottomPadding,
+                            ),
                           ),
                         ),
                       ),

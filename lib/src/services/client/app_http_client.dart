@@ -2,24 +2,28 @@ import 'package:http/http.dart' as http;
 import 'package:ibnt/src/services/services_imports.dart';
 
 class AppHttpClient implements AppClient {
-
-  @override
-  Future<Response> delete(String url, Object body, {Map<String, String>? headers}) async {
-    return await http.delete(Uri.parse(url), body: jsonEncode(body), headers: headers);
-  }
-
+  
   @override
   Future<Response> get(String url, {Map<String, String>? headers}) async {
-    return await http.get(Uri.parse(url), headers: headers);
+    final response = await http.get(Uri.parse(url), headers: headers);
+    return response;
   }
 
   @override
   Future<Response> post(String url, Object requestBody, {Map<String, String>? headers}) async {
-    return await http.post(Uri.parse(url), body: jsonEncode(requestBody), headers: headers);
+    final response = await http.post(Uri.parse(url), body: jsonEncode(requestBody), headers: headers);
+    return response;
   }
 
   @override
   Future<Response> put(String url, Object body, {Map<String, String>? headers}) async {
-    return await http.put(Uri.parse(url), body: jsonEncode(body), headers: headers);
+    final response = await http.put(Uri.parse(url), body: jsonEncode(body), headers: headers);
+    return response;
+  }
+
+  @override
+  Future<Response> delete(String url, Object body, {Map<String, String>? headers}) async {
+    final response = await http.delete(Uri.parse(url), body: jsonEncode(body), headers: headers);
+    return response;
   }
 }

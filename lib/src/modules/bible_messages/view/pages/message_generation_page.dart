@@ -90,7 +90,6 @@ class _MessageGenerationPageState extends State<MessageGenerationPage> {
                           );
                   }),
               const Spacer(),
-              SizedBox(height: height * 0.01),
               BlocConsumer(
                   bloc: bibleMessagesBloc,
                   listener: (_, state) {
@@ -126,7 +125,7 @@ class _MessageGenerationPageState extends State<MessageGenerationPage> {
                       onTap: () => bibleMessagesBloc.add(GenerateMessageEvent(newMessage)),
                     );
                   }),
-              SizedBox(height: height * 0.06),
+              SizedBox(height: height * 0.04),
             ],
           ),
         ),

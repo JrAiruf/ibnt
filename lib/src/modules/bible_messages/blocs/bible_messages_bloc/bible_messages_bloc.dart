@@ -7,6 +7,7 @@ class BibleMessagesBloc extends Bloc<BibleMessagesEvents, BibleMessagesStates> {
   BibleMessagesBloc(this._repository) : super(BibleMessagesInitialState()) {
     on<CreateMessageEvent>(_mapCreateMessageEventToState);
     on<GenerateMessageEvent>(_mapGenerateMessageEventToState);
+    on<UpdateMessageEvent>(_mapUpdateMessageEventToState);
   }
 
   final IBibleMessagesRepository _repository;
@@ -19,12 +20,22 @@ class BibleMessagesBloc extends Bloc<BibleMessagesEvents, BibleMessagesStates> {
       (right) => state(BibleMessagesSuccessState(right)),
     );
   }
+
   Future<void> _mapGenerateMessageEventToState(GenerateMessageEvent event, Emitter<BibleMessagesStates> state) async {
     state(BibleMessagesLoadingState());
     final result = await _repository.generateBibleMessage(event.newMessage);
     result.fold(
       (left) => state(BibleMessagesFailureState(left.exception)),
       (right) => state(BibleMessagesSuccessState(right)),
+    );
+  }
+
+  Future<void> _mapUpdateMessageEventToState(UpdateMessageEvent event, Emitter<BibleMessagesStates> state) async {
+    state(BibleMessagesLoadingState());
+    final result = await _repository.updateBibleMessage(event.message);
+    result.fold(
+      (left) => state(UpdateBibleMessageFailureState(left.exception)),
+      (right) => state(UpdateBibleMessageSuccessState(right)),
     );
   }
 }

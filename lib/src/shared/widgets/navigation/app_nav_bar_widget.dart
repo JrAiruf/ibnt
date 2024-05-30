@@ -9,13 +9,14 @@ class AppNavBarWidget extends StatefulWidget {
   State<AppNavBarWidget> createState() => _AppNavBarWidgetState();
 }
 
-late String memberId;
+late String _memberId;
+
 Future<void> _setUserData() async {
   final preferences = await SharedPreferences.getInstance();
   final userJson = preferences.getString("user");
   if (userJson != null) {
     final userMap = jsonDecode(userJson);
-    memberId = userMap["id"];
+    _memberId = userMap["id"];
   }
 }
 
@@ -84,7 +85,7 @@ class _AppNavBarWidgetState extends State<AppNavBarWidget> {
         Modular.to.navigate('/home/');
         break;
       case 2:
-        Modular.to.navigate('/bible_messages/$memberId');
+        Modular.to.navigate('/bible_messages/$_memberId');
         break;
       case 3:
         Modular.to.navigate('/warnings/');

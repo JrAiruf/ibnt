@@ -10,7 +10,7 @@ final class AuthEvent extends AuthEvents {
 }
 
 final class SignInWithAuthEntityEvent extends AuthEvents {
-  final AuthEntity authEntity;
+  final Credential authEntity;
 
   SignInWithAuthEntityEvent(this.authEntity);
 }

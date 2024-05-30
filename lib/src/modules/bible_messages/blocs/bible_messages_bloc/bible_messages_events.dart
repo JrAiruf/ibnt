@@ -1,4 +1,5 @@
 part of 'bible_messages_bloc.dart';
+
 abstract class BibleMessagesEvents {}
 
 class CreateMessageEvent implements BibleMessagesEvents {
@@ -15,4 +16,10 @@ class GenerateMessageEvent implements BibleMessagesEvents {
   GenerateMessageEvent(this.newMessage) {
     newMessage.type = BibleMessageType.generated.name;
   }
+}
+
+class UpdateMessageEvent implements BibleMessagesEvents {
+  final BibleMessageEntity message;
+
+  UpdateMessageEvent(this.message);
 }

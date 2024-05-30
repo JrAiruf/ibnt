@@ -86,9 +86,11 @@ class _MessagePageState extends State<MessagePage> {
         ),
       ),
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: height * 0.025),
+        padding: EdgeInsets.only(bottom: height * 0.1),
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Modular.to.pushReplacementNamed('./edit_message', arguments: {"message": widget.message});
+          },
           backgroundColor: AppThemes.primaryColor1,
           child: const Icon(
             Icons.mode_edit,

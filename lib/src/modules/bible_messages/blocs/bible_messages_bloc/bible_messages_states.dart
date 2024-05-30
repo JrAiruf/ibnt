@@ -18,3 +18,15 @@ final class BibleMessagesSuccessState extends BibleMessagesStates {
 
   BibleMessagesSuccessState(this.message);
 }
+
+final class UpdateBibleMessageFailureState extends BibleMessagesStates {
+  final String exception;
+
+  UpdateBibleMessageFailureState(this.exception);
+}
+
+final class UpdateBibleMessageSuccessState extends BibleMessagesStates {
+  final BibleMessageEntity message;
+
+  UpdateBibleMessageSuccessState(this.message);
+}

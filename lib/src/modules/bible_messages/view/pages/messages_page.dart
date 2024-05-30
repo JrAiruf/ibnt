@@ -11,10 +11,14 @@ class MessagesPage extends StatefulWidget {
 int _pageIndex = 2;
 
 class _MessagesPageState extends State<MessagesPage> {
+
   String memberId = Modular.args.params["memberId"];
+  
   @override
   Widget build(BuildContext context) {
     final authBloc = context.read<AuthBloc>();
+    final getMemberMessagesBloc = context.read<GetMemberMessagesBloc>();
+
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final pagePadding = width * 0.035;
@@ -40,7 +44,7 @@ class _MessagesPageState extends State<MessagesPage> {
                 ),
               ),
               SizedBox(height: height * 0.02),
-              const MessageMenuWidget()
+              MessageMenuWidget(getMemberMessagesBloc: getMemberMessagesBloc),
             ],
           ),
         ),

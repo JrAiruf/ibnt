@@ -96,4 +96,48 @@ void main() {
       );
     },
   );
+  group(
+    'UpdateMessageEvent should',
+    () {
+      setUp(
+        () {
+          registerFallbackValue(BibleMessageEntity());
+          repository = BibleMessagesRepositoryMock();
+          bloc = BibleMessagesBloc(repository);
+        },
+      );
+
+      blocTest<BibleMessagesBloc, BibleMessagesStates>(
+        'return a UpdateBibleMessageFailureState',
+        setUp: () {
+          when(() => repository.updateBibleMessage(any())).thenAnswer(
+            (_) async => Left(UpdateMessageException(exception: "exception")),
+          );
+        },
+        build: () => bloc,
+        act: (bloc) => bloc.add(UpdateMessageEvent(BibleMessageEntity())),
+        expect: () => [
+          isA<BibleMessagesLoadingState>(),
+          isA<UpdateBibleMessageFailureState>(),
+        ],
+        tearDown: () => bloc.close(),
+      );
+      blocTest<BibleMessagesBloc, BibleMessagesStates>(
+        'return a BibleMessageSuccessState',
+        setUp: () {
+          when(() => repository.updateBibleMessage(any())).thenAnswer(
+            (_) async => Right(BibleMessageEntity()),
+          );
+        },
+        build: () => BibleMessagesBloc(repository),
+        act: (bloc) => bloc.add(UpdateMessageEvent(BibleMessageEntity())),
+        wait: const Duration(milliseconds: 300),
+        expect: () => [
+          isA<BibleMessagesLoadingState>(),
+          isA<UpdateBibleMessageSuccessState>(),
+        ],
+        tearDown: () => bloc.close(),
+      );
+    },
+  );
 }

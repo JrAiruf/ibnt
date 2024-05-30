@@ -1,10 +1,10 @@
+// ignore_for_file: must_be_immutable
 import 'package:ibnt/src/modules/bible_messages/bible_messages_imports.dart';
-import 'package:ibnt/src/modules/bible_messages/view/widgets/bible_message_widget.dart';
-import 'package:ibnt/src/shared/widgets/form/app_search_widget.dart';
 
 class MessageMenuWidget extends StatefulWidget {
-  const MessageMenuWidget({super.key});
+  MessageMenuWidget({required this.getMemberMessagesBloc, super.key});
 
+  GetMemberMessagesBloc getMemberMessagesBloc;
   @override
   State<MessageMenuWidget> createState() => _MessageMenuWidgetState();
 }
@@ -12,6 +12,18 @@ class MessageMenuWidget extends StatefulWidget {
 int _currentIndex = 0;
 int _initialPage = 0;
 int _seccondPage = 1;
+
+late String _memberId;
+
+Future<void> _setUserData() async {
+  final preferences = await SharedPreferences.getInstance();
+  final userJson = preferences.getString("user");
+  if (userJson != null) {
+    final userMap = jsonDecode(userJson);
+    _memberId = userMap["id"];
+  }
+}
+
 PageController controller = PageController(initialPage: _initialPage);
 
 class _MessageMenuWidgetState extends State<MessageMenuWidget> {
@@ -19,6 +31,9 @@ class _MessageMenuWidgetState extends State<MessageMenuWidget> {
   void initState() {
     super.initState();
     _currentIndex = _initialPage;
+    _setUserData().then((value) {
+      widget.getMemberMessagesBloc.add(GetMemberMessagesEvent(_memberId));
+    });
   }
 
   @override
@@ -28,6 +43,8 @@ class _MessageMenuWidgetState extends State<MessageMenuWidget> {
     final buttonFontSize = height * 0.025;
     final buttonInnerPadding = height * 0.0041;
     final buttonRowPadding = height * 0.04;
+
+    final cubit = context.read<BibleMessagesFilterCubit>();
 
     bool firstPageSelected = _currentIndex == _initialPage;
     bool seccondPageSelected = _currentIndex == _seccondPage;
@@ -105,37 +122,111 @@ class _MessageMenuWidgetState extends State<MessageMenuWidget> {
               ],
             ),
           ),
-          AppSearchWidget(
-            onChanged: () {},
+          BlocBuilder(
+            bloc: widget.getMemberMessagesBloc,
+            builder: (context, blocState) {
+              if (blocState is GetMemberMessagesLoadingState) {
+                return const Expanded(
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
+              if (blocState is GetMemberMessagesFailureState) {
+                return Center(child: Text(blocState.exception));
+              }
+              if (blocState is GetMemberMessagesSuccessState) {
+                return Expanded(
+                  child: BlocBuilder<BibleMessagesFilterCubit, List<BibleMessageEntity>>(
+                    bloc: cubit,
+                    builder: (context, state) {
+                      final messagesList = state.isEmpty ? blocState.messages : state;
+                      final createdMessagesList = state.isEmpty
+                          ? blocState.messages.where(
+                                (message) => message.type == BibleMessageType.created,
+                              )
+                              .toList()
+                          : state
+                              .where(
+                                (message) => message.type == BibleMessageType.created,
+                              )
+                              .toList();
+                      return Column(
+                        children: [
+                          AppSearchWidget(
+                            onChanged: (value) {
+                              cubit.filterBibleMessages(value, blocState.messages);
+                            },
+                          ),
+                          Expanded(
+                            child: PageView(
+                              controller: controller,
+                              physics: const NeverScrollableScrollPhysics(),
+                              children: [
+                                cubit.loading
+                                    ? Container()
+                                    : SizedBox(
+                                        child: RefreshIndicator(
+                                          triggerMode: RefreshIndicatorTriggerMode.onEdge,
+                                          onRefresh: () async {
+                                            widget.getMemberMessagesBloc.add(GetMemberMessagesEvent(_memberId));
+                                          },  
+                                          child: ListView.builder(
+                                            itemCount: messagesList.length,
+                                            itemBuilder: (_, i) {
+                                              final bibleMessageEntity = messagesList[i];
+                                              final bibleMessage = HomeMessageEntity(
+                                                title: bibleMessageEntity.title,
+                                                content: bibleMessageEntity.content,
+                                                messageType: bibleMessageEntity.type,
+                                              );
+                                              return BibleMessageWidget(
+                                                message: bibleMessage,
+                                                onTap: () {
+                                                  Modular.to.pushNamed('./message', arguments: {"message": bibleMessageEntity});
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                cubit.loading
+                                    ? Container()
+                                    : SizedBox(
+                                        child: RefreshIndicator(
+                                          triggerMode: RefreshIndicatorTriggerMode.onEdge,
+                                          onRefresh: () async {
+                                            widget.getMemberMessagesBloc.add(GetMemberMessagesEvent(_memberId));
+                                          },  
+                                          child: ListView.builder(
+                                            itemCount: createdMessagesList.length,
+                                            itemBuilder: (_, i) {
+                                              final bibleMessageEntity = createdMessagesList[i];
+                                              final bibleMessage = HomeMessageEntity(
+                                                title: bibleMessageEntity.title,
+                                                content: bibleMessageEntity.content,
+                                                messageType: bibleMessageEntity.type,
+                                              );
+                                              return BibleMessageWidget(
+                                                message: bibleMessage,
+                                                onTap: () {
+                                                  Modular.to.pushNamed('./message', arguments: {"message": bibleMessageEntity});
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                              ],
+                            ),
+                          )
+                        ],
+                      );
+                    },
+                  ),
+                );
+              }
+              return Container();
+            },
           ),
-          Expanded(
-            child: PageView(
-              controller: controller,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                SizedBox(
-                  child: ListView(
-                    children: [
-                      BibleMessageWidget(message: HomeMessageEntity()),
-                      BibleMessageWidget(message: HomeMessageEntity()),
-                      BibleMessageWidget(message: HomeMessageEntity()),
-                      BibleMessageWidget(message: HomeMessageEntity()),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  child: ListView(
-                    children: [
-                      BibleMessageWidget(message: HomeMessageEntity()),
-                      BibleMessageWidget(message: HomeMessageEntity()),
-                      BibleMessageWidget(message: HomeMessageEntity()),
-                      BibleMessageWidget(message: HomeMessageEntity()),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )
         ],
       ),
     );

@@ -10,12 +10,13 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   bool obscured = true;
   final formKey = GlobalKey<FormState>();
-  AuthEntity authEntity = AuthEntity(email: "", password: "");
+  Credential authEntity = Credential(email: "", password: "");
   @override
   Widget build(BuildContext context) {
     final authBloc = context.read<AuthBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
+    final textFontSize = height * 0.027;
     double buttonHeight = 60;
     double buttonFontSize = 18;
     double horizontalPadding = 10;
@@ -55,19 +56,17 @@ class LoginPageState extends State<LoginPage> {
                         obscureText: obscured,
                         passwordField: true,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            onPressed: sendEmailPageNavigation,
-                            child: const Text(
-                              "Esqueci minha senha",
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
+                      Align(
+                        alignment:Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: sendEmailPageNavigation,
+                          child: const Text(
+                            "Esqueci minha senha",
+                            style: TextStyle(
+                              color: Colors.black,
                             ),
                           ),
-                        ],
+                        ),
                       ),
                       BlocConsumer(
                         bloc: authBloc,
@@ -117,10 +116,10 @@ class LoginPageState extends State<LoginPage> {
                 const Spacer(),
                 TextButton(
                   onPressed: registerPageNavigation,
-                  child: const Text(
+                  child: Text(
                     "Criar Conta",
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: textFontSize,
                       color: Colors.black,
                       fontWeight: FontWeight.w400,
                     ),

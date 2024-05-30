@@ -15,7 +15,7 @@ class RegisterPageState extends State<RegisterPage> {
 
   CreateUserEntity newUserEntity = CreateUserEntity(
       fullName: "",
-      authEntity: AuthEntity(
+      credential: Credential(
         email: "",
         password: "",
       ));
@@ -48,12 +48,12 @@ class RegisterPageState extends State<RegisterPage> {
                           ),
                           TextFieldLabel(label: "E-mail"),
                           AppTextField(
-                            onChanged: (value) => newUserEntity.authEntity.email = value,
+                            onChanged: (value) => newUserEntity.credential.email = value,
                           ),
                           TextFieldLabel(label: "Senha"),
                           AppTextField(
                             obscureText: obscure,
-                            onChanged: (value) => newUserEntity.authEntity.password = value,
+                            onChanged: (value) => newUserEntity.credential.password = value,
                             passwordField: true,
                             iconTap: () {
                               setState(() {
@@ -98,7 +98,7 @@ class RegisterPageState extends State<RegisterPage> {
                               return AppButton(
                                 onTap: () {
                                   if (formKey.currentState!.validate()) {
-                                    if (newUserEntity.authEntity.password == passwordConfirmation) {
+                                    if (newUserEntity.credential.password == passwordConfirmation) {
                                       createUserBloc.add(CreateUserEvent(newUserEntity));
                                     } else {
                                       ScaffoldMessenger.of(context).showSnackBar(

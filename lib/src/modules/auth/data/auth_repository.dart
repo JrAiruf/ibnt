@@ -11,11 +11,7 @@ class AuthRepository implements IAuthRepository {
   Future<Either<AuthException, AuthResponseEntity>> createAccount(CreateUserEntity newUserEntity, {bool admin = false}) async {
     var prefereces = await SharedPreferences.getInstance();
     try {
-      Map<String, dynamic> authMap = {
-        "fullName": newUserEntity.fullName,
-        "profileImage": newUserEntity.profileImage,
-        "credential": {"email": newUserEntity.authEntity.email, "password": newUserEntity.authEntity.password}
-      };
+      Map<String, dynamic> authMap = newUserEntity.toMap();
       if (admin) {
         authMap["credential"]["role"] = "admin";
       }
@@ -24,11 +20,11 @@ class AuthRepository implements IAuthRepository {
         authMap,
         headers: {"content-type": "application/json"},
       ) as Response;
-      if (response.statusCode == 400) {
+      if (response.statusCode == StatusCodes.BAD_REQUEST) {
         final message = jsonDecode(response.body);
         return left(CreateMemberException(exception: message));
-      } else if (response.statusCode == 201) {
-        final body = jsonDecode(response.body);
+      } else if (response.statusCode == StatusCodes.CREATED) {
+        final body = jsonDecode(response.body) as Map<String, dynamic>;
         final userRole = body["credential"]["role"] == "user" ? UserRole.user : UserRole.admin;
         final authResponseEntity = AuthResponseEntity(
           id: body["id"],
@@ -70,11 +66,11 @@ class AuthRepository implements IAuthRepository {
         headers: {"content-type": "application/json"},
       ) as Response;
 
-      if (apiSignInAttempt.statusCode != 200) {
+      if (apiSignInAttempt.statusCode != StatusCodes.OK) {
         CreateUserEntity newUserEntity = CreateUserEntity(
           fullName: signInResult.user?.displayName ?? "",
           profileImage: signInResult.user?.photoURL,
-          authEntity: AuthEntity(
+          credential: Credential(
             email: signInResult.user?.email ?? "",
             password: signInResult.user?.uid ?? "",
           ),
@@ -92,7 +88,7 @@ class AuthRepository implements IAuthRepository {
           return left(AuthException(exception: "Não foi possível realizar o login."));
         }
       } else {
-        final body = jsonDecode(apiSignInAttempt.body);
+        final body = jsonDecode(apiSignInAttempt.body) as Map<String, dynamic>;
         final userRole = body["role"] == "user" ? UserRole.user : UserRole.admin;
         final authResponseEntity = AuthResponseEntity(
           id: body["id"],
@@ -110,7 +106,7 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
-  Future<Either<AuthException, AuthResponseEntity>> signInWithAuthEntity(AuthEntity auth) async {
+  Future<Either<AuthException, AuthResponseEntity>> signInWithAuthEntity(Credential auth) async {
     var prefereces = await SharedPreferences.getInstance();
     try {
       final userData = {"email": auth.email, "password": auth.password};
@@ -120,7 +116,7 @@ class AuthRepository implements IAuthRepository {
         userData,
         headers: {"content-type": "application/json"},
       ) as Response;
-      if (response.statusCode == 200) {
+      if (response.statusCode == StatusCodes.OK) {
         final body = jsonDecode(response.body) as Map<String, dynamic>;
         final userRole = body["role"] == "user" ? UserRole.user : UserRole.admin;
         final authResponseEntity = AuthResponseEntity(
@@ -149,7 +145,7 @@ class AuthRepository implements IAuthRepository {
         emailMap,
         headers: {"content-type": "application/json"},
       ) as Response;
-      if (response.statusCode == 200) {
+      if (response.statusCode == StatusCodes.OK) {
         final body = jsonDecode(response.body) as Map<String, dynamic>;
         final recoveryEntity = AuthRecoveryEntity(
           fullName: body["fullName"],
@@ -176,7 +172,7 @@ class AuthRepository implements IAuthRepository {
         recoveryData,
         headers: {"content-type": "application/json"},
       ) as Response;
-      if (response.statusCode == 200) {
+      if (response.statusCode == StatusCodes.OK) {
         return right(null);
       } else {
         return left(AuthException(exception: "Erro ao redefinir nova senha."));

@@ -19,8 +19,8 @@ class _AppWidgetState extends State<AppWidget> {
         appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           sizeConstraints: BoxConstraints(
-            minHeight: height * 0.08,
-            minWidth: width * 0.25,
+            minHeight: height * 0.07,
+            minWidth: width * 0.23,
           ),
         ),
       ),

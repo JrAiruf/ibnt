@@ -1,25 +1,53 @@
 import 'package:ibnt/src/modules/bible_messages/bible_messages_imports.dart';
 
 class BibleMessagesRepository implements IBibleMessagesRepository {
-  BibleMessagesRepository(this._appClient);
-  final AppClient _appClient;
+  BibleMessagesRepository(this.appClient);
+  final AppClient appClient;
+
+  @override
+  Future<Either<BibleMessageException, List<BibleMessageEntity>>> getMemberMessages(String memberId) async {
+    try {
+      final memberMessages = <BibleMessageEntity>[];
+      final response = await appClient.get("$API_URL/biblemessages/member/$memberId", headers: {
+        "content-type": "application/json",
+        "authorization": "Bearer $user_token",
+      }) as Response;
+      if (response.statusCode == StatusCodes.NOT_FOUND) {
+        return left(GetMessagesException(exception: response.body));
+      } else if (response.statusCode == StatusCodes.OK) {
+        final jsonMemberMessages = jsonDecode(response.body) as List;
+        for (var i = 0; i < jsonMemberMessages.length; i++) {
+          var jsonMemberMessage = jsonMemberMessages[i];
+          final memberMessage = BibleMessageEntity.fromMap(jsonMemberMessage);
+          if (!memberMessages.contains(memberMessage)) {
+            memberMessages.add(memberMessage);
+          }
+        }
+        return right(memberMessages);
+      } else {
+        return left(GetMessagesException(exception: response.body));
+      }
+    } catch (e) {
+      return left(GetMessagesException(exception: "Erro ao obter mensagens do usuário."));
+    }
+  }
 
   @override
   Future<Either<BibleMessageException, BibleMessageEntity>> createBibleMessage(NewMessageEntity message) async {
     try {
-      final response = await _appClient.post("$API_URL/biblemessages", message.toMap(), headers: {
+      final response = await appClient.post("$API_URL/biblemessages", message.toMap(), headers: {
         "content-type": "application/json",
         "authorization": "Bearer $user_token",
       }) as Response;
-      if (response.statusCode == 201) {
+      if (response.statusCode == StatusCodes.CREATED) {
         final bibleMessageMap = jsonDecode(response.body) as Map<String, dynamic>;
         final bibleMessage = BibleMessageEntity.fromMap(bibleMessageMap);
         return right(bibleMessage);
       } else {
         return left(CreateMessageException(exception: "Erro ao criar nova mensagem."));
       }
-    } on BibleMessageException catch (e) {
-      return left(CreateMessageException(exception: e.exception));
+    } on BibleMessageException {
+      rethrow;
     }
   }
 
@@ -44,13 +72,32 @@ class BibleMessagesRepository implements IBibleMessagesRepository {
     }
   }
 
+  @override
+  Future<Either<BibleMessageException, BibleMessageEntity>> updateBibleMessage(BibleMessageEntity message) async {
+    try {
+      final response = await appClient.put("$API_URL/biblemessages/${message.id}", message.toMap(), headers: {
+        "content-type": "application/json",
+        "authorization": "Bearer $user_token",
+      }) as Response;
+      if (response.statusCode == StatusCodes.OK) {
+        final bibleMessageMap = jsonDecode(response.body) as Map<String, dynamic>;
+        final bibleMessage = BibleMessageEntity.fromMap(bibleMessageMap);
+        return right(bibleMessage);
+      } else {
+        return left(UpdateMessageException(exception: "Erro ao atualizar mensagem."));
+      }
+    } on BibleMessageException catch (e) {
+      return left(UpdateMessageException(exception: e.exception));
+    }
+  }
+
   Future<int> chapterSelector(String book) async {
     try {
       final randomValues = Random();
-      final booksResponse = await _appClient.get(
+      final booksResponse = await appClient.get(
         "$BIBLE_API_URL/books/$book",
       ) as Response;
-      if (booksResponse.statusCode == 200) {
+      if (booksResponse.statusCode == StatusCodes.OK) {
         final bookMap = jsonDecode(booksResponse.body) as Map<String, dynamic>;
         int generatedChapter = randomValues.nextInt(bookMap["chapters"]);
         int chapter = generatedChapter > 0 ? generatedChapter : (generatedChapter + 1);
@@ -68,10 +115,8 @@ class BibleMessagesRepository implements IBibleMessagesRepository {
       final random = Random();
       final versesList = <String>[];
 
-      final response = await _appClient.get(
-        "$BIBLE_API_URL/verses/$bibleVersion/$book/$chapter",
-      ) as Response;
-      if (response.statusCode == 200) {
+      final response = await appClient.get("$BIBLE_API_URL/verses/$bibleVersion/$book/$chapter") as Response;
+      if (response.statusCode == StatusCodes.OK) {
         final verseMap = jsonDecode(response.body) as Map<String, dynamic>;
         final chapterVerses = verseMap["verses"] as List;
         for (var i = 0; i < chapterVerses.length; i++) {
@@ -90,11 +135,5 @@ class BibleMessagesRepository implements IBibleMessagesRepository {
     } on BibleMessageException {
       rethrow;
     }
-  }
-
-  Future<String> getUserToken() async {
-    final preferences = await SharedPreferences.getInstance();
-    var token = preferences.getString("token");
-    return token ?? "";
   }
 }

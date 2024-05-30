@@ -6,6 +6,7 @@ class AppTextField extends StatelessWidget {
     super.key,
     this.label,
     this.fieldName,
+    this.initialValue,
     this.onChanged,
     this.obscureText = false,
     this.passwordField,
@@ -17,6 +18,7 @@ class AppTextField extends StatelessWidget {
   });
   String? label;
   String? fieldName;
+  String? initialValue;
   bool obscureText;
   bool? passwordField;
   Function(String)? onChanged;
@@ -28,6 +30,7 @@ class AppTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       maxLength: maxLength,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       maxLines: maxLines ?? 1,
