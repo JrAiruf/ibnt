@@ -14,6 +14,7 @@ class EventTypeWidget extends StatelessWidget {
     final verticalPadding = height * 0.009;
     final iconSize = height * 0.04;
     final eventNameFontSize = height * 0.025;
+    final eventDateFontSize = height * 0.017;
     final eventContentFontSize = height * 0.019;
     double stackOutlineMeasure = -10;
     String? eventDate = event.date?.split("T").first;
@@ -58,9 +59,10 @@ class EventTypeWidget extends StatelessWidget {
                               style: TextStyle(fontSize: eventNameFontSize),
                             ),
                           ),
+                          SizedBox(width: width * 0.02),
                           Text(
                             eventDate,
-                            style: TextStyle(fontSize: eventContentFontSize),
+                            style: TextStyle(fontSize: eventDateFontSize),
                           ),
                         ],
                       ),

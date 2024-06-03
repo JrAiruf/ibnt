@@ -9,11 +9,13 @@ class EventEntity extends TimeLineContent {
   String? description;
 
   EventEntity({
+    super.id,
     this.title,
     this.imageUrl,
     this.postDate,
     this.date,
     this.description,
+    super.type
   }) {
     super.type = EntityType.event;
     imageUrl = "https://images.pexels.com/photos/2351722/pexels-photo-2351722.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
