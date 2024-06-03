@@ -2,15 +2,23 @@
 import 'package:ibnt/src/modules/home/home_imports.dart';
 
 class EventTypeWidget extends StatelessWidget {
-  EventTypeWidget({Key? key, required this.event, this.editable = false}) : super(key: key);
+  EventTypeWidget({
+    Key? key,
+    required this.memberId,
+    required this.event,
+    this.editable = false,
+  }) : super(key: key);
 
   final EventEntity event;
+  final String memberId;
   bool editable = false;
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
-    final widgetHeight = editable ? height * 0.43 : height * 0.57;
+
+    const radius = 5.0;
+    final widgetHeight = editable ? height * 0.41 : height * 0.53;
     final verticalPadding = height * 0.009;
     final iconSize = height * 0.04;
     final eventNameFontSize = height * 0.025;
@@ -38,6 +46,7 @@ class EventTypeWidget extends StatelessWidget {
                 flex: 3,
                 child: Container(
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(radius),
                     image: DecorationImage(
                       image: NetworkImage(event.imageUrl ?? ""),
                       fit: BoxFit.fill,
@@ -98,7 +107,7 @@ class EventTypeWidget extends StatelessWidget {
                         style: TextStyle(fontSize: eventContentFontSize),
                       ),
                     ),
-              editable ? Container() : const ReactionsWidget(),
+              editable ? Container() : ReactionsWidget(memberId: memberId, content: event),
             ],
           ),
         ),

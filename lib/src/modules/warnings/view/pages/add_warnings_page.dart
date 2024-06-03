@@ -11,14 +11,14 @@ class _AddWarningsPageState extends State<AddWarningsPage> {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final authBloc = context.watch<AuthBloc>();
+    // final authBloc = context.watch<AuthBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final labelFontSize = height * 0.025;
     final pagePadding = width * 0.035;
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: AppDrawer(authBloc: authBloc),
+      drawer: AppDrawer(/* authBloc: authBloc */),
       appBar: AppBarWidget(preferredSize: Size(width, height * 0.08)),
       body: SizedBox(
         height: height,

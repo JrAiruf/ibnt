@@ -21,7 +21,7 @@ class _CreateMessagePageState extends State<CreateMessagePage> {
 
   @override
   Widget build(BuildContext context) {
-    final authBloc = context.read<AuthBloc>();
+    // final authBloc = context.read<AuthBloc>();
     final bibleMessagesBloc = context.read<BibleMessagesBloc>();
 
     final height = MediaQuery.sizeOf(context).height;
@@ -34,7 +34,7 @@ class _CreateMessagePageState extends State<CreateMessagePage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: AppDrawer(authBloc: authBloc),
+      drawer: AppDrawer(/* authBloc: authBloc */),
       appBar: AppBarWidget(preferredSize: Size(width, height * 0.08)),
       body: SingleChildScrollView(
         child: SizedBox(

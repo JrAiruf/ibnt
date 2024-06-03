@@ -7,8 +7,7 @@ abstract class BaseUserEntity {
   UserRole role = UserRole.user;
   bool? departmentAssociation;
 
-  BaseUserEntity(
-    {
+  BaseUserEntity({
     required this.id,
     required this.email,
     required this.role,

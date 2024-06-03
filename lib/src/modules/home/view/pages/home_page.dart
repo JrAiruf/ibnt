@@ -18,7 +18,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final authBloc = context.read<AuthBloc>();
     final homeBloc = context.read<HomeBloc>();
 
     final height = MediaQuery.sizeOf(context).height;
@@ -28,7 +27,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: AppDrawer(authBloc: authBloc),
+      drawer: AppDrawer(),
       appBar: AppBarWidget(preferredSize: Size(width, height * 0.08)),
       body: SizedBox(
         height: height,
@@ -65,11 +64,15 @@ class _HomePageState extends State<HomePage> {
                           var timeLineData = timeLine[i];
                           if (timeLineData.type == EntityType.event) {
                             final event = timeLineData as EventEntity;
-                            return EventTypeWidget(event: event);
+                            return EventTypeWidget(memberId: "ID", event: event);
                           }
                           if (timeLineData.type == EntityType.message) {
                             final message = timeLineData as MessageEntity;
-                            return MessageTypeWidget(message: message);
+                            return MessageTypeWidget(
+                              message: message,
+                              memberId: "ID",
+                              memberName: "NAME",
+                            );
                           }
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 2.5),
