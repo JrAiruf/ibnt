@@ -1,14 +1,14 @@
 import 'package:ibnt/src/modules/bible_messages/bible_messages_imports.dart';
 
 class BibleMessagesRepository implements IBibleMessagesRepository {
-  BibleMessagesRepository(this.appClient);
-  final AppClient appClient;
+  BibleMessagesRepository(this._appClient);
+  final AppClient _appClient;
 
   @override
   Future<Either<BibleMessageException, List<BibleMessageEntity>>> getMemberMessages(String memberId) async {
     try {
       final memberMessages = <BibleMessageEntity>[];
-      final response = await appClient.get("$API_URL/biblemessages/member/$memberId", headers: {
+      final response = await _appClient.get("$API_URL/biblemessages/member/$memberId", headers: {
         "content-type": "application/json",
         "authorization": "Bearer $user_token",
       }) as Response;
@@ -35,7 +35,7 @@ class BibleMessagesRepository implements IBibleMessagesRepository {
   @override
   Future<Either<BibleMessageException, BibleMessageEntity>> createBibleMessage(NewMessageEntity message) async {
     try {
-      final response = await appClient.post("$API_URL/biblemessages", message.toMap(), headers: {
+      final response = await _appClient.post("$API_URL/biblemessages", message.toMap(), headers: {
         "content-type": "application/json",
         "authorization": "Bearer $user_token",
       }) as Response;
@@ -75,7 +75,7 @@ class BibleMessagesRepository implements IBibleMessagesRepository {
   @override
   Future<Either<BibleMessageException, BibleMessageEntity>> updateBibleMessage(BibleMessageEntity message) async {
     try {
-      final response = await appClient.put("$API_URL/biblemessages/${message.id}", message.toMap(), headers: {
+      final response = await _appClient.put("$API_URL/biblemessages/${message.id}", message.toMap(), headers: {
         "content-type": "application/json",
         "authorization": "Bearer $user_token",
       }) as Response;
@@ -94,7 +94,7 @@ class BibleMessagesRepository implements IBibleMessagesRepository {
   Future<int> chapterSelector(String book) async {
     try {
       final randomValues = Random();
-      final booksResponse = await appClient.get(
+      final booksResponse = await _appClient.get(
         "$BIBLE_API_URL/books/$book",
       ) as Response;
       if (booksResponse.statusCode == StatusCodes.OK) {
@@ -115,7 +115,7 @@ class BibleMessagesRepository implements IBibleMessagesRepository {
       final random = Random();
       final versesList = <String>[];
 
-      final response = await appClient.get("$BIBLE_API_URL/verses/$bibleVersion/$book/$chapter") as Response;
+      final response = await _appClient.get("$BIBLE_API_URL/verses/$bibleVersion/$book/$chapter") as Response;
       if (response.statusCode == StatusCodes.OK) {
         final verseMap = jsonDecode(response.body) as Map<String, dynamic>;
         final chapterVerses = verseMap["verses"] as List;

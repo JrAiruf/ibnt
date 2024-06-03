@@ -1,3 +1,4 @@
+import 'package:ibnt/src/modules/home/blocs/home_bloc/home_bloc.dart';
 import 'package:ibnt/src/modules/home/home_imports.dart';
 
 class HomePage extends StatefulWidget {
@@ -7,60 +8,24 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-List<TimeLineContent> timeline = [
-  HomeEventEntity(),
-  HomePostEntity(),
-  HomeMessageEntity(title:"Message Title",content: "Message Content",messageType: BibleMessageType.created),
-  HomeEventEntity(),
-  HomePostEntity(),
-  HomeMessageEntity(title:"Message Title",content: "Message Content",messageType: BibleMessageType.created),
-  HomeEventEntity(),
-  HomeMessageEntity(title:"Message Title",content: "Message Content",messageType: BibleMessageType.generated),
-  HomeEventEntity(),
-  HomeEventEntity(),
-  HomeEventEntity(),
-  HomePostEntity(),
-  HomeEventEntity(),
-  HomeMessageEntity(title:"Message Title",content: "Message Content",messageType: BibleMessageType.generated),
-  HomeEventEntity(),
-  HomePostEntity(),
-  HomeEventEntity(),
-  HomeEventEntity(),
-  HomePostEntity(),
-  HomePostEntity(),
-  HomeEventEntity(),
-  HomeEventEntity(),
-  HomePostEntity(),
-  HomeEventEntity(),
-  HomeMessageEntity(title:"Message Title",content: "Message Content",messageType: BibleMessageType.generated),
-  HomePostEntity(),
-  HomeEventEntity(),
-  HomeMessageEntity(title:"Message Title",content: "Message Content",messageType: BibleMessageType.generated),
-  HomeEventEntity(),
-  HomeMessageEntity(title:"Message Title",content: "Message Content",messageType: BibleMessageType.created),
-  HomeEventEntity(),
-  HomeEventEntity(),
-  HomeEventEntity(),
-  HomePostEntity(),
-  HomeEventEntity(),
-  HomeMessageEntity(title:"Message Title",content: "Message Content",messageType: BibleMessageType.created),
-  HomeEventEntity(),
-  HomeEventEntity(),
-  HomeEventEntity(),
-  HomePostEntity(),
-  HomeEventEntity(),
-  HomeEventEntity(),
-  HomePostEntity(),
-];
-
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    final homeBloc = context.read<HomeBloc>();
+    homeBloc.add(FetchTimelineEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     final authBloc = context.read<AuthBloc>();
+    final homeBloc = context.read<HomeBloc>();
+
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final titleFontSize = height * 0.035;
     final pagePadding = width * 0.035;
+
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: AppDrawer(authBloc: authBloc),
@@ -82,26 +47,40 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               SizedBox(height: height * 0.02),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: timeline.length,
-                  itemBuilder: (_, i) {
-                    var timeLineData = timeline[i];
-                    if (timeLineData.type == EntityType.event) {
-                      final event = timeLineData as HomeEventEntity;
-                      return EventTypeWidget(event: event);
-                    }
-                    if (timeLineData.type == EntityType.message) {
-                      final message = timeLineData as HomeMessageEntity;
-                      return MessageTypeWidget(message: message);
-                    }
-                    if (timeLineData.type == EntityType.post) {
-                      final post = timeLineData as HomePostEntity;
-                      return PostTypeWidget(post: post);
-                    }
-                    return null;
-                  },
-                ),
+              BlocBuilder(
+                bloc: homeBloc,
+                builder: (context, state) {
+                  if (state is HomeLoadingState) {
+                    return const Expanded(
+                        child: Center(
+                      child: CircularProgressIndicator(),
+                    ));
+                  }
+                  if (state is HomeSuccessState) {
+                    final timeLine = state.timelineEntity.timeline;
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: timeLine.length,
+                        itemBuilder: (_, i) {
+                          var timeLineData = timeLine[i];
+                          if (timeLineData.type == EntityType.event) {
+                            final event = timeLineData as EventEntity;
+                            return EventTypeWidget(event: event);
+                          }
+                          if (timeLineData.type == EntityType.message) {
+                            final message = timeLineData as MessageEntity;
+                            return MessageTypeWidget(message: message);
+                          }
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 2.5),
+                            child: Container(height: height * 0.15, color: AppThemes.secondaryColor1),
+                          );
+                        },
+                      ),
+                    );
+                  }
+                  return Container();
+                },
               ),
             ],
           ),

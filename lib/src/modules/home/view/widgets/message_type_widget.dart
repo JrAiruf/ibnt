@@ -4,7 +4,7 @@ import 'package:ibnt/src/modules/home/home_imports.dart';
 class MessageTypeWidget extends StatelessWidget {
   const MessageTypeWidget({Key? key, required this.message}) : super(key: key);
 
-  final HomeMessageEntity message;
+  final MessageEntity message;
 
   @override
   Widget build(BuildContext context) {

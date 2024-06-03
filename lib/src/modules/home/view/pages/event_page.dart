@@ -50,7 +50,7 @@ class _EventPageState extends State<EventPage> {
               ),
               SizedBox(height: height * 0.02),
               EventTypeWidget(
-                event: HomeEventEntity(),
+                event: EventEntity(),
                 editable: true,
               ),
               const AppDateWidget(),

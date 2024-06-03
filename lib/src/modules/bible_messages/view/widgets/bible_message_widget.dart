@@ -3,7 +3,7 @@ import 'package:ibnt/src/modules/bible_messages/bible_messages_imports.dart';
 class BibleMessageWidget extends StatelessWidget {
   const BibleMessageWidget({Key? key, required this.message, this.onTap}) : super(key: key);
 
-  final HomeMessageEntity message;
+  final MessageEntity message;
   final Function()? onTap;
 
   @override

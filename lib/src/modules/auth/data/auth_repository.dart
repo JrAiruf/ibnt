@@ -83,6 +83,7 @@ class AuthRepository implements IAuthRepository {
         if (authResponseEntity != null) {
           await prefereces.setString("token", authResponseEntity.token!);
           await prefereces.setString("user", authResponseEntity.toJson());
+          user_token = authResponseEntity.token!;
           return right(authResponseEntity);
         } else {
           return left(AuthException(exception: "Não foi possível realizar o login."));
@@ -127,6 +128,7 @@ class AuthRepository implements IAuthRepository {
         );
         await prefereces.setString("token", authResponseEntity.token!);
         await prefereces.setString("user", authResponseEntity.toJson());
+        user_token = authResponseEntity.token!;
         return right(authResponseEntity);
       } else {
         return left(AuthException(exception: "Não foi possível realizar o login. Verifique os dados e tente novamente."));

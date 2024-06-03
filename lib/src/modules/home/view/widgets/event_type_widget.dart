@@ -4,7 +4,7 @@ import 'package:ibnt/src/modules/home/home_imports.dart';
 class EventTypeWidget extends StatelessWidget {
   EventTypeWidget({Key? key, required this.event, this.editable = false}) : super(key: key);
 
-  final HomeEventEntity event;
+  final EventEntity event;
   bool editable = false;
   @override
   Widget build(BuildContext context) {
@@ -16,6 +16,12 @@ class EventTypeWidget extends StatelessWidget {
     final eventNameFontSize = height * 0.025;
     final eventContentFontSize = height * 0.019;
     double stackOutlineMeasure = -10;
+    String? eventDate = event.date?.split("T").first;
+    final eventSplitDateList = eventDate?.split("-");
+    final dateYear = eventSplitDateList?[0];
+    final dateMonth = eventSplitDateList?[1];
+    final dateDay = eventSplitDateList?[2];
+    eventDate = "$dateDay - $dateMonth - $dateYear";
     return GestureDetector(
       onTap: () {
         Modular.to.pushNamed('./event');
@@ -30,11 +36,9 @@ class EventTypeWidget extends StatelessWidget {
               Expanded(
                 flex: 3,
                 child: Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(
-                        "https://images.pexels.com/photos/2351722/pexels-photo-2351722.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-                      ),
+                      image: NetworkImage(event.imageUrl ?? ""),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -46,15 +50,16 @@ class EventTypeWidget extends StatelessWidget {
                   : Padding(
                       padding: EdgeInsets.symmetric(vertical: verticalPadding),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
-                            "Nome do Evento",
-                            style: TextStyle(fontSize: eventNameFontSize),
+                          Expanded(
+                            child: Text(
+                              event.title ?? "",
+                              style: TextStyle(fontSize: eventNameFontSize),
+                            ),
                           ),
                           Text(
-                            "Data do Evento",
+                            eventDate,
                             style: TextStyle(fontSize: eventContentFontSize),
                           ),
                         ],
@@ -66,7 +71,7 @@ class EventTypeWidget extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: verticalPadding),
                           child: Text(
-                            "Descrição do evento, contendo informações pertinentes como participantes, cronograma, e demais informações que forem úteis ao evento.",
+                            event.description ?? "",
                             style: TextStyle(fontSize: eventContentFontSize),
                           ),
                         ),
@@ -87,7 +92,7 @@ class EventTypeWidget extends StatelessWidget {
                   : Padding(
                       padding: EdgeInsets.symmetric(vertical: verticalPadding),
                       child: Text(
-                        "Descrição do evento, contendo informações pertinentes como participantes, cronograma, e demais informações que forem úteis ao evento.",
+                        event.description ?? "",
                         style: TextStyle(fontSize: eventContentFontSize),
                       ),
                     ),

@@ -173,7 +173,7 @@ class _MessageMenuWidgetState extends State<MessageMenuWidget> {
                                             itemCount: messagesList.length,
                                             itemBuilder: (_, i) {
                                               final bibleMessageEntity = messagesList[i];
-                                              final bibleMessage = HomeMessageEntity(
+                                              final bibleMessage = MessageEntity(
                                                 title: bibleMessageEntity.title,
                                                 content: bibleMessageEntity.content,
                                                 messageType: bibleMessageEntity.type,
@@ -200,7 +200,7 @@ class _MessageMenuWidgetState extends State<MessageMenuWidget> {
                                             itemCount: createdMessagesList.length,
                                             itemBuilder: (_, i) {
                                               final bibleMessageEntity = createdMessagesList[i];
-                                              final bibleMessage = HomeMessageEntity(
+                                              final bibleMessage = MessageEntity(
                                                 title: bibleMessageEntity.title,
                                                 content: bibleMessageEntity.content,
                                                 messageType: bibleMessageEntity.type,
