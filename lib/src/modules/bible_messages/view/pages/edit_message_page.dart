@@ -16,7 +16,7 @@ final _formKey = GlobalKey<FormState>();
 class _EditMessagePageState extends State<EditMessagePage> {
   @override
   Widget build(BuildContext context) {
-    // final authBloc = context.read<AuthBloc>();
+   
     final bibleMessagesBloc = context.read<BibleMessagesBloc>();
 
     final height = MediaQuery.sizeOf(context).height;
@@ -29,7 +29,7 @@ class _EditMessagePageState extends State<EditMessagePage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: AppDrawer(/* authBloc: authBloc */),
+      drawer: const AppDrawer(),
       appBar: AppBarWidget(preferredSize: Size(width, height * 0.08)),
       body: SingleChildScrollView(
         child: SizedBox(

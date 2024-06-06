@@ -10,12 +10,12 @@ class PostsPage extends StatefulWidget {
 class PostsPageState extends State<PostsPage> {
   @override
   Widget build(BuildContext context) {
-    // final authBloc = context.read<AuthBloc>();
+    
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: AppDrawer(/* authBloc: authBloc */),
+      drawer: const AppDrawer(),
       appBar: AppBarWidget(preferredSize: Size(width, 80)),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: height * 0.025),

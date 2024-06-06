@@ -15,7 +15,6 @@ class _MessagesPageState extends State<MessagesPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final authBloc = context.read<AuthBloc>();
     final getMemberMessagesBloc = context.read<GetMemberMessagesBloc>();
 
     final height = MediaQuery.sizeOf(context).height;
@@ -24,7 +23,7 @@ class _MessagesPageState extends State<MessagesPage> {
     final titleFontSize = height * 0.035;
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: AppDrawer(/* authBloc: authBloc */),
+      drawer: const AppDrawer(),
       appBar: AppBarWidget(preferredSize: Size(width, height * 0.08)),
       body: SizedBox(
         height: height,

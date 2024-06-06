@@ -23,7 +23,7 @@ class _MessagePageState extends State<MessagePage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: AppDrawer(/* authBloc: authBloc */),
+      drawer: const AppDrawer(),
       appBar: AppBarWidget(preferredSize: Size(width, height * 0.08)),
       body: SingleChildScrollView(
         child: SizedBox(

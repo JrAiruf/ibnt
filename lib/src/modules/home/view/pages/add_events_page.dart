@@ -11,7 +11,7 @@ class _AddEventsPageState extends State<AddEventsPage> {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    // final authBloc = context.watch<AuthBloc>();
+    
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final titleFontSize = height * 0.04;
@@ -19,10 +19,9 @@ class _AddEventsPageState extends State<AddEventsPage> {
     final labelFontSize = height * 0.025;
     final pagePadding = width * 0.035;
 
-    //COMPONENT
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: AppDrawer(/* authBloc: authBloc */),
+      drawer: const AppDrawer(),
       appBar: AppBarWidget(preferredSize: Size(width, height * 0.08)),
       body: SizedBox(
         height: height,

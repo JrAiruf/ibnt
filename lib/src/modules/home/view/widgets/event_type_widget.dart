@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 import 'package:ibnt/src/modules/home/home_imports.dart';
+import 'package:ibnt/src/modules/home/view/widgets/event_reactions_widget.dart';
 
 class EventTypeWidget extends StatelessWidget {
   EventTypeWidget({
@@ -107,7 +108,14 @@ class EventTypeWidget extends StatelessWidget {
                         style: TextStyle(fontSize: eventContentFontSize),
                       ),
                     ),
-              editable ? Container() : ReactionsWidget(memberId: memberId, content: event),
+              editable
+                  ? Container()
+                  : EventReactionsWidget(
+                      eventReaction: EventReaction(
+                      name: "",
+                      memberId: memberId,
+                      eventId: event.id!,
+                    )),
             ],
           ),
         ),

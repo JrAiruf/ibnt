@@ -2,7 +2,7 @@
 import 'package:ibnt/src/app_imports.dart';
 
 class AppDrawer extends StatelessWidget {
-  AppDrawer({super.key});
+  const AppDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {

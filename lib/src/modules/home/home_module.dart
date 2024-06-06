@@ -1,7 +1,5 @@
-import 'package:ibnt/src/modules/home/blocs/home_bloc/home_bloc.dart';
-import 'package:ibnt/src/modules/home/data/home_repository.dart';
+import 'package:ibnt/src/modules/home/blocs/reactions_bloc/reactions_bloc.dart';
 import 'package:ibnt/src/modules/home/home_imports.dart';
-import 'package:ibnt/src/modules/home/interfaces/ihome_repository.dart';
 
 class HomeModule extends Module {
   @override
@@ -9,10 +7,13 @@ class HomeModule extends Module {
         AppModule(),
         AuthModule(),
       ];
+
   @override
   void binds(Injector i) {
     i.addSingleton<IHomeRepository>(HomeRepository.new);
+    i.addSingleton(UserBloc.new);
     i.add(HomeBloc.new);
+    i.add(ReactionsBloc.new);
   }
 
   @override
@@ -20,8 +21,10 @@ class HomeModule extends Module {
     r.child(
       '/',
       child: (_) => MultiBlocProvider(providers: [
+        BlocProvider(create: (context) => Modular.get<UserBloc>()),
         BlocProvider(create: (context) => Modular.get<HomeBloc>()),
-      ], child: const HomePage()),
+        BlocProvider(create: (context) => Modular.get<ReactionsBloc>()),
+      ], child: HomePage()),
     );
     r.child(
       '/add_events',

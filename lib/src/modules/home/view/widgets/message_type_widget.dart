@@ -28,7 +28,7 @@ class MessageTypeWidget extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            flex:3,
+            flex: 3,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -85,7 +85,14 @@ class MessageTypeWidget extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(child: ReactionsWidget(content: message,memberId: memberId)),
+          Expanded(
+              child: BibleMessageReactionsWidget(
+                  bibleMessageReaction: BibleMessageReaction(
+                    name: "",
+                    memberId: memberId,
+                    messageId: message.id!,
+                  ),
+                  memberId: memberId)),
         ],
       ),
     );

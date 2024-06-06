@@ -1,6 +1,7 @@
 import 'app_imports.dart';
 
 class AppModule extends Module {
+  
   @override
   void exportedBinds(Injector i) {
     i.add<AppClient>(AppHttpClient.new);

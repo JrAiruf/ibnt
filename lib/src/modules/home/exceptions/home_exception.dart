@@ -8,3 +8,19 @@ abstract class HomeException extends AppException {
 class TimeLineException extends HomeException {
   TimeLineException({required super.exception});
 }
+
+class UserException extends HomeException {
+  UserException({required super.exception});
+}
+
+class ReactionException extends HomeException {
+  ReactionException({required super.exception});
+}
+
+class EventsReactionsListException extends HomeException {
+  EventsReactionsListException({required super.exception});
+}
+
+class BibleMessagesReactionsListException extends HomeException {
+  BibleMessagesReactionsListException({required super.exception});
+}

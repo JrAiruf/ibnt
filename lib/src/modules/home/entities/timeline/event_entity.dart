@@ -23,6 +23,7 @@ class EventEntity extends TimeLineContent {
 
   factory EventEntity.fromMap(Map<String, dynamic> map) {
     return EventEntity(
+      id:map["id"],
       title: map['title'] != null ? map['title'] as String : null,
       imageUrl: map['imageUrl'] != null ? map['imageUrl'] as String : null,
       postDate: map['postDate'] != null ? map['postDate'] as String : null,

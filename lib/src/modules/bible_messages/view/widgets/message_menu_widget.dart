@@ -38,11 +38,14 @@ class _MessageMenuWidgetState extends State<MessageMenuWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final userBloc = context.read<UserBloc>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final buttonFontSize = height * 0.025;
+    final noMessagesFontSize = height * 0.02;
     final buttonInnerPadding = height * 0.0041;
     final buttonRowPadding = height * 0.04;
+    final missingMessagesIconSize = height * 0.045;
 
     final cubit = context.read<BibleMessagesFilterCubit>();
 
@@ -131,7 +134,26 @@ class _MessageMenuWidgetState extends State<MessageMenuWidget> {
                 );
               }
               if (blocState is GetMemberMessagesFailureState) {
-                return Center(child: Text(blocState.exception));
+                return Expanded(
+                    child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add_to_photos_outlined,
+                        color: AppThemes.primaryColor1,
+                        size: missingMessagesIconSize,
+                      ),
+                      SizedBox(height: height * 0.03),
+                      Text(
+                        "Nenhuma mensagem adicionada.",
+                        style: TextStyle(
+                          fontSize: noMessagesFontSize,
+                        ),
+                      )
+                    ],
+                  ),
+                ));
               }
               if (blocState is GetMemberMessagesSuccessState) {
                 return Expanded(
@@ -140,7 +162,8 @@ class _MessageMenuWidgetState extends State<MessageMenuWidget> {
                     builder: (context, state) {
                       final messagesList = state.isEmpty ? blocState.messages : state;
                       final createdMessagesList = state.isEmpty
-                          ? blocState.messages.where(
+                          ? blocState.messages
+                              .where(
                                 (message) => message.type == BibleMessageType.created,
                               )
                               .toList()
@@ -167,8 +190,9 @@ class _MessageMenuWidgetState extends State<MessageMenuWidget> {
                                         child: RefreshIndicator(
                                           triggerMode: RefreshIndicatorTriggerMode.onEdge,
                                           onRefresh: () async {
+                                            setState(() => _currentIndex = _initialPage);
                                             widget.getMemberMessagesBloc.add(GetMemberMessagesEvent(_memberId));
-                                          },  
+                                          },
                                           child: ListView.builder(
                                             itemCount: messagesList.length,
                                             itemBuilder: (_, i) {
@@ -179,6 +203,7 @@ class _MessageMenuWidgetState extends State<MessageMenuWidget> {
                                                 messageType: bibleMessageEntity.type,
                                               );
                                               return BibleMessageWidget(
+                                                user: userBloc.user,
                                                 message: bibleMessage,
                                                 onTap: () {
                                                   Modular.to.pushNamed('./message', arguments: {"message": bibleMessageEntity});
@@ -194,8 +219,9 @@ class _MessageMenuWidgetState extends State<MessageMenuWidget> {
                                         child: RefreshIndicator(
                                           triggerMode: RefreshIndicatorTriggerMode.onEdge,
                                           onRefresh: () async {
+                                            setState(() => _currentIndex = _initialPage);
                                             widget.getMemberMessagesBloc.add(GetMemberMessagesEvent(_memberId));
-                                          },  
+                                          },
                                           child: ListView.builder(
                                             itemCount: createdMessagesList.length,
                                             itemBuilder: (_, i) {
@@ -206,6 +232,7 @@ class _MessageMenuWidgetState extends State<MessageMenuWidget> {
                                                 messageType: bibleMessageEntity.type,
                                               );
                                               return BibleMessageWidget(
+                                                user: userBloc.user,
                                                 message: bibleMessage,
                                                 onTap: () {
                                                   Modular.to.pushNamed('./message', arguments: {"message": bibleMessageEntity});

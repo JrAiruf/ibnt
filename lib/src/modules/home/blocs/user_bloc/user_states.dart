@@ -11,14 +11,15 @@ sealed class UserStates extends Equatable {
 
 final class UserInitialState extends UserStates {}
 
-final class LoadingUserState extends UserStates {}
+final class GetUserLoadingUserState extends UserStates {}
 
-final class MemberUserState extends UserStates {
-  MemberEntity member;
-  MemberUserState(this.member);
+final class GetUserFailureUserState extends UserStates {
+  final String exception;
+
+  const GetUserFailureUserState(this.exception);
 }
 
-final class AdminUserState extends UserStates {
-  AdminEntity admin;
-  AdminUserState(this.admin);
+final class GetUserSuccessState extends UserStates {
+  BaseUserEntity user;
+  GetUserSuccessState(this.user);
 }

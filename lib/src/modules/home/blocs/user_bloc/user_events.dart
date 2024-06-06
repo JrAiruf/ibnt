@@ -5,7 +5,9 @@ abstract class UserEvents extends Equatable {
   List<Object> get props => [];
 }
 
-class FilterUserEvent extends UserEvents {
-  FilterUserEvent(this.user);
-  final BaseUserEntity user;
+final class GetMemberByIdEvent extends UserEvents {
+  final String memberId;
+
+  GetMemberByIdEvent(this.memberId);
 }
+

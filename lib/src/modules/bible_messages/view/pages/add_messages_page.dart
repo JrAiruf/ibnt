@@ -11,7 +11,7 @@ class _AddMessagesPageState extends State<AddMessagesPage> {
   @override
   Widget build(BuildContext context) {
     String? memberId = Modular.args.params["memberId"];
-    // final authBloc = context.read<AuthBloc>();
+   
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final pagePadding = width * 0.035;
@@ -24,7 +24,7 @@ class _AddMessagesPageState extends State<AddMessagesPage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: AppDrawer(/* authBloc: authBloc */),
+      drawer: const AppDrawer(),
       appBar: AppBarWidget(preferredSize: Size(width, height * 0.08)),
       body: SizedBox(
         height: height,

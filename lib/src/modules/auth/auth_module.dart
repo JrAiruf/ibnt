@@ -1,10 +1,12 @@
 import 'package:ibnt/src/modules/auth/auth_imports.dart';
 
 class AuthModule extends Module {
+  
   @override
   List<Module> get imports => [
         AppModule(),
       ];
+
   @override
   void binds(Injector i) {
     i.addSingleton<IAuthRepository>(AuthRepository.new);

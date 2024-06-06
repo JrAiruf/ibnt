@@ -2,14 +2,10 @@ import 'package:ibnt/src/modules/home/home_imports.dart';
 
 class MemberEntity extends BaseUserEntity {
   MemberEntity({
-    required super.id,
-    required super.email,
-    required super.role,
+    super.id,
+    super.fullName,
+    super.profileImage,
     super.departmentAssociation = false,
-    this.fullName,
-    this.profileImage,
+    super.userCredential,
   });
-
-  String? fullName;
-  String? profileImage;
 }
