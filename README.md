@@ -1,16 +1,14 @@
-# ibnt
+# IBNT
 
-A new Flutter project.
+## O app particular da Igreja Batista Nacional em Turmalina
 
-## Getting Started
+### 🚧 We're still Working on it!!!🚧
 
-This project is a starting point for a Flutter application.
+Esse app terá alguns recursos que visam aumentar a interação entre os membros da igreja, E mantê-los informados sobre eventos e programações dentro da IBNT.
+O app conta com:
+- Módulo completo de autenticação que inclui login social;
+- Uma timeline contentdo os eventos a serem realizados na igreja, e mensagens bíblicas dos próprios usuários;
+- Auto geração de mensagens baseadas em textos bíblicos, além da possibilidade da criação de mensagens pelo usuário;
+- Um quadro de avisos para acompanhamento das atividades semanais...
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+O app está crescendo, e em breve estará disponível nas lojas de aplicativos.
