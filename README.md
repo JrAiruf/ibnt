@@ -12,3 +12,7 @@ O app conta com:
 - Um quadro de avisos para acompanhamento das atividades semanais...
 
 O app está crescendo, e em breve estará disponível nas lojas de aplicativos.
+
+
+## Links
+Projeto no Figma: [IBNT](https://www.figma.com/design/tCsF7aPhDnLVWy5UnIFMR6/IBNT?node-id=0-1&t=cGnRJSblkYPBJ5Ox-0).
