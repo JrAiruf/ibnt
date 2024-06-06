@@ -5,25 +5,25 @@ part 'reactions_states.dart';
 
 class ReactionsBloc extends Bloc<ReactionsEvents, ReactionsStates> {
   ReactionsBloc(this._repository) : super(ReactionsInitialState()) {
-    on<EventReactionEvent>(_mapEventReactionEventToState);
-    on<BibleMessageReactionEvent>(_mapBibleMessageReactionEventToState);
+    on<FetchEventsReactions>(_mapFetchEventsReactionsToState);
+    on<FetchBibleMessagesReactions>(_mapFetchBibleMessagesReactionsToState);
   }
 
   final IHomeRepository _repository;
 
-  Future<void> _mapEventReactionEventToState(EventReactionEvent event, Emitter<ReactionsStates> state) async {
-    final result = await _repository.setEventReaction(event.reaction);
+  Future<void> _mapFetchEventsReactionsToState(FetchEventsReactions event, Emitter<ReactionsStates> state) async {
+    final result = await _repository.saveEventsReactionsInCache();
     result.fold(
       (left) => state(ReactionsFailureState(left.exception)),
-      (right) => state(EventReactionSuccessState(right)),
+      (right) => state(EventReactionSuccessState()),
     );
   }
 
-  Future<void> _mapBibleMessageReactionEventToState(BibleMessageReactionEvent event, Emitter<ReactionsStates> state) async {
-    final result = await _repository.setBibleMessageReaction(event.reaction);
+  Future<void> _mapFetchBibleMessagesReactionsToState(FetchBibleMessagesReactions event, Emitter<ReactionsStates> state) async {
+    final result = await _repository.saveBibleMessagesReactionsInCache();
     result.fold(
       (left) => state(ReactionsFailureState(left.exception)),
-      (right) => state(BibleMessageReactionSuccessState(right)),
+      (right) => state(BibleMessageReactionSuccessState()),
     );
   }
 }

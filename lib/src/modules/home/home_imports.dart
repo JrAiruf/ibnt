@@ -20,6 +20,7 @@ export 'package:ibnt/src/modules/home/entities/users/admin_entity.dart';
 export 'package:ibnt/src/modules/home/entities/users/member_entity.dart';
 export 'package:ibnt/src/modules/home/blocs/home_bloc/home_bloc.dart';
 export 'package:ibnt/src/modules/home/blocs/user_bloc/user_bloc.dart';
+export 'package:ibnt/src/modules/home/blocs/reactions_bloc/reactions_bloc.dart';
 export 'package:ibnt/src/modules/home/data/home_repository.dart';
 export 'package:ibnt/src/modules/home/entities/users/app_user_credential.dart';
 export 'package:ibnt/src/modules/home/interfaces/ihome_repository.dart';

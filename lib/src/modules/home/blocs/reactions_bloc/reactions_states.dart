@@ -13,14 +13,6 @@ final class ReactionsFailureState extends ReactionsStates {
   ReactionsFailureState(this.exception);
 }
 
-final class EventReactionSuccessState extends ReactionsStates {
-  final EventReactionResponse response;
+final class EventReactionSuccessState extends ReactionsStates {}
 
-  EventReactionSuccessState(this.response);
-}
-
-final class BibleMessageReactionSuccessState extends ReactionsStates {
-  final BibleMessageReactionResponse response;
-
-  BibleMessageReactionSuccessState(this.response);
-}
+final class BibleMessageReactionSuccessState extends ReactionsStates {}

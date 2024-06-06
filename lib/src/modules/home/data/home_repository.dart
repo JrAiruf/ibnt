@@ -135,7 +135,10 @@ class HomeRepository implements IHomeRepository {
       final preferences = await SharedPreferences.getInstance();
       List<EventReactionResponse> eventsReactions = [];
 
-      final response = await _appClient.get("$API_URL/reactions/events") as Response;
+      final response = await _appClient.get("$API_URL/reactions/events", headers: {
+        "content-type": "application/json",
+        "authorization": "Bearer $user_token",
+      }) as Response;
 
       if (response.statusCode == StatusCodes.OK) {
         final list = jsonDecode(response.body) as List;

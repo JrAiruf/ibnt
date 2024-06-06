@@ -1,6 +1,5 @@
 import 'package:http/http.dart' as http;
 import 'package:ibnt/src/services/services_imports.dart';
-import 'package:ibnt/src/shared/utils/logger.dart';
 
 class AppHttpClient implements AppClient {
   @override

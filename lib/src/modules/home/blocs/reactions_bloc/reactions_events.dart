@@ -11,8 +11,12 @@ class EventReactionEvent extends ReactionsEvents {
   EventReactionEvent(this.reaction);
 }
 
- class BibleMessageReactionEvent extends ReactionsEvents {
+class BibleMessageReactionEvent extends ReactionsEvents {
   final BibleMessageReaction reaction;
 
   BibleMessageReactionEvent(this.reaction);
 }
+
+final class FetchEventsReactions extends ReactionsEvents {}
+
+final class FetchBibleMessagesReactions extends ReactionsEvents {}

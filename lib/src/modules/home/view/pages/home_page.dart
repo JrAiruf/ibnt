@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:ibnt/src/modules/home/home_imports.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,12 +24,17 @@ class _HomePageState extends State<HomePage> {
 
   late UserBloc userBloc;
   late HomeBloc homeBloc;
-  
+
   @override
   void initState() {
     super.initState();
     userBloc = context.read<UserBloc>();
     homeBloc = context.read<HomeBloc>();
+    
+    final reactionsBloc = context.read<ReactionsBloc>();
+
+    reactionsBloc.add(FetchEventsReactions());
+
     Future.delayed(const Duration(milliseconds: 200)).whenComplete(() async {
       await _setUserData();
       if (!userBloc.isClosed) {

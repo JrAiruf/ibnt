@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: must_be_immutable
 
-import 'package:ibnt/src/modules/home/blocs/reactions_bloc/reactions_bloc.dart';
 import 'package:ibnt/src/modules/home/home_imports.dart';
 
 class BibleMessageReactionsWidget extends StatefulWidget {

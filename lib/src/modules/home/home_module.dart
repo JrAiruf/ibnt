@@ -1,4 +1,3 @@
-import 'package:ibnt/src/modules/home/blocs/reactions_bloc/reactions_bloc.dart';
 import 'package:ibnt/src/modules/home/home_imports.dart';
 
 class HomeModule extends Module {
