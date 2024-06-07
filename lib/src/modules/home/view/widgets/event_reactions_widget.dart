@@ -24,20 +24,29 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
   final String _thirdReactionTag = "Abençoado";
 
   bool _eventReactedByMember() {
-    bool eventReactedByMember = reactionsBloc.eventsReactions.any((eventReaction) =>
-        eventReaction.eventId == widget.eventReaction.eventId && //
-        eventReaction.memberId == widget.eventReaction.memberId);
+    if (reactionsBloc.eventsReactions.isNotEmpty) {
+      bool eventReactedByMember = reactionsBloc.eventsReactions.any((eventReaction) =>
+          eventReaction.eventId == widget.eventReaction.eventId && //
+          eventReaction.memberId == widget.eventReaction.memberId);
 
-    return eventReactedByMember;
+      return eventReactedByMember;
+    } else {
+      return false;
+    }
   }
 
   bool _selectedReaction(String reactionTagName) {
-    bool selectedTag = false;
     if (_eventReactedByMember()) {
-      final eventReaction = reactionsBloc.eventsReactions.where((eventReaction) => eventReaction.eventId == widget.eventReaction.eventId).first;
+      late bool selectedTag;
+      final eventReaction = reactionsBloc.eventsReactions.firstWhere((eventReaction) =>
+          eventReaction.memberId == widget.eventReaction.memberId && //
+          eventReaction.eventId == widget.eventReaction.eventId);
+
       selectedTag = eventReaction.name == reactionTagName ? true : false;
+      return selectedTag;
+    } else {
+      return false;
     }
-    return selectedTag;
   }
 
   @override
@@ -63,6 +72,7 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
             return const LoadingReactionWidget();
           }
           if (state is EventReactionSuccessState) {
+            print(reactionsBloc.eventsReactions.map((e) => e.toMap()).toList());
             return Row(
               children: [
                 Expanded(
