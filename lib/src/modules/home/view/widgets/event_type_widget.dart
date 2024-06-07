@@ -32,94 +32,99 @@ class EventTypeWidget extends StatelessWidget {
     final dateMonth = eventSplitDateList?[1];
     final dateDay = eventSplitDateList?[2];
     eventDate = "$dateDay - $dateMonth - $dateYear";
-    return GestureDetector(
-      onTap: () {
-        Modular.to.pushNamed('./event');
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: SizedBox(
-          height: widgetHeight,
-          width: width,
-          child: Column(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(radius),
-                    image: DecorationImage(
-                      image: NetworkImage(event.imageUrl ?? ""),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ),
-              editable ? SizedBox(height: height * 0.02) : Container(),
-              editable
-                  ? Container()
-                  : Padding(
-                      padding: EdgeInsets.symmetric(vertical: verticalPadding),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              event.title ?? "",
-                              style: TextStyle(fontSize: eventNameFontSize),
-                            ),
-                          ),
-                          SizedBox(width: width * 0.02),
-                          Text(
-                            eventDate,
-                            style: TextStyle(fontSize: eventDateFontSize),
-                          ),
-                        ],
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () {
+            Modular.to.pushNamed('./event');
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            child: SizedBox(
+              height: widgetHeight,
+              width: width,
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(radius),
+                        image: DecorationImage(
+                          image: NetworkImage(event.imageUrl ?? ""),
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
-              editable
-                  ? Stack(
-                      children: [
-                        Padding(
+                  ),
+                  editable ? SizedBox(height: height * 0.02) : Container(),
+                  editable
+                      ? Container()
+                      : Padding(
+                          padding: EdgeInsets.symmetric(vertical: verticalPadding),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  event.title ?? "",
+                                  style: TextStyle(fontSize: eventNameFontSize),
+                                ),
+                              ),
+                              SizedBox(width: width * 0.02),
+                              Text(
+                                eventDate,
+                                style: TextStyle(fontSize: eventDateFontSize),
+                              ),
+                            ],
+                          ),
+                        ),
+                  editable
+                      ? Stack(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: verticalPadding),
+                              child: Text(
+                                event.description ?? "",
+                                style: TextStyle(fontSize: eventContentFontSize),
+                              ),
+                            ),
+                            Positioned(
+                              top: stackOutlineMeasure,
+                              right: stackOutlineMeasure,
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.edit_note,
+                                  size: iconSize,
+                                  color: AppThemes.primaryColor1,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Padding(
                           padding: EdgeInsets.symmetric(vertical: verticalPadding),
                           child: Text(
                             event.description ?? "",
                             style: TextStyle(fontSize: eventContentFontSize),
                           ),
                         ),
-                        Positioned(
-                          top: stackOutlineMeasure,
-                          right: stackOutlineMeasure,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.edit_note,
-                              size: iconSize,
-                              color: AppThemes.primaryColor1,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Padding(
-                      padding: EdgeInsets.symmetric(vertical: verticalPadding),
-                      child: Text(
-                        event.description ?? "",
-                        style: TextStyle(fontSize: eventContentFontSize),
-                      ),
-                    ),
-              editable
-                  ? Container()
-                  : EventReactionsWidget(
-                      eventReaction: EventReaction(
-                      name: "",
-                      memberId: memberId,
-                      eventId: event.id!,
-                    )),
-            ],
+                ],
+              ),
+            ),
           ),
         ),
-      ),
+        editable
+            ? Container()
+            : EventReactionsWidget(
+                eventReaction: EventReaction(
+                  name: "",
+                  memberId: memberId,
+                  eventId: event.id!,
+                ),
+              ),
+      ],
     );
   }
 }

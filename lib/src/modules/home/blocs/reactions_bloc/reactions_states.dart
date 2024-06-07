@@ -7,6 +7,8 @@ sealed class ReactionsStates extends Equatable {
 
 final class ReactionsInitialState extends ReactionsStates {}
 
+final class ReactionsLoadingState extends ReactionsStates {}
+
 final class ReactionsFailureState extends ReactionsStates {
   final String exception;
 

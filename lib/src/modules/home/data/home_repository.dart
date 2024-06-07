@@ -71,16 +71,24 @@ class HomeRepository implements IHomeRepository {
   }
 
   @override
-  Future<Either<HomeException, EventReactionResponse>> setEventReaction(EventReaction reaction) async {
+  Future<Either<HomeException, void>> setEventReaction(EventReaction reaction) async {
     try {
+      final preferences = await SharedPreferences.getInstance();
+      List<EventReactionResponse> eventsReactions = [];
+
       final response = await _appClient.post("$API_URL/reactions/events", reaction.toMap(), headers: {
         "content-type": "application/json",
         "authorization": "Bearer $user_token",
       }) as Response;
       if (response.statusCode == StatusCodes.OK) {
-        final reactionMap = jsonDecode(response.body) as Map<String, dynamic>;
-        final reactionResponse = EventReactionResponse.fromMap(reactionMap);
-        return right(reactionResponse);
+        final reactionsList = jsonDecode(response.body) as List;
+        for (var i = 0; i < reactionsList.length; i++) {
+          final eventReaction = EventReactionResponse.fromMap(reactionsList[i]);
+          eventsReactions.add(eventReaction);
+        }
+        final events = eventsReactions.map((event) => event.toJson()).toList();
+        await preferences.setStringList("events", events);
+        return right(null);
       } else {
         return left(ReactionException(exception: response.body));
       }
@@ -90,16 +98,24 @@ class HomeRepository implements IHomeRepository {
   }
 
   @override
-  Future<Either<HomeException, BibleMessageReactionResponse>> setBibleMessageReaction(BibleMessageReaction reaction) async {
+  Future<Either<HomeException, void>> setBibleMessageReaction(BibleMessageReaction reaction) async {
     try {
+      final preferences = await SharedPreferences.getInstance();
+      List<BibleMessageReactionResponse> bibleMessagesReactions = [];
+
       final response = await _appClient.post("$API_URL/reactions/bible-messages", reaction.toMap(), headers: {
         "content-type": "application/json",
         "authorization": "Bearer $user_token",
       }) as Response;
       if (response.statusCode == StatusCodes.OK) {
-        final reactionMap = jsonDecode(response.body) as Map<String, dynamic>;
-        final reactionResponse = BibleMessageReactionResponse.fromMap(reactionMap);
-        return right(reactionResponse);
+        final reactionsList = jsonDecode(response.body) as List;
+        for (var i = 0; i < reactionsList.length; i++) {
+          final bibleMessageReaction = BibleMessageReactionResponse.fromMap(reactionsList[i]);
+          bibleMessagesReactions.add(bibleMessageReaction);
+        }
+        final bibleMessages = bibleMessagesReactions.map((bibleMessage) => bibleMessage.toJson()).toList();
+        await preferences.setStringList("bibleMessages", bibleMessages);
+        return right(null);
       } else {
         return left(ReactionException(exception: response.body));
       }
@@ -160,7 +176,51 @@ class HomeRepository implements IHomeRepository {
 
   @override
   Future<Either<HomeException, void>> saveBibleMessagesReactionsInCache() async {
-    // TODO: implement getEventsReactions
-    throw UnimplementedError();
+    try {
+      final preferences = await SharedPreferences.getInstance();
+      List<BibleMessageReactionResponse> bibleMessagesReactions = [];
+
+      final response = await _appClient.get("$API_URL/reactions/bible-messages", headers: {
+        "content-type": "application/json",
+        "authorization": "Bearer $user_token",
+      }) as Response;
+
+      if (response.statusCode == StatusCodes.OK) {
+        final list = jsonDecode(response.body) as List;
+        for (var i = 0; i < list.length; i++) {
+          final bibleMessageReaction = BibleMessageReactionResponse.fromMap(list[i]);
+          bibleMessagesReactions.add(bibleMessageReaction);
+        }
+        final bibleMessages = bibleMessagesReactions.map((bibleMessage) => bibleMessage.toJson()).toList();
+        await preferences.setStringList("bibleMessages", bibleMessages);
+        return right(null);
+      } else {
+        final message = jsonDecode(response.body);
+        return left(BibleMessagesReactionsListException(exception: message));
+      }
+    } catch (e) {
+      return left(BibleMessagesReactionsListException(exception: "Não foi possível obter lista de reações às Mensagens."));
+    }
+  }
+
+  @override
+  Future<Either<HomeException, void>> removeReaction(RemoverReactionEntity reaction) async {
+    try {
+      final response = await _appClient.delete("$API_URL/reactions/remove-reaction", reaction.toMap(), headers: {
+        "content-type": "application/json",
+        "authorization": "Bearer $user_token",
+      }) as Response;
+
+      if (response.statusCode == StatusCodes.NO_CONTENT) {
+        await saveEventsReactionsInCache();
+        await saveBibleMessagesReactionsInCache();
+        return right(null);
+      } else {
+        final message = jsonDecode(response.body);
+        return left(RemoveReactionException(exception: message));
+      }
+    } catch (e) {
+      return left(RemoveReactionException(exception: "Não foi possível obter lista de reações às Mensagens."));
+    }
   }
 }

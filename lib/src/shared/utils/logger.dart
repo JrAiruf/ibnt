@@ -4,7 +4,10 @@ void logger({required String url, required String method, required String logVal
   logValue = logValue
       .replaceAll('{', '{\n') //
       .replaceAll('}', '\n}') //
-      .replaceAll(',', ',\n');
+      .replaceAll(',', ',\n')
+      .replaceAll('[', '[\n')
+      .replaceAll(']', '\n]')
+      ;
 
-  return log('''URL: $url \nMETHOD: $method \n$logValue \n''');
+  return log('''URL: $url \nMETHOD: $method \n$logValue \n \n''');
 }

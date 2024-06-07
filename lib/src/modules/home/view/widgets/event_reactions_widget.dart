@@ -2,22 +2,53 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:ibnt/src/modules/home/home_imports.dart';
+import 'package:ibnt/src/modules/home/view/widgets/loading_reaction_widget.dart';
 
-class EventReactionsWidget extends StatelessWidget {
+class EventReactionsWidget extends StatefulWidget {
   EventReactionsWidget({
     Key? key,
     required this.eventReaction,
   }) : super(key: key);
 
   EventReaction eventReaction;
-  bool gloryToggled = false;
-  bool allellujahToggled = false;
-  bool blessedToggled = false;
+
+  @override
+  State<EventReactionsWidget> createState() => _EventReactionsWidgetState();
+}
+
+late ReactionsBloc reactionsBloc;
+
+class _EventReactionsWidgetState extends State<EventReactionsWidget> {
+  final String _firstReactionTag = "Glória";
+  final String _secondReactionTag = "Aleluia";
+  final String _thirdReactionTag = "Abençoado";
+
+  bool _eventReactedByMember() {
+    bool eventReactedByMember = reactionsBloc.eventsReactions.any((eventReaction) =>
+        eventReaction.eventId == widget.eventReaction.eventId && //
+        eventReaction.memberId == widget.eventReaction.memberId);
+
+    return eventReactedByMember;
+  }
+
+  bool _selectedReaction(String reactionTagName) {
+    bool selectedTag = false;
+    if (_eventReactedByMember()) {
+      final eventReaction = reactionsBloc.eventsReactions.where((eventReaction) => eventReaction.eventId == widget.eventReaction.eventId).first;
+      selectedTag = eventReaction.name == reactionTagName ? true : false;
+    }
+    return selectedTag;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    reactionsBloc = context.read<ReactionsBloc>();
+    reactionsBloc.add(FetchEventsReactionsEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
-    final reactionsBloc = context.read<ReactionsBloc>();
-
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final titleFontSize = height * 0.012;
@@ -28,36 +59,61 @@ class EventReactionsWidget extends StatelessWidget {
       child: BlocBuilder(
         bloc: reactionsBloc,
         builder: (context, state) {
+          if (state is ReactionsLoadingState) {
+            return const LoadingReactionWidget();
+          }
           if (state is EventReactionSuccessState) {
             return Row(
               children: [
                 Expanded(
-                  child: Align(
-                    child: InkWell(
-                      splashColor: AppThemes.primaryColor1.withOpacity(0.4),
-                      onDoubleTap: () {
-                        gloryToggled = true;
-                        allellujahToggled = false;
-                        blessedToggled = false;
-                        eventReaction.name = "Glória";
-                        reactionsBloc.add(EventReactionEvent(eventReaction));
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.all(contentPadding),
+                  child: InkWell(
+                    splashColor: AppThemes.primaryColor1.withOpacity(0.4),
+                    onTap: () {
+                      if (!_eventReactedByMember() && !_selectedReaction(_firstReactionTag)) {
+                        widget.eventReaction.name = _firstReactionTag;
+                        reactionsBloc.add(ReactionOnEventOfTimelineEvent(widget.eventReaction));
+                      } else if (_eventReactedByMember() && !_selectedReaction(_firstReactionTag)) {
+                        log("OUTRA REAÇÃO");
+                      }
+                    },
+                    onDoubleTap: () {
+                      if (_selectedReaction(_firstReactionTag)) {
+                        final removeReactionEntity = RemoverReactionEntity(
+                          widget.eventReaction.memberId,
+                          widget.eventReaction.eventId,
+                        );
+                        reactionsBloc.add(RemoveReactionEvent(removeReactionEntity));
+                      } else {
+                        return;
+                      }
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(contentPadding),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: _eventReactedByMember() && _selectedReaction(_firstReactionTag)
+                              ? Border.all(
+                                  color: AppThemes.primaryColor1,
+                                )
+                              : null,
+                        ),
                         child: Row(
                           children: [
                             Expanded(
                               child: Icon(
                                 Icons.front_hand_sharp,
-                                color: gloryToggled ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
+                                color: _eventReactedByMember() && _selectedReaction(_firstReactionTag) ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                "Glória",
-                                style: TextStyle(
-                                  fontSize: titleFontSize,
-                                  color: gloryToggled ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
+                              child: Padding(
+                                padding: EdgeInsets.all(contentPadding),
+                                child: Text(
+                                  _firstReactionTag,
+                                  style: TextStyle(
+                                    fontSize: titleFontSize,
+                                    color: _eventReactedByMember() && _selectedReaction(_firstReactionTag) ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
+                                  ),
                                 ),
                               ),
                             ),
@@ -70,33 +126,57 @@ class EventReactionsWidget extends StatelessWidget {
                 Expanded(
                   child: InkWell(
                     splashColor: AppThemes.primaryColor1.withOpacity(0.4),
+                    onTap: () {
+                      if (!_eventReactedByMember() && !_selectedReaction(_secondReactionTag)) {
+                        widget.eventReaction.name = _secondReactionTag;
+                        reactionsBloc.add(ReactionOnEventOfTimelineEvent(widget.eventReaction));
+                      } else if (_eventReactedByMember() && !_selectedReaction(_secondReactionTag)) {
+                        log("OUTRA REAÇÃO");
+                      }
+                    },
                     onDoubleTap: () {
-                      gloryToggled = false;
-                      allellujahToggled = true;
-                      blessedToggled = false;
-                      eventReaction.name = "Aleluia";
-                      reactionsBloc.add(EventReactionEvent(eventReaction));
+                      if (_selectedReaction(_secondReactionTag)) {
+                        final removeReactionEntity = RemoverReactionEntity(
+                          widget.eventReaction.memberId,
+                          widget.eventReaction.eventId,
+                        );
+                        reactionsBloc.add(RemoveReactionEvent(removeReactionEntity));
+                      } else {
+                        return;
+                      }
                     },
                     child: Padding(
                       padding: EdgeInsets.all(contentPadding),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Icon(
-                              Icons.waving_hand_sharp,
-                              color: allellujahToggled ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              "Aleluia",
-                              style: TextStyle(
-                                fontSize: titleFontSize,
-                                color: allellujahToggled ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: _eventReactedByMember() && _selectedReaction(_secondReactionTag)
+                              ? Border.all(
+                                  color: AppThemes.primaryColor1,
+                                )
+                              : null,
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Icon(
+                                Icons.waving_hand_sharp,
+                                color: _eventReactedByMember() && _selectedReaction(_secondReactionTag) ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
                               ),
                             ),
-                          ),
-                        ],
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.all(contentPadding),
+                                child: Text(
+                                  _secondReactionTag,
+                                  style: TextStyle(
+                                    fontSize: titleFontSize,
+                                    color: _eventReactedByMember() && _selectedReaction(_secondReactionTag) ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -104,32 +184,54 @@ class EventReactionsWidget extends StatelessWidget {
                 Expanded(
                   child: InkWell(
                     splashColor: AppThemes.primaryColor1.withOpacity(0.4),
+                    onTap: () {
+                      if (!_eventReactedByMember() && !_selectedReaction(_thirdReactionTag)) {
+                        widget.eventReaction.name = _thirdReactionTag;
+                        reactionsBloc.add(ReactionOnEventOfTimelineEvent(widget.eventReaction));
+                      } else if (_eventReactedByMember() && !_selectedReaction(_thirdReactionTag)) {
+                        log("OUTRA REAÇÃO");
+                      }
+                    },
                     onDoubleTap: () {
-                      gloryToggled = false;
-                      allellujahToggled = false;
-                      blessedToggled = true;
-                      eventReaction.name = "Abençoado";
-                      reactionsBloc.add(EventReactionEvent(eventReaction));
+                      if (_selectedReaction(_thirdReactionTag)) {
+                        final removeReactionEntity = RemoverReactionEntity(
+                          widget.eventReaction.memberId,
+                          widget.eventReaction.eventId,
+                        );
+                        reactionsBloc.add(RemoveReactionEvent(removeReactionEntity));
+                      } else {
+                        return;
+                      }
                     },
                     child: Padding(
                       padding: EdgeInsets.all(contentPadding),
-                      child: Row(
-                        children: [
-                          const Expanded(
-                            child: Icon(
-                              Icons.brightness_auto_outlined,
-                              color: AppThemes.secondaryColor1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: _eventReactedByMember() && _selectedReaction(_thirdReactionTag)
+                              ? Border.all(
+                                  color: AppThemes.primaryColor1,
+                                )
+                              : null,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.light_mode,
+                              color: _eventReactedByMember() && _selectedReaction(_thirdReactionTag) ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
                             ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              "Abençoado",
-                              style: TextStyle(
-                                fontSize: titleFontSize,
+                            Padding(
+                              padding: EdgeInsets.all(contentPadding),
+                              child: Text(
+                                _thirdReactionTag,
+                                style: TextStyle(
+                                  fontSize: titleFontSize,
+                                  color: _eventReactedByMember() && _selectedReaction(_thirdReactionTag) ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

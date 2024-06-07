@@ -187,7 +187,7 @@ class AuthRepository implements IAuthRepository {
   @override
   Future<void> signOut() async {
     var prefereces = await SharedPreferences.getInstance();
-    prefereces.remove("token");
+    await prefereces.clear();
     await _googleSignIn.signOut();
   }
 }

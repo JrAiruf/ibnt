@@ -5,18 +5,24 @@ sealed class ReactionsEvents extends Equatable {
   List<Object> get props => [];
 }
 
-class EventReactionEvent extends ReactionsEvents {
+class ReactionOnEventOfTimelineEvent extends ReactionsEvents {
   final EventReaction reaction;
 
-  EventReactionEvent(this.reaction);
+  ReactionOnEventOfTimelineEvent(this.reaction);
 }
 
-class BibleMessageReactionEvent extends ReactionsEvents {
+class ReactionOnBibleMessageEvent extends ReactionsEvents {
   final BibleMessageReaction reaction;
 
-  BibleMessageReactionEvent(this.reaction);
+  ReactionOnBibleMessageEvent(this.reaction);
 }
 
-final class FetchEventsReactions extends ReactionsEvents {}
+final class FetchEventsReactionsEvent extends ReactionsEvents {}
 
-final class FetchBibleMessagesReactions extends ReactionsEvents {}
+final class FetchBibleMessagesReactionsEvent extends ReactionsEvents {}
+
+final class RemoveReactionEvent extends ReactionsEvents {
+  final RemoverReactionEntity removeReaction;
+
+  RemoveReactionEvent(this.removeReaction);
+}

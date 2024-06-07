@@ -12,7 +12,7 @@ class BibleMessageReaction {
     return <String, dynamic>{
       'name': name,
       'memberId': memberId,
-      'messageId': messageId,
+      'itemId': messageId,
     };
   }
 }

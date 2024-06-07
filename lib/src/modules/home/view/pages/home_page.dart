@@ -30,10 +30,11 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     userBloc = context.read<UserBloc>();
     homeBloc = context.read<HomeBloc>();
-    
+
     final reactionsBloc = context.read<ReactionsBloc>();
 
-    reactionsBloc.add(FetchEventsReactions());
+    reactionsBloc.add(FetchEventsReactionsEvent());
+    reactionsBloc.add(FetchBibleMessagesReactionsEvent());
 
     Future.delayed(const Duration(milliseconds: 200)).whenComplete(() async {
       await _setUserData();

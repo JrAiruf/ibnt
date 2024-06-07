@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class BibleMessageReactionResponse {
   String name;
@@ -12,12 +14,25 @@ class BibleMessageReactionResponse {
     this.toggled = false,
   });
 
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'name': name,
+      'eventId': eventId,
+      'memberId': memberId,
+      'toggled': toggled,
+    };
+  }
+
   factory BibleMessageReactionResponse.fromMap(Map<String, dynamic> map) {
     return BibleMessageReactionResponse(
-      name: map['name'],
-      eventId: map['eventId'],
-      memberId: map['memberId'],
-      toggled: map['toggled'],
+      name: map['name'] as String,
+      eventId: map['eventId'] as String,
+      memberId: map['memberId'] as String,
+      toggled: map['toggled'] as bool,
     );
   }
+
+  String toJson() => json.encode(toMap());
+
+  factory BibleMessageReactionResponse.fromJson(String source) => BibleMessageReactionResponse.fromMap(json.decode(source) as Map<String, dynamic>);
 }

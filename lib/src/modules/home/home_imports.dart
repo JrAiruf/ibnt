@@ -18,6 +18,7 @@ export 'package:ibnt/src/modules/home/entities/reactions/event_reaction.dart';
 export 'package:ibnt/src/modules/home/entities/reactions/bible_message_reaction.dart';
 export 'package:ibnt/src/modules/home/entities/users/admin_entity.dart';
 export 'package:ibnt/src/modules/home/entities/users/member_entity.dart';
+export 'package:ibnt/src/modules/home/entities/reactions/remove_reaction_entity.dart';
 export 'package:ibnt/src/modules/home/blocs/home_bloc/home_bloc.dart';
 export 'package:ibnt/src/modules/home/blocs/user_bloc/user_bloc.dart';
 export 'package:ibnt/src/modules/home/blocs/reactions_bloc/reactions_bloc.dart';

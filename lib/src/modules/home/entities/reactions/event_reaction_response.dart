@@ -25,10 +25,10 @@ class EventReactionResponse {
 
   factory EventReactionResponse.fromMap(Map<String, dynamic> map) {
     return EventReactionResponse(
-      name: map['name'] as String,
-      eventId: map['eventId'] as String,
-      memberId: map['memberId'] as String,
-      toggled: map['toggled'] as bool,
+      name: map['name'],
+      eventId: map['eventId'],
+      memberId: map['memberId'],
+      toggled: map['toggled'],
     );
   }
 
