@@ -4,8 +4,7 @@ import 'package:ibnt/src/modules/bible_messages/view/pages/edit_message_page.dar
 class BibleMessagesModule extends Module {
   @override
   List<Module> get imports => [
-        AppModule(),
-        AuthModule(),
+        HomeModule(),
       ];
 
   @override
@@ -22,7 +21,7 @@ class BibleMessagesModule extends Module {
     r.child(
       '/:memberId',
       child: (_) => MultiBlocProvider(providers: [
-        BlocProvider(create: (context) => Modular.get<AuthBloc>()),
+        BlocProvider(create: (context) => Modular.get<UserBloc>()),
         BlocProvider(create: (context) => Modular.get<GetMemberMessagesBloc>()),
         BlocProvider(create: (context) => Modular.get<BibleMessagesFilterCubit>()),
       ], child: const MessagesPage()),
@@ -30,13 +29,12 @@ class BibleMessagesModule extends Module {
 
     r.child(
       '/add_messages/:memberId',
-      child: (_) => BlocProvider(create: (context) => Modular.get<AuthBloc>(), child: const AddMessagesPage()),
+      child: (_) => const AddMessagesPage(),
     );
 
     r.child(
       '/message_generation/:memberId',
       child: (_) => MultiBlocProvider(providers: [
-        BlocProvider(create: (context) => Modular.get<AuthBloc>()),
         BlocProvider(create: (context) => Modular.get<BibleMessagesBloc>()),
         BlocProvider(create: (context) => Modular.get<BibleBookCubit>()),
       ], child: const MessageGenerationPage()),
@@ -45,7 +43,6 @@ class BibleMessagesModule extends Module {
     r.child(
       '/create_message/:memberId',
       child: (_) => MultiBlocProvider(providers: [
-        BlocProvider(create: (context) => Modular.get<AuthBloc>()),
         BlocProvider(create: (context) => Modular.get<BibleMessagesBloc>()),
       ], child: const CreateMessagePage()),
     );
@@ -54,7 +51,6 @@ class BibleMessagesModule extends Module {
       '/edit_message',
       child: (_) => MultiBlocProvider(
           providers: [
-            BlocProvider(create: (context) => Modular.get<AuthBloc>()),
             BlocProvider(create: (context) => Modular.get<BibleMessagesBloc>()),
           ],
           child: EditMessagePage(
@@ -64,11 +60,9 @@ class BibleMessagesModule extends Module {
 
     r.child(
       '/message',
-      child: (_) => BlocProvider(
-          create: (context) => Modular.get<AuthBloc>(),
-          child: MessagePage(
-            message: r.args.data["message"],
-          )),
+      child: (_) => MessagePage(
+        message: r.args.data["message"],
+      ),
     );
   }
 }

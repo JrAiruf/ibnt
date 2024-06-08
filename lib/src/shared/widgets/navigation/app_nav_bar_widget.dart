@@ -79,16 +79,16 @@ class _AppNavBarWidgetState extends State<AppNavBarWidget> {
     });
     switch (value) {
       case 0:
-        Modular.to.navigate('/posts/');
+        Modular.to.navigate('/auth/home/posts/');
         break;
       case 1:
-        Modular.to.navigate('/home/');
+        Modular.to.navigate('/auth/home/');
         break;
       case 2:
-        Modular.to.navigate('/bible_messages/$_memberId');
+        Modular.to.navigate('/auth/home/bible_messages/$_memberId');
         break;
       case 3:
-        Modular.to.navigate('/warnings/');
+        Modular.to.navigate('/auth/home/warnings/');
         break;
     }
   }

@@ -1,13 +1,22 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:ibnt/src/modules/bible_messages/bible_messages_imports.dart';
 
 class BibleMessageWidget extends StatelessWidget {
-  const BibleMessageWidget({Key? key, required this.message, this.onTap}) : super(key: key);
+  BibleMessageWidget({
+    Key? key,
+    required this.user,
+    required this.message,
+    this.onTap,
+  }) : super(key: key);
 
+  BaseUserEntity user;
   final MessageEntity message;
   final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
+    user = user.role == UserRole.admin ? user as AdminEntity : user as MemberEntity;
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final widgetHeight = height * 0.2;
@@ -39,25 +48,30 @@ class BibleMessageWidget extends StatelessWidget {
                       height: imageContainerSize,
                       width: imageContainerSize,
                       decoration: BoxDecoration(
-                        border:!createdMessage ? Border.all(color: AppThemes.primaryColor1, width: 2) : null,
+                        border: !createdMessage ? Border.all(color: AppThemes.primaryColor1, width: 2) : null,
                         shape: BoxShape.circle,
                         image: createdMessage
-                            ? const DecorationImage(
+                            ? DecorationImage(
                                 fit: BoxFit.fill,
                                 image: NetworkImage(
-                                    "https://images.pexels.com/photos/1309052/pexels-photo-1309052.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"))
+                                  user.profileImage ?? "",
+                                ))
                             : const DecorationImage(
-                                image: AssetImage("assets/images/ibnt_logo.png")),
+                                image: AssetImage(
+                                "assets/images/ibnt_logo.png",
+                              )),
                       ),
                     ),
-                   message.messageType == BibleMessageType.created ? IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.share_outlined,
-                        size: iconSize,
-                        color: AppThemes.primaryColor1,
-                      ),
-                    ) : Container()
+                    message.messageType == BibleMessageType.created
+                        ? IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.share_outlined,
+                              size: iconSize,
+                              color: AppThemes.primaryColor1,
+                            ),
+                          )
+                        : Container()
                   ],
                 ),
               ),
@@ -68,7 +82,7 @@ class BibleMessageWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Nome do Membro",
+                      user.fullName ?? "Usuário",
                       style: TextStyle(
                         fontSize: memberNameFontSize,
                       ),

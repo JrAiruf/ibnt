@@ -14,7 +14,7 @@ class AuthResponseEntity extends BaseUserEntity {
     return {
       "id": super.id,
       "email": super.email,
-      "role": super.role.name,
+      "role": super.role?.name,
       "token": token,
     };
   }

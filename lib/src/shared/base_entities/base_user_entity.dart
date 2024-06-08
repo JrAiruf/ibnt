@@ -1,17 +1,24 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:ibnt/src/shared/shared_imports.dart';
+import 'package:ibnt/src/modules/home/home_imports.dart';
 
 abstract class BaseUserEntity {
-  String id;
-  String email;
-  UserRole role = UserRole.user;
+  String? id;
+  String? email;
+  String? fullName;
+  String? profileImage;
   bool? departmentAssociation;
+  AppUserCredential? userCredential;
+  Credential? credential;
+  UserRole? role;
 
-  BaseUserEntity(
-    {
-    required this.id,
-    required this.email,
-    required this.role,
+  BaseUserEntity({
+    this.id,
+    this.email,
+    this.fullName,
+    this.profileImage,
     this.departmentAssociation = false,
+    this.userCredential,
+    this.credential,
+    this.role,
   });
 }

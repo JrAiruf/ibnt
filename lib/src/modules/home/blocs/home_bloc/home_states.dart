@@ -13,6 +13,10 @@ final class HomeInitialState extends HomeStates {}
 
 final class HomeLoadingState extends HomeStates {}
 
+final class EventsReactionsLoadingState extends HomeStates {}
+
+final class BibleMessagessReactionsLoadingState extends HomeStates {}
+
 final class HomeFailureState extends HomeStates {
   final String exception;
   HomeFailureState(this.exception);

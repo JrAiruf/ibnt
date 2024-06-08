@@ -2,10 +2,12 @@
 import 'package:ibnt/src/app_imports.dart';
 
 class AppDrawer extends StatelessWidget {
-  AppDrawer({super.key, required this.authBloc});
-  AuthBloc authBloc;
+  const AppDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final authBloc = Modular.get<AuthBloc>();
+
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final menuFontSize = height * 0.04;
@@ -26,7 +28,7 @@ class AppDrawer extends StatelessWidget {
         return Drawer(
           width: width * 0.8,
           child: Container(
-            color:Colors.white,
+            color: Colors.white,
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: verticalDrawerPdding, horizontal: horizontalDrawerPdding),
               child: Column(

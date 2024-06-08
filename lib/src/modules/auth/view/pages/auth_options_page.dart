@@ -23,7 +23,7 @@ class AuthOptionsPageState extends State<AuthOptionsPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: height * 0.1),
-              const LogoWidget(key:Key("options_page_logo_widget")),
+              const LogoWidget(key: Key("options_page_logo_widget")),
               SizedBox(height: height * 0.045),
               const Text(
                 "Para acessar o app, você pode \n usar as seguintes opções",
@@ -36,7 +36,7 @@ class AuthOptionsPageState extends State<AuthOptionsPage> {
               ),
               SizedBox(height: height * 0.05),
               AppButton(
-                key:const Key("login_page_redirection_button"),
+                key: const Key("login_page_redirection_button"),
                 showBorder: true,
                 width: width,
                 primaryColor: Colors.black,
@@ -62,10 +62,7 @@ class AuthOptionsPageState extends State<AuthOptionsPage> {
                     );
                   }
                   if (state is AuthSuccessState) {
-                    Modular.to.navigate('/home/');
-                  }
-                  if (state is AuthSignOutState) {
-                    Modular.to.navigate('/');
+                    Modular.to.navigate('/auth/home/');
                   }
                 },
                 builder: (context, state) {
@@ -73,7 +70,7 @@ class AuthOptionsPageState extends State<AuthOptionsPage> {
                     return const Center(child: CircularProgressIndicator());
                   }
                   return AppButton(
-                    key:const Key("social_login_button"),
+                    key: const Key("social_login_button"),
                     showBorder: true,
                     width: width,
                     primaryColor: Colors.black,

@@ -22,7 +22,7 @@ class _MessageGenerationPageState extends State<MessageGenerationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final authBloc = context.read<AuthBloc>();
+    
     final bibleMessagesBloc = context.read<BibleMessagesBloc>();
     final bookCubit = context.read<BibleBookCubit>();
 
@@ -34,7 +34,7 @@ class _MessageGenerationPageState extends State<MessageGenerationPage> {
     final titleFontSize = height * 0.035;
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: AppDrawer(authBloc: authBloc),
+      drawer: const AppDrawer(),
       appBar: AppBarWidget(preferredSize: Size(width, height * 0.08)),
       body: SizedBox(
         height: height,
