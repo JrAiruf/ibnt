@@ -1,7 +1,6 @@
 import 'package:ibnt/src/modules/auth/auth_imports.dart';
 
 class AuthModule extends Module {
-  
   @override
   List<Module> get imports => [
         AppModule(),
@@ -10,7 +9,7 @@ class AuthModule extends Module {
   @override
   void binds(Injector i) {
     i.addSingleton<IAuthRepository>(AuthRepository.new);
-    i.addLazySingleton<AuthBloc>(AuthBloc.new);
+    i.add<AuthBloc>(AuthBloc.new);
     i.add<CreateUserBloc>(CreateUserBloc.new);
     i.add<RecoveryPasswordBloc>(RecoveryPasswordBloc.new);
   }
@@ -22,5 +21,6 @@ class AuthModule extends Module {
     r.child('/register', child: (_) => BlocProvider(create: (context) => Modular.get<CreateUserBloc>(), child: const RegisterPage()));
     r.child('/send_email', child: (_) => BlocProvider(create: (context) => Modular.get<RecoveryPasswordBloc>(), child: const SendEmailPage()));
     r.child('/recovery_password', child: (_) => BlocProvider(create: (context) => Modular.get<RecoveryPasswordBloc>(), child: const RecoveryPasswordPage()));
+    r.module('/home', module: HomeModule(), transition: TransitionType.fadeIn);
   }
 }

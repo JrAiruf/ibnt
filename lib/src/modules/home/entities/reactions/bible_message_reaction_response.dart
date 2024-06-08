@@ -3,13 +3,13 @@ import 'dart:convert';
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class BibleMessageReactionResponse {
   String name;
-  String eventId;
+  String bibleMessageId;
   String memberId;
   bool toggled;
 
   BibleMessageReactionResponse({
     required this.name,
-    required this.eventId,
+    required this.bibleMessageId,
     required this.memberId,
     this.toggled = false,
   });
@@ -17,7 +17,7 @@ class BibleMessageReactionResponse {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
-      'eventId': eventId,
+      'bibleMessageId': bibleMessageId,
       'memberId': memberId,
       'toggled': toggled,
     };
@@ -26,7 +26,7 @@ class BibleMessageReactionResponse {
   factory BibleMessageReactionResponse.fromMap(Map<String, dynamic> map) {
     return BibleMessageReactionResponse(
       name: map['name'] as String,
-      eventId: map['eventId'] as String,
+      bibleMessageId: map['bibleMessageId'] as String,
       memberId: map['memberId'] as String,
       toggled: map['toggled'] as bool,
     );

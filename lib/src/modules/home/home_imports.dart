@@ -13,6 +13,7 @@ export 'package:ibnt/src/modules/home/view/widgets/message_type_widget.dart';
 export 'package:ibnt/src/modules/home/entities/timeline/entity_type.dart';
 export 'package:ibnt/src/modules/home/entities/timeline/time_line_content.dart';
 export 'package:ibnt/src/modules/home/entities/reactions/bible_message_reaction_response.dart';
+export 'package:ibnt/src/modules/home/view/widgets/loading_reaction_widget.dart';
 export 'package:ibnt/src/modules/home/entities/reactions/event_reaction_response.dart';
 export 'package:ibnt/src/modules/home/entities/reactions/event_reaction.dart';
 export 'package:ibnt/src/modules/home/entities/reactions/bible_message_reaction.dart';

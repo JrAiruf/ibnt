@@ -15,6 +15,4 @@ final class ReactionsFailureState extends ReactionsStates {
   ReactionsFailureState(this.exception);
 }
 
-final class EventReactionSuccessState extends ReactionsStates {}
-
-final class BibleMessageReactionSuccessState extends ReactionsStates {}
+final class ReactionSuccessState extends ReactionsStates {}

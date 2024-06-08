@@ -31,11 +31,6 @@ class _HomePageState extends State<HomePage> {
     userBloc = context.read<UserBloc>();
     homeBloc = context.read<HomeBloc>();
 
-    final reactionsBloc = context.read<ReactionsBloc>();
-
-    reactionsBloc.add(FetchEventsReactionsEvent());
-    reactionsBloc.add(FetchBibleMessagesReactionsEvent());
-
     Future.delayed(const Duration(milliseconds: 200)).whenComplete(() async {
       await _setUserData();
       if (!userBloc.isClosed) {
@@ -51,6 +46,11 @@ class _HomePageState extends State<HomePage> {
     final width = MediaQuery.sizeOf(context).width;
     final titleFontSize = height * 0.035;
     final pagePadding = width * 0.035;
+    
+    final reactionsBloc = context.read<ReactionsBloc>();
+
+    reactionsBloc.add(FetchEventsReactionsEvent());
+    reactionsBloc.add(FetchBibleMessagesReactionsEvent());
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                                   return MessageTypeWidget(
                                     message: message,
                                     memberId: _memberId,
-                                    memberName: "NAME",
+                                    memberName: userBloc.user.fullName ?? "",
                                   );
                                 }
                                 return Padding(

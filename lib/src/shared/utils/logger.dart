@@ -6,8 +6,7 @@ void logger({required String url, required String method, required String logVal
       .replaceAll('}', '\n}') //
       .replaceAll(',', ',\n')
       .replaceAll('[', '[\n')
-      .replaceAll(']', '\n]')
-      ;
+      .replaceAll(']', '\n]');
 
-  return log('''URL: $url \nMETHOD: $method \n$logValue \n \n''');
+  return log('''URL: $url \nMETHOD: $method \nREQUEST BODY: \n$logValue \n \n''');
 }

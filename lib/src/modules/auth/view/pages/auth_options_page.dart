@@ -62,10 +62,7 @@ class AuthOptionsPageState extends State<AuthOptionsPage> {
                     );
                   }
                   if (state is AuthSuccessState) {
-                    Modular.to.navigate('/home/');
-                  }
-                  if (state is AuthSignOutState) {
-                    Modular.to.navigate('/');
+                    Modular.to.navigate('/auth/home/');
                   }
                 },
                 builder: (context, state) {
@@ -81,14 +78,7 @@ class AuthOptionsPageState extends State<AuthOptionsPage> {
                       "G",
                       style: TextStyle(fontSize: 30),
                     ),
-                    onTap: () {
-                      if (authBloc.isClosed) {
-                        final bloc = Modular.get<AuthBloc>();
-                        bloc.add(GoogleSignInEvent());
-                      } else {
-                        authBloc.add(GoogleSignInEvent());
-                      }
-                    },
+                    onTap: () => authBloc.add(GoogleSignInEvent()),
                     text: "Sua Conta do Google",
                   );
                 },

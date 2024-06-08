@@ -86,13 +86,14 @@ class MessageTypeWidget extends StatelessWidget {
             ),
           ),
           Expanded(
-              child: BibleMessageReactionsWidget(
-                  bibleMessageReaction: BibleMessageReaction(
-                    name: "",
-                    memberId: memberId,
-                    messageId: message.id!,
-                  ),
-                  memberId: memberId)),
+            child: BibleMessageReactionsWidget(
+              bibleMessageReaction: BibleMessageReaction(
+                name: "",
+                memberId: memberId,
+                bibleMessageId: message.id!,
+              ),
+            ),
+          ),
         ],
       ),
     );

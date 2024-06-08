@@ -88,7 +88,7 @@ class LoginPageState extends State<LoginPage> {
                             );
                           }
                           if (state is AuthSuccessState) {
-                            Modular.to.navigate('/home/');
+                            Modular.to.navigate('/auth/home/');
                           }
                         },
                         builder: (context, state) {

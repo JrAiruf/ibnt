@@ -17,7 +17,7 @@ class _SplashPageState extends State<SplashPage> {
       await Future.delayed(const Duration(seconds: 3));
       if (token != null) {
         await setUserTokenToGlobalVariable(token);
-        Modular.to.navigate('/home/');
+        Modular.to.navigate('/auth/home/');
       } else {
         Modular.to.navigate('/auth/');
       }
