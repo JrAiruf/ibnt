@@ -10,7 +10,7 @@ class AppDateWidget extends StatelessWidget {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final weekDayContainerHeight = height * 0.06;
-    final monthDayContainerSize = height * 0.055;
+    final monthDayContainerSize = height * 0.05;
     final labelFontSize = height * 0.03;
     final monthDayFontSize = height * 0.025;
     final list = getMonthDays();

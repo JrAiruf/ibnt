@@ -21,8 +21,14 @@ final class FetchEventsReactionsEvent extends ReactionsEvents {}
 
 final class FetchBibleMessagesReactionsEvent extends ReactionsEvents {}
 
+final class UpdateReactionEvent extends ReactionsEvents {
+  final UpdateReactionEntity updateReaction;
+
+  UpdateReactionEvent(this.updateReaction);
+}
+
 final class RemoveReactionEvent extends ReactionsEvents {
-  final RemoverReactionEntity removeReaction;
+  final RemoveReactionEntity removeReaction;
 
   RemoveReactionEvent(this.removeReaction);
 }

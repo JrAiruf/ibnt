@@ -9,6 +9,7 @@ class ReactionsBloc extends Bloc<ReactionsEvents, ReactionsStates> {
     on<FetchBibleMessagesReactionsEvent>(_mapFetchBibleMessagesReactionsToState);
     on<ReactionOnEventOfTimelineEvent>(_mapReactionOnEventOfTimelineEventToState);
     on<ReactionOnBibleMessageEvent>(_mapReactionOnBibleMessageEventToState);
+    on<UpdateReactionEvent>(_mapUpdateReactionEventToState);
     on<RemoveReactionEvent>(_mapRemoveReactionEventToState);
   }
 
@@ -92,6 +93,31 @@ class ReactionsBloc extends Bloc<ReactionsEvents, ReactionsStates> {
     }
   }
 
+  Future<void> _mapUpdateReactionEventToState(UpdateReactionEvent event, Emitter<ReactionsStates> state) async {
+    state(ReactionsLoadingState());
+    eventsReactions.clear();
+    bibleMessagesReactions.clear();
+    final preferences = await SharedPreferences.getInstance();
+    final result = await _repository.updateReaction(event.updateReaction);
+    result.fold(
+      (left) => state(ReactionsFailureState(left.exception)),
+      (right) => state(ReactionSuccessState()),
+    );
+    final jsonListOfEventsReactions = preferences.getStringList('events') ?? [];
+    if (jsonListOfEventsReactions.isNotEmpty) {
+      for (var i = 0; i < jsonListOfEventsReactions.length; i++) {
+        final eventReaction = EventReactionResponse.fromJson(jsonListOfEventsReactions[i]);
+        eventsReactions.add(eventReaction);
+      }
+    }
+    final jsonListOfBibleMessagesReactions = preferences.getStringList('bibleMessages') ?? [];
+    if (jsonListOfBibleMessagesReactions.isNotEmpty) {
+      for (var i = 0; i < jsonListOfBibleMessagesReactions.length; i++) {
+        final bibleMessageReaction = BibleMessageReactionResponse.fromJson(jsonListOfBibleMessagesReactions[i]);
+        bibleMessagesReactions.add(bibleMessageReaction);
+      }
+    }
+  }
   Future<void> _mapRemoveReactionEventToState(RemoveReactionEvent event, Emitter<ReactionsStates> state) async {
     state(ReactionsLoadingState());
     eventsReactions.clear();

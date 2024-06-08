@@ -68,6 +68,7 @@ class _AddEventsPageState extends State<AddEventsPage> {
                 ),
               ),
               const AppDateWidget(),
+              SizedBox(height: height * 0.02),
               AppButton(
                 onTap: () {},
                 height: 60,

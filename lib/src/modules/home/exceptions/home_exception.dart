@@ -25,6 +25,9 @@ class BibleMessagesReactionsListException extends HomeException {
   BibleMessagesReactionsListException({required super.exception});
 }
 
+class UpdateReactionException extends HomeException {
+  UpdateReactionException({required super.exception});
+}
 class RemoveReactionException extends HomeException {
   RemoveReactionException({required super.exception});
 }

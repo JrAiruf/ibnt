@@ -204,7 +204,29 @@ class HomeRepository implements IHomeRepository {
   }
 
   @override
-  Future<Either<HomeException, void>> removeReaction(RemoverReactionEntity reaction) async {
+  Future<Either<HomeException, void>> updateReaction(UpdateReactionEntity reaction) async {
+    try {
+      String updateEndpoint = reaction.type == EntityType.event ? "$API_URL/reactions/events" : "$API_URL/reactions/bible-messages";
+      final response = await _appClient.put(updateEndpoint, reaction.toMap(), headers: {
+        "content-type": "application/json",
+        "authorization": "Bearer $user_token",
+      }) as Response;
+
+      if (response.statusCode == StatusCodes.OK) {
+        await saveEventsReactionsInCache();
+        await saveBibleMessagesReactionsInCache();
+        return right(null);
+      } else {
+        final message = jsonDecode(response.body);
+        return left(UpdateReactionException(exception: message));
+      }
+    } catch (e) {
+      return left(UpdateReactionException(exception: "Não foi possível obter lista de reações."));
+    }
+  }
+
+  @override
+  Future<Either<HomeException, void>> removeReaction(RemoveReactionEntity reaction) async {
     try {
       final response = await _appClient.delete("$API_URL/reactions/remove-reaction", reaction.toMap(), headers: {
         "content-type": "application/json",
@@ -220,7 +242,7 @@ class HomeRepository implements IHomeRepository {
         return left(RemoveReactionException(exception: message));
       }
     } catch (e) {
-      return left(RemoveReactionException(exception: "Não foi possível obter lista de reações às Mensagens."));
+      return left(RemoveReactionException(exception: "Não foi possível obter lista de reações."));
     }
   }
 }

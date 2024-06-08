@@ -7,5 +7,6 @@ abstract class IHomeRepository {
   Future<Either<HomeException, void>> setBibleMessageReaction(BibleMessageReaction reaction);
   Future<Either<HomeException, void>> saveEventsReactionsInCache();
   Future<Either<HomeException, void>> saveBibleMessagesReactionsInCache();
-  Future<Either<HomeException, void>> removeReaction(RemoverReactionEntity reaction);
+  Future<Either<HomeException, void>> removeReaction(RemoveReactionEntity reaction);
+  Future<Either<HomeException, void>> updateReaction(UpdateReactionEntity reaction);
 }

@@ -74,12 +74,18 @@ class _BibleMessageReactionsWidgetState extends State<BibleMessageReactionsWidge
                         widget.bibleMessageReaction.name = _firstReactionTag;
                         reactionsBloc.add(ReactionOnBibleMessageEvent(widget.bibleMessageReaction));
                       } else if (bibleMessageReactedByMember0() && !selectedReaction(_firstReactionTag)) {
-                        log("OUTRA REAÇÃO");
+                        final updateReactionEntity = UpdateReactionEntity(
+                          _firstReactionTag,
+                          widget.bibleMessageReaction.memberId,
+                          widget.bibleMessageReaction.bibleMessageId,
+                          EntityType.message,
+                        );
+                        reactionsBloc.add(UpdateReactionEvent(updateReactionEntity));
                       }
                     },
                     onDoubleTap: () {
                       if (selectedReaction(_firstReactionTag)) {
-                        final removeReactionEntity = RemoverReactionEntity(
+                        final removeReactionEntity = RemoveReactionEntity(
                           widget.bibleMessageReaction.memberId,
                           widget.bibleMessageReaction.bibleMessageId,
                         );
@@ -132,12 +138,18 @@ class _BibleMessageReactionsWidgetState extends State<BibleMessageReactionsWidge
                         widget.bibleMessageReaction.name = _secondReactionTag;
                         reactionsBloc.add(ReactionOnBibleMessageEvent(widget.bibleMessageReaction));
                       } else if (bibleMessageReactedByMember0() && !selectedReaction(_secondReactionTag)) {
-                        log("OUTRA REAÇÃO");
+                        final updateReactionEntity = UpdateReactionEntity(
+                          _secondReactionTag,
+                          widget.bibleMessageReaction.memberId,
+                          widget.bibleMessageReaction.bibleMessageId,
+                          EntityType.message,
+                        );
+                        reactionsBloc.add(UpdateReactionEvent(updateReactionEntity));
                       }
                     },
                     onDoubleTap: () {
                       if (selectedReaction(_secondReactionTag)) {
-                        final removeReactionEntity = RemoverReactionEntity(
+                        final removeReactionEntity = RemoveReactionEntity(
                           widget.bibleMessageReaction.memberId,
                           widget.bibleMessageReaction.bibleMessageId,
                         );
@@ -190,12 +202,18 @@ class _BibleMessageReactionsWidgetState extends State<BibleMessageReactionsWidge
                         widget.bibleMessageReaction.name = _thirdReactionTag;
                         reactionsBloc.add(ReactionOnBibleMessageEvent(widget.bibleMessageReaction));
                       } else if (bibleMessageReactedByMember0() && !selectedReaction(_thirdReactionTag)) {
-                        log("OUTRA REAÇÃO");
+                        final updateReactionEntity = UpdateReactionEntity(
+                          _thirdReactionTag,
+                          widget.bibleMessageReaction.memberId,
+                          widget.bibleMessageReaction.bibleMessageId,
+                          EntityType.message,
+                        );
+                        reactionsBloc.add(UpdateReactionEvent(updateReactionEntity));
                       }
                     },
                     onDoubleTap: () {
                       if (selectedReaction(_thirdReactionTag)) {
-                        final removeReactionEntity = RemoverReactionEntity(
+                        final removeReactionEntity = RemoveReactionEntity(
                           widget.bibleMessageReaction.memberId,
                           widget.bibleMessageReaction.bibleMessageId,
                         );

@@ -75,12 +75,18 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
                         widget.eventReaction.name = _firstReactionTag;
                         reactionsBloc.add(ReactionOnEventOfTimelineEvent(widget.eventReaction));
                       } else if (eventReactedByMember() && !selectedReaction(_firstReactionTag)) {
-                        log("OUTRA REAÇÃO");
+                        final updateReactionEntity = UpdateReactionEntity(
+                          _firstReactionTag,
+                          widget.eventReaction.memberId,
+                          widget.eventReaction.eventId,
+                          EntityType.event,
+                        );
+                        reactionsBloc.add(UpdateReactionEvent(updateReactionEntity));
                       }
                     },
                     onDoubleTap: () {
                       if (selectedReaction(_firstReactionTag)) {
-                        final removeReactionEntity = RemoverReactionEntity(
+                        final removeReactionEntity = RemoveReactionEntity(
                           widget.eventReaction.memberId,
                           widget.eventReaction.eventId,
                         );
@@ -133,12 +139,18 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
                         widget.eventReaction.name = _secondReactionTag;
                         reactionsBloc.add(ReactionOnEventOfTimelineEvent(widget.eventReaction));
                       } else if (eventReactedByMember() && !selectedReaction(_secondReactionTag)) {
-                        log("OUTRA REAÇÃO");
+                        final updateReactionEntity = UpdateReactionEntity(
+                          _secondReactionTag,
+                          widget.eventReaction.memberId,
+                          widget.eventReaction.eventId,
+                          EntityType.event,
+                        );
+                        reactionsBloc.add(UpdateReactionEvent(updateReactionEntity));
                       }
                     },
                     onDoubleTap: () {
                       if (selectedReaction(_secondReactionTag)) {
-                        final removeReactionEntity = RemoverReactionEntity(
+                        final removeReactionEntity = RemoveReactionEntity(
                           widget.eventReaction.memberId,
                           widget.eventReaction.eventId,
                         );
@@ -191,12 +203,18 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
                         widget.eventReaction.name = _thirdReactionTag;
                         reactionsBloc.add(ReactionOnEventOfTimelineEvent(widget.eventReaction));
                       } else if (eventReactedByMember() && !selectedReaction(_thirdReactionTag)) {
-                        log("OUTRA REAÇÃO");
+                        final updateReactionEntity = UpdateReactionEntity(
+                          _thirdReactionTag,
+                          widget.eventReaction.memberId,
+                          widget.eventReaction.eventId,
+                          EntityType.event,
+                        );
+                        reactionsBloc.add(UpdateReactionEvent(updateReactionEntity));
                       }
                     },
                     onDoubleTap: () {
                       if (selectedReaction(_thirdReactionTag)) {
-                        final removeReactionEntity = RemoverReactionEntity(
+                        final removeReactionEntity = RemoveReactionEntity(
                           widget.eventReaction.memberId,
                           widget.eventReaction.eventId,
                         );
