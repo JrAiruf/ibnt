@@ -2,7 +2,7 @@ import 'package:ibnt/src/modules/home/home_imports.dart';
 
 class HomeRepository implements IHomeRepository {
   HomeRepository(this._appClient) {
-    () async => await saveEventsReactionsInCache();
+    () async => await getEventsReactions();
   }
   final AppClient _appClient;
 
@@ -71,9 +71,8 @@ class HomeRepository implements IHomeRepository {
   }
 
   @override
-  Future<Either<HomeException, void>> setEventReaction(EventReaction reaction) async {
+  Future<Either<HomeException, List<EventReactionResponse>>> setEventReaction(EventReaction reaction) async {
     try {
-      final preferences = await SharedPreferences.getInstance();
       List<EventReactionResponse> eventsReactions = [];
 
       final response = await _appClient.post("$API_URL/reactions/events", reaction.toMap(), headers: {
@@ -86,9 +85,7 @@ class HomeRepository implements IHomeRepository {
           final eventReaction = EventReactionResponse.fromMap(reactionsList[i]);
           eventsReactions.add(eventReaction);
         }
-        final events = eventsReactions.map((event) => event.toJson()).toList();
-        await preferences.setStringList("events", events);
-        return right(null);
+        return right(eventsReactions);
       } else {
         return left(ReactionException(exception: response.body));
       }
@@ -98,9 +95,8 @@ class HomeRepository implements IHomeRepository {
   }
 
   @override
-  Future<Either<HomeException, void>> setBibleMessageReaction(BibleMessageReaction reaction) async {
+  Future<Either<HomeException, List<BibleMessageReactionResponse>>> setBibleMessageReaction(BibleMessageReaction reaction) async {
     try {
-      final preferences = await SharedPreferences.getInstance();
       List<BibleMessageReactionResponse> bibleMessagesReactions = [];
 
       final response = await _appClient.post("$API_URL/reactions/bible-messages", reaction.toMap(), headers: {
@@ -113,9 +109,7 @@ class HomeRepository implements IHomeRepository {
           final bibleMessageReaction = BibleMessageReactionResponse.fromMap(reactionsList[i]);
           bibleMessagesReactions.add(bibleMessageReaction);
         }
-        final bibleMessages = bibleMessagesReactions.map((bibleMessage) => bibleMessage.toJson()).toList();
-        await preferences.setStringList("bibleMessages", bibleMessages);
-        return right(null);
+        return right(bibleMessagesReactions);
       } else {
         return left(ReactionException(exception: response.body));
       }
@@ -146,9 +140,8 @@ class HomeRepository implements IHomeRepository {
   }
 
   @override
-  Future<Either<HomeException, void>> saveEventsReactionsInCache() async {
+  Future<Either<HomeException, List<EventReactionResponse>>> getEventsReactions() async {
     try {
-      final preferences = await SharedPreferences.getInstance();
       List<EventReactionResponse> eventsReactions = [];
 
       final response = await _appClient.get("$API_URL/reactions/events", headers: {
@@ -162,9 +155,7 @@ class HomeRepository implements IHomeRepository {
           final eventReaction = EventReactionResponse.fromMap(list[i]);
           eventsReactions.add(eventReaction);
         }
-        final events = eventsReactions.map((event) => event.toJson()).toList();
-        await preferences.setStringList("events", events);
-        return right(null);
+        return right(eventsReactions);
       } else {
         final message = jsonDecode(response.body);
         return left(EventsReactionsListException(exception: message));
@@ -175,9 +166,8 @@ class HomeRepository implements IHomeRepository {
   }
 
   @override
-  Future<Either<HomeException, void>> saveBibleMessagesReactionsInCache() async {
+  Future<Either<HomeException, List<BibleMessageReactionResponse>>> getBibleMessagesReactions() async {
     try {
-      final preferences = await SharedPreferences.getInstance();
       List<BibleMessageReactionResponse> bibleMessagesReactions = [];
 
       final response = await _appClient.get("$API_URL/reactions/bible-messages", headers: {
@@ -191,9 +181,7 @@ class HomeRepository implements IHomeRepository {
           final bibleMessageReaction = BibleMessageReactionResponse.fromMap(list[i]);
           bibleMessagesReactions.add(bibleMessageReaction);
         }
-        final bibleMessages = bibleMessagesReactions.map((bibleMessage) => bibleMessage.toJson()).toList();
-        await preferences.setStringList("bibleMessages", bibleMessages);
-        return right(null);
+        return right(bibleMessagesReactions);
       } else {
         final message = jsonDecode(response.body);
         return left(BibleMessagesReactionsListException(exception: message));
@@ -204,18 +192,15 @@ class HomeRepository implements IHomeRepository {
   }
 
   @override
-  Future<Either<HomeException, void>> updateReaction(UpdateReactionEntity reaction) async {
+  Future<Either<HomeException, List<EventReactionResponse>>> updateEventReaction(UpdateReactionEntity reaction) async {
     try {
-      String updateEndpoint = reaction.type == EntityType.event ? "$API_URL/reactions/events" : "$API_URL/reactions/bible-messages";
-      final response = await _appClient.put(updateEndpoint, reaction.toMap(), headers: {
+      final response = await _appClient.put("$API_URL/reactions/events", reaction.toMap(), headers: {
         "content-type": "application/json",
         "authorization": "Bearer $user_token",
       }) as Response;
 
       if (response.statusCode == StatusCodes.OK) {
-        await saveEventsReactionsInCache();
-        await saveBibleMessagesReactionsInCache();
-        return right(null);
+        return await getEventsReactions();
       } else {
         final message = jsonDecode(response.body);
         return left(UpdateReactionException(exception: message));
@@ -226,7 +211,26 @@ class HomeRepository implements IHomeRepository {
   }
 
   @override
-  Future<Either<HomeException, void>> removeReaction(RemoveReactionEntity reaction) async {
+  Future<Either<HomeException, List<BibleMessageReactionResponse>>> updateBibleMessageReaction(UpdateReactionEntity reaction) async {
+    try {
+      final response = await _appClient.put("$API_URL/reactions/bible-messages", reaction.toMap(), headers: {
+        "content-type": "application/json",
+        "authorization": "Bearer $user_token",
+      }) as Response;
+
+      if (response.statusCode == StatusCodes.OK) {
+        return await getBibleMessagesReactions();
+      } else {
+        final message = jsonDecode(response.body);
+        return left(UpdateReactionException(exception: message));
+      }
+    } catch (e) {
+      return left(UpdateReactionException(exception: "Não foi possível obter lista de reações."));
+    }
+  }
+
+  @override
+  Future<Either<HomeException, List<EventReactionResponse>>> removeEventReaction(RemoveReactionEntity reaction) async {
     try {
       final response = await _appClient.delete("$API_URL/reactions/remove-reaction", reaction.toMap(), headers: {
         "content-type": "application/json",
@@ -234,9 +238,26 @@ class HomeRepository implements IHomeRepository {
       }) as Response;
 
       if (response.statusCode == StatusCodes.NO_CONTENT) {
-        await saveEventsReactionsInCache();
-        await saveBibleMessagesReactionsInCache();
-        return right(null);
+        return await getEventsReactions();
+      } else {
+        final message = jsonDecode(response.body);
+        return left(RemoveReactionException(exception: message));
+      }
+    } catch (e) {
+      return left(RemoveReactionException(exception: "Não foi possível obter lista de reações."));
+    }
+  }
+
+  @override
+  Future<Either<HomeException, List<BibleMessageReactionResponse>>> removeBibleMessageReaction(RemoveReactionEntity reaction) async {
+    try {
+      final response = await _appClient.delete("$API_URL/reactions/remove-reaction", reaction.toMap(), headers: {
+        "content-type": "application/json",
+        "authorization": "Bearer $user_token",
+      }) as Response;
+
+      if (response.statusCode == StatusCodes.NO_CONTENT) {
+        return await getBibleMessagesReactions();
       } else {
         final message = jsonDecode(response.body);
         return left(RemoveReactionException(exception: message));

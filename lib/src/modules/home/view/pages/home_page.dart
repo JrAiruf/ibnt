@@ -46,11 +46,12 @@ class _HomePageState extends State<HomePage> {
     final width = MediaQuery.sizeOf(context).width;
     final titleFontSize = height * 0.035;
     final pagePadding = width * 0.035;
-    
-    final reactionsBloc = context.read<ReactionsBloc>();
 
-    reactionsBloc.add(FetchEventsReactionsEvent());
-    reactionsBloc.add(FetchBibleMessagesReactionsEvent());
+    final eventsReactionsBloc = context.read<EventsReactionsBloc>();
+    final bibleMessagesReactionsBloc = context.read<BibleMessagesReactionsBloc>();
+
+    eventsReactionsBloc.add(FetchEventsReactionsEvent());
+    bibleMessagesReactionsBloc.add(FetchBibleMessagesReactionsEvent());
 
     return Scaffold(
       backgroundColor: Colors.white,
