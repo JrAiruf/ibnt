@@ -23,4 +23,5 @@ class AuthModule extends Module {
     r.child('/recovery_password', child: (_) => BlocProvider(create: (context) => Modular.get<RecoveryPasswordBloc>(), child: const RecoveryPasswordPage()));
     r.module('/home', module: HomeModule(), transition: TransitionType.fadeIn);
   }
+
 }

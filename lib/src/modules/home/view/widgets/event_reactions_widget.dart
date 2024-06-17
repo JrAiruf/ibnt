@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: must_be_immutable
-
 import 'package:ibnt/src/modules/home/home_imports.dart';
 
 class EventReactionsWidget extends StatefulWidget {
@@ -27,33 +26,7 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
     final titleFontSize = height * 0.012;
     final contentPadding = height * 0.007;
 
-    final reactionsBloc = context.read<ReactionsBloc>();
-
-    bool eventReactedByMember() {
-      if (reactionsBloc.eventsReactions.isNotEmpty) {
-        bool eventReactedByMember = reactionsBloc.eventsReactions.any((eventReaction) =>
-            eventReaction.eventId == widget.eventReaction.eventId && //
-            eventReaction.memberId == widget.eventReaction.memberId);
-
-        return eventReactedByMember;
-      } else {
-        return false;
-      }
-    }
-
-    bool selectedReaction(String reactionTagName) {
-      if (eventReactedByMember()) {
-        late bool selectedTag;
-        final eventReaction = reactionsBloc.eventsReactions.firstWhere((eventReaction) =>
-            eventReaction.memberId == widget.eventReaction.memberId && //
-            eventReaction.eventId == widget.eventReaction.eventId);
-
-        selectedTag = eventReaction.name == reactionTagName ? true : false;
-        return selectedTag;
-      } else {
-        return false;
-      }
-    }
+    final reactionsBloc = context.read<EventsReactionsBloc>();
 
     return SizedBox(
       height: height * 0.05,
@@ -62,35 +35,65 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
         bloc: reactionsBloc,
         builder: (context, state) {
           if (state is ReactionsLoadingState) {
-            return const LoadingReactionWidget();
+            return Center(
+                child: LinearProgressIndicator(
+                  color: Colors.grey[50],
+                  backgroundColor: Colors.grey[100],
+              minHeight: height * 0.045,
+            ));
           }
-          if (state is ReactionSuccessState) {
+          if (state is EventReactionSuccessState) {
             return Row(
               children: [
                 Expanded(
                   child: InkWell(
                     splashColor: AppThemes.primaryColor1.withOpacity(0.4),
                     onTap: () {
-                      if (!eventReactedByMember() && !selectedReaction(_firstReactionTag)) {
+                      if (!reactionsBloc.eventReactedByMember(
+                            state.eventReactions,
+                            widget.eventReaction.memberId,
+                            widget.eventReaction.eventId,
+                          ) &&
+                          !reactionsBloc.selectedReaction(
+                            state.eventReactions,
+                            widget.eventReaction.memberId,
+                            widget.eventReaction.eventId,
+                            _firstReactionTag,
+                          )) {
                         widget.eventReaction.name = _firstReactionTag;
                         reactionsBloc.add(ReactionOnEventOfTimelineEvent(widget.eventReaction));
-                      } else if (eventReactedByMember() && !selectedReaction(_firstReactionTag)) {
+                      } else if (reactionsBloc.eventReactedByMember(
+                            state.eventReactions,
+                            widget.eventReaction.memberId,
+                            widget.eventReaction.eventId,
+                          ) &&
+                          !reactionsBloc.selectedReaction(
+                            state.eventReactions,
+                            widget.eventReaction.memberId,
+                            widget.eventReaction.eventId,
+                            _firstReactionTag,
+                          )) {
                         final updateReactionEntity = UpdateReactionEntity(
                           _firstReactionTag,
                           widget.eventReaction.memberId,
                           widget.eventReaction.eventId,
                           EntityType.event,
                         );
-                        reactionsBloc.add(UpdateReactionEvent(updateReactionEntity));
+                        reactionsBloc.add(UpdateEventReactionEvent(updateReactionEntity));
                       }
                     },
                     onDoubleTap: () {
-                      if (selectedReaction(_firstReactionTag)) {
+                      if (reactionsBloc.selectedReaction(
+                        state.eventReactions,
+                        widget.eventReaction.memberId,
+                        widget.eventReaction.eventId,
+                        _firstReactionTag,
+                      )) {
                         final removeReactionEntity = RemoveReactionEntity(
                           widget.eventReaction.memberId,
                           widget.eventReaction.eventId,
                         );
-                        reactionsBloc.add(RemoveReactionEvent(removeReactionEntity));
+                        reactionsBloc.add(RemoveEventReactionEvent(removeReactionEntity));
                       } else {
                         return;
                       }
@@ -99,7 +102,17 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
                       padding: EdgeInsets.all(contentPadding),
                       child: Container(
                         decoration: BoxDecoration(
-                          border: eventReactedByMember() && selectedReaction(_firstReactionTag)
+                          border: reactionsBloc.eventReactedByMember(
+                                    state.eventReactions,
+                                    widget.eventReaction.memberId,
+                                    widget.eventReaction.eventId,
+                                  ) &&
+                                  reactionsBloc.selectedReaction(
+                                    state.eventReactions,
+                                    widget.eventReaction.memberId,
+                                    widget.eventReaction.eventId,
+                                    _firstReactionTag,
+                                  )
                               ? Border.all(
                                   color: AppThemes.primaryColor1,
                                 )
@@ -110,7 +123,19 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
                             Expanded(
                               child: Icon(
                                 Icons.front_hand_sharp,
-                                color: eventReactedByMember() && selectedReaction(_firstReactionTag) ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
+                                color: reactionsBloc.eventReactedByMember(
+                                          state.eventReactions,
+                                          widget.eventReaction.memberId,
+                                          widget.eventReaction.eventId,
+                                        ) &&
+                                        reactionsBloc.selectedReaction(
+                                          state.eventReactions,
+                                          widget.eventReaction.memberId,
+                                          widget.eventReaction.eventId,
+                                          _firstReactionTag,
+                                        )
+                                    ? AppThemes.primaryColor1
+                                    : AppThemes.secondaryColor1,
                               ),
                             ),
                             Expanded(
@@ -120,7 +145,19 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
                                   _firstReactionTag,
                                   style: TextStyle(
                                     fontSize: titleFontSize,
-                                    color: eventReactedByMember() && selectedReaction(_firstReactionTag) ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
+                                    color: reactionsBloc.eventReactedByMember(
+                                              state.eventReactions,
+                                              widget.eventReaction.memberId,
+                                              widget.eventReaction.eventId,
+                                            ) &&
+                                            reactionsBloc.selectedReaction(
+                                              state.eventReactions,
+                                              widget.eventReaction.memberId,
+                                              widget.eventReaction.eventId,
+                                              _firstReactionTag,
+                                            )
+                                        ? AppThemes.primaryColor1
+                                        : AppThemes.secondaryColor1,
                                   ),
                                 ),
                               ),
@@ -135,26 +172,51 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
                   child: InkWell(
                     splashColor: AppThemes.primaryColor1.withOpacity(0.4),
                     onTap: () {
-                      if (!eventReactedByMember() && !selectedReaction(_secondReactionTag)) {
+                      if (!reactionsBloc.eventReactedByMember(
+                            state.eventReactions,
+                            widget.eventReaction.memberId,
+                            widget.eventReaction.eventId,
+                          ) &&
+                          !reactionsBloc.selectedReaction(
+                            state.eventReactions,
+                            widget.eventReaction.memberId,
+                            widget.eventReaction.eventId,
+                            _secondReactionTag,
+                          )) {
                         widget.eventReaction.name = _secondReactionTag;
                         reactionsBloc.add(ReactionOnEventOfTimelineEvent(widget.eventReaction));
-                      } else if (eventReactedByMember() && !selectedReaction(_secondReactionTag)) {
+                      } else if (reactionsBloc.eventReactedByMember(
+                            state.eventReactions,
+                            widget.eventReaction.memberId,
+                            widget.eventReaction.eventId,
+                          ) &&
+                          !reactionsBloc.selectedReaction(
+                            state.eventReactions,
+                            widget.eventReaction.memberId,
+                            widget.eventReaction.eventId,
+                            _secondReactionTag,
+                          )) {
                         final updateReactionEntity = UpdateReactionEntity(
                           _secondReactionTag,
                           widget.eventReaction.memberId,
                           widget.eventReaction.eventId,
                           EntityType.event,
                         );
-                        reactionsBloc.add(UpdateReactionEvent(updateReactionEntity));
+                        reactionsBloc.add(UpdateEventReactionEvent(updateReactionEntity));
                       }
                     },
                     onDoubleTap: () {
-                      if (selectedReaction(_secondReactionTag)) {
+                      if (reactionsBloc.selectedReaction(
+                        state.eventReactions,
+                        widget.eventReaction.memberId,
+                        widget.eventReaction.eventId,
+                        _secondReactionTag,
+                      )) {
                         final removeReactionEntity = RemoveReactionEntity(
                           widget.eventReaction.memberId,
                           widget.eventReaction.eventId,
                         );
-                        reactionsBloc.add(RemoveReactionEvent(removeReactionEntity));
+                        reactionsBloc.add(RemoveEventReactionEvent(removeReactionEntity));
                       } else {
                         return;
                       }
@@ -163,7 +225,17 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
                       padding: EdgeInsets.all(contentPadding),
                       child: Container(
                         decoration: BoxDecoration(
-                          border: eventReactedByMember() && selectedReaction(_secondReactionTag)
+                          border: reactionsBloc.eventReactedByMember(
+                                    state.eventReactions,
+                                    widget.eventReaction.memberId,
+                                    widget.eventReaction.eventId,
+                                  ) &&
+                                  reactionsBloc.selectedReaction(
+                                    state.eventReactions,
+                                    widget.eventReaction.memberId,
+                                    widget.eventReaction.eventId,
+                                    _secondReactionTag,
+                                  )
                               ? Border.all(
                                   color: AppThemes.primaryColor1,
                                 )
@@ -174,7 +246,19 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
                             Expanded(
                               child: Icon(
                                 Icons.waving_hand_sharp,
-                                color: eventReactedByMember() && selectedReaction(_secondReactionTag) ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
+                                color: reactionsBloc.eventReactedByMember(
+                                          state.eventReactions,
+                                          widget.eventReaction.memberId,
+                                          widget.eventReaction.eventId,
+                                        ) &&
+                                        reactionsBloc.selectedReaction(
+                                          state.eventReactions,
+                                          widget.eventReaction.memberId,
+                                          widget.eventReaction.eventId,
+                                          _secondReactionTag,
+                                        )
+                                    ? AppThemes.primaryColor1
+                                    : AppThemes.secondaryColor1,
                               ),
                             ),
                             Expanded(
@@ -184,7 +268,19 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
                                   _secondReactionTag,
                                   style: TextStyle(
                                     fontSize: titleFontSize,
-                                    color: eventReactedByMember() && selectedReaction(_secondReactionTag) ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
+                                    color: reactionsBloc.eventReactedByMember(
+                                              state.eventReactions,
+                                              widget.eventReaction.memberId,
+                                              widget.eventReaction.eventId,
+                                            ) &&
+                                            reactionsBloc.selectedReaction(
+                                              state.eventReactions,
+                                              widget.eventReaction.memberId,
+                                              widget.eventReaction.eventId,
+                                              _secondReactionTag,
+                                            )
+                                        ? AppThemes.primaryColor1
+                                        : AppThemes.secondaryColor1,
                                   ),
                                 ),
                               ),
@@ -199,26 +295,51 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
                   child: InkWell(
                     splashColor: AppThemes.primaryColor1.withOpacity(0.4),
                     onTap: () {
-                      if (!eventReactedByMember() && !selectedReaction(_thirdReactionTag)) {
+                      if (!reactionsBloc.eventReactedByMember(
+                            state.eventReactions,
+                            widget.eventReaction.memberId,
+                            widget.eventReaction.eventId,
+                          ) &&
+                          !reactionsBloc.selectedReaction(
+                            state.eventReactions,
+                            widget.eventReaction.memberId,
+                            widget.eventReaction.eventId,
+                            _thirdReactionTag,
+                          )) {
                         widget.eventReaction.name = _thirdReactionTag;
                         reactionsBloc.add(ReactionOnEventOfTimelineEvent(widget.eventReaction));
-                      } else if (eventReactedByMember() && !selectedReaction(_thirdReactionTag)) {
+                      } else if (reactionsBloc.eventReactedByMember(
+                            state.eventReactions,
+                            widget.eventReaction.memberId,
+                            widget.eventReaction.eventId,
+                          ) &&
+                          !reactionsBloc.selectedReaction(
+                            state.eventReactions,
+                            widget.eventReaction.memberId,
+                            widget.eventReaction.eventId,
+                            _thirdReactionTag,
+                          )) {
                         final updateReactionEntity = UpdateReactionEntity(
                           _thirdReactionTag,
                           widget.eventReaction.memberId,
                           widget.eventReaction.eventId,
                           EntityType.event,
                         );
-                        reactionsBloc.add(UpdateReactionEvent(updateReactionEntity));
+                        reactionsBloc.add(UpdateEventReactionEvent(updateReactionEntity));
                       }
                     },
                     onDoubleTap: () {
-                      if (selectedReaction(_thirdReactionTag)) {
+                      if (reactionsBloc.selectedReaction(
+                        state.eventReactions,
+                        widget.eventReaction.memberId,
+                        widget.eventReaction.eventId,
+                        _thirdReactionTag,
+                      )) {
                         final removeReactionEntity = RemoveReactionEntity(
                           widget.eventReaction.memberId,
                           widget.eventReaction.eventId,
                         );
-                        reactionsBloc.add(RemoveReactionEvent(removeReactionEntity));
+                        reactionsBloc.add(RemoveEventReactionEvent(removeReactionEntity));
                       } else {
                         return;
                       }
@@ -227,7 +348,17 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
                       padding: EdgeInsets.all(contentPadding),
                       child: Container(
                         decoration: BoxDecoration(
-                          border: eventReactedByMember() && selectedReaction(_thirdReactionTag)
+                          border: reactionsBloc.eventReactedByMember(
+                                    state.eventReactions,
+                                    widget.eventReaction.memberId,
+                                    widget.eventReaction.eventId,
+                                  ) &&
+                                  reactionsBloc.selectedReaction(
+                                    state.eventReactions,
+                                    widget.eventReaction.memberId,
+                                    widget.eventReaction.eventId,
+                                    _thirdReactionTag,
+                                  )
                               ? Border.all(
                                   color: AppThemes.primaryColor1,
                                 )
@@ -238,7 +369,19 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
                           children: [
                             Icon(
                               Icons.light_mode,
-                              color: eventReactedByMember() && selectedReaction(_thirdReactionTag) ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
+                              color: reactionsBloc.eventReactedByMember(
+                                        state.eventReactions,
+                                        widget.eventReaction.memberId,
+                                        widget.eventReaction.eventId,
+                                      ) &&
+                                      reactionsBloc.selectedReaction(
+                                        state.eventReactions,
+                                        widget.eventReaction.memberId,
+                                        widget.eventReaction.eventId,
+                                        _thirdReactionTag,
+                                      )
+                                  ? AppThemes.primaryColor1
+                                  : AppThemes.secondaryColor1,
                             ),
                             Padding(
                               padding: EdgeInsets.all(contentPadding),
@@ -246,7 +389,19 @@ class _EventReactionsWidgetState extends State<EventReactionsWidget> {
                                 _thirdReactionTag,
                                 style: TextStyle(
                                   fontSize: titleFontSize,
-                                  color: eventReactedByMember() && selectedReaction(_thirdReactionTag) ? AppThemes.primaryColor1 : AppThemes.secondaryColor1,
+                                  color: reactionsBloc.eventReactedByMember(
+                                            state.eventReactions,
+                                            widget.eventReaction.memberId,
+                                            widget.eventReaction.eventId,
+                                          ) &&
+                                          reactionsBloc.selectedReaction(
+                                            state.eventReactions,
+                                            widget.eventReaction.memberId,
+                                            widget.eventReaction.eventId,
+                                            _thirdReactionTag,
+                                          )
+                                      ? AppThemes.primaryColor1
+                                      : AppThemes.secondaryColor1,
                                 ),
                               ),
                             ),

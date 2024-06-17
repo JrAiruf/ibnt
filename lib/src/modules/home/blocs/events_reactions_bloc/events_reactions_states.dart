@@ -1,4 +1,4 @@
-part of 'reactions_bloc.dart';
+part of 'events_reactions_bloc.dart';
 
 sealed class ReactionsStates extends Equatable {
   @override
@@ -15,4 +15,8 @@ final class ReactionsFailureState extends ReactionsStates {
   ReactionsFailureState(this.exception);
 }
 
-final class ReactionSuccessState extends ReactionsStates {}
+final class EventReactionSuccessState extends ReactionsStates {
+  final List<EventReactionResponse> eventReactions;
+
+  EventReactionSuccessState(this.eventReactions);
+}

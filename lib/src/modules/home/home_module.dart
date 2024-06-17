@@ -12,7 +12,8 @@ class HomeModule extends Module {
     i.addSingleton<IHomeRepository>(HomeRepository.new);
     i.addSingleton(UserBloc.new);
     i.add(HomeBloc.new);
-    i.add(ReactionsBloc.new);
+    i.add(EventsReactionsBloc.new);
+    i.add(BibleMessagesReactionsBloc.new);
   }
 
   @override
@@ -22,7 +23,8 @@ class HomeModule extends Module {
       child: (_) => MultiBlocProvider(providers: [
         BlocProvider(create: (context) => Modular.get<UserBloc>()),
         BlocProvider(create: (context) => Modular.get<HomeBloc>()),
-        BlocProvider(create: (context) => Modular.get<ReactionsBloc>()),
+        BlocProvider(create: (context) => Modular.get<EventsReactionsBloc>()),
+        BlocProvider(create: (context) => Modular.get<BibleMessagesReactionsBloc>()),
       ], child: HomePage()),
     );
     r.child(

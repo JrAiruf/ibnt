@@ -23,7 +23,8 @@ export 'package:ibnt/src/modules/home/entities/reactions/remove_reaction_entity.
 export 'package:ibnt/src/modules/home/entities/reactions/update_reaction_entity.dart';
 export 'package:ibnt/src/modules/home/blocs/home_bloc/home_bloc.dart';
 export 'package:ibnt/src/modules/home/blocs/user_bloc/user_bloc.dart';
-export 'package:ibnt/src/modules/home/blocs/reactions_bloc/reactions_bloc.dart';
+export 'package:ibnt/src/modules/home/blocs/events_reactions_bloc/events_reactions_bloc.dart';
+export 'package:ibnt/src/modules/home/blocs/bible_messages_reactions_bloc/bible_messages_reactions_bloc.dart';
 export 'package:ibnt/src/modules/home/data/home_repository.dart';
 export 'package:ibnt/src/modules/home/entities/users/app_user_credential.dart';
 export 'package:ibnt/src/modules/home/interfaces/ihome_repository.dart';
