@@ -1,6 +1,6 @@
 abstract class AppClient {
-  Future<dynamic> get(String url);
-  Future<dynamic> post(String url, Object requestBody);
-  Future<dynamic> put(String url, Object body);
-  Future<dynamic> delete(String url, Object body);
+  Future get(String url, {Map<String, String>? headers});
+  Future post(String url, Map requestBody, {Map<String, String>? headers});
+  Future put(String url, Map body, {Map<String, String>? headers});
+  Future delete(String url, Map body, {Map<String, String>? headers});
 }

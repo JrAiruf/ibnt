@@ -6,26 +6,32 @@ class AppTextField extends StatelessWidget {
     super.key,
     this.label,
     this.fieldName,
+    this.initialValue,
     this.onChanged,
     this.obscureText = false,
     this.passwordField,
     this.validator,
     this.maxLines,
+    this.maxLength,
     this.iconTap,
     this.controller,
   });
   String? label;
   String? fieldName;
+  String? initialValue;
   bool obscureText;
   bool? passwordField;
   Function(String)? onChanged;
   String? Function(String?)? validator;
+  int? maxLength;
   int? maxLines;
   Function()? iconTap;
   TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
+      maxLength: maxLength,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       maxLines: maxLines ?? 1,
       controller: controller,
@@ -67,7 +73,7 @@ class AppTextField extends StatelessWidget {
 
   String? fieldValidator(String? value) {
     if (value == null || value.isEmpty) {
-      return "Por favor, informe o ${fieldName ?? "campo"}.";
+      return "Por favor, informe ${fieldName ?? "campo"}.";
     }
     return null;
   }

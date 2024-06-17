@@ -1,4 +1,5 @@
 import 'package:ibnt/src/modules/bible_messages/bible_messages_imports.dart';
+import 'package:ibnt/src/modules/bible_messages/view/widgets/message_menu_widget.dart';
 
 class MessagesPage extends StatefulWidget {
   const MessagesPage({super.key});
@@ -7,21 +8,22 @@ class MessagesPage extends StatefulWidget {
   State<MessagesPage> createState() => _MessagesPageState();
 }
 
+int _pageIndex = 2;
+
 class _MessagesPageState extends State<MessagesPage> {
-  bool selected = true;
+  String memberId = Modular.args.params["memberId"];
+
   @override
   Widget build(BuildContext context) {
-    final authBloc = context.read<AuthBloc>();
+    final getMemberMessagesBloc = context.read<GetMemberMessagesBloc>();
+
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final pagePadding = width * 0.035;
     final titleFontSize = height * 0.035;
-    final buttonFontSize = height * 0.025;
-    final buttonInnerPadding = height * 0.01;
-    double radius = 5;
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: AppDrawer(authBloc: authBloc),
+      drawer: const AppDrawer(),
       appBar: AppBarWidget(preferredSize: Size(width, height * 0.08)),
       body: SizedBox(
         height: height,
@@ -40,60 +42,7 @@ class _MessagesPageState extends State<MessagesPage> {
                 ),
               ),
               SizedBox(height: height * 0.02),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: selected ? AppThemes.primaryColor1 : null,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(radius),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: buttonInnerPadding),
-                          child: Text(
-                            "Todas",
-                            style: TextStyle(
-                              fontFamily: "Karma",
-                              height: 0,
-                              fontSize: buttonFontSize,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: width * 0.01),
-                  Expanded(
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(color: AppThemes.primaryColor1),
-                          borderRadius: BorderRadius.circular(radius),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: buttonInnerPadding),
-                          child: Text(
-                            "Criadas",
-                            style: TextStyle(
-                              fontFamily: "Karma",
-                              height: 0,
-                              fontSize: buttonFontSize,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
+              MessageMenuWidget(getMemberMessagesBloc: getMemberMessagesBloc),
             ],
           ),
         ),
@@ -101,7 +50,7 @@ class _MessagesPageState extends State<MessagesPage> {
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: height * 0.025),
         child: FloatingActionButton(
-          onPressed: () => Modular.to.pushNamed('./add_messages'),
+          onPressed: () => Modular.to.pushNamed('./add_messages/$memberId'),
           backgroundColor: AppThemes.primaryColor1,
           child: const Icon(
             Icons.add,
@@ -110,7 +59,7 @@ class _MessagesPageState extends State<MessagesPage> {
           ),
         ),
       ),
-      bottomNavigationBar: AppNavBarWidget(pageIndex: 2),
+      bottomNavigationBar: AppNavBarWidget(pageIndex: _pageIndex),
     );
   }
 }

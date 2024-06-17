@@ -5,6 +5,7 @@ class AuthModule extends Module {
   List<Module> get imports => [
         AppModule(),
       ];
+
   @override
   void binds(Injector i) {
     i.addSingleton<IAuthRepository>(AuthRepository.new);
@@ -20,5 +21,7 @@ class AuthModule extends Module {
     r.child('/register', child: (_) => BlocProvider(create: (context) => Modular.get<CreateUserBloc>(), child: const RegisterPage()));
     r.child('/send_email', child: (_) => BlocProvider(create: (context) => Modular.get<RecoveryPasswordBloc>(), child: const SendEmailPage()));
     r.child('/recovery_password', child: (_) => BlocProvider(create: (context) => Modular.get<RecoveryPasswordBloc>(), child: const RecoveryPasswordPage()));
+    r.module('/home', module: HomeModule(), transition: TransitionType.fadeIn);
   }
+
 }

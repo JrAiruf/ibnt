@@ -4,23 +4,19 @@ import 'package:ibnt/src/modules/auth/auth_imports.dart';
 class CreateUserEntity {
   String fullName;
   String? profileImage;
-  AuthEntity authEntity;
+  Credential credential;
 
-  CreateUserEntity({required this.fullName, required this.authEntity, this.profileImage});
+  CreateUserEntity({required this.fullName, required this.credential, this.profileImage});
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'fullName': fullName,
-      'profileImage': profileImage,
-      'authEntity': authEntity.toMap(),
-    };
+    return <String, dynamic>{'fullName': fullName, 'profileImage': profileImage, 'credential': credential.toMap()};
   }
 
   factory CreateUserEntity.fromMap(Map<String, dynamic> map) {
     return CreateUserEntity(
       fullName: map['fullName'] as String,
       profileImage: map['profileImage'] != null ? map['profileImage'] as String : null,
-      authEntity: AuthEntity.fromMap(map['authEntity'] as Map<String, dynamic>),
+      credential: Credential.fromMap(map['credential'] as Map<String, dynamic>),
     );
   }
 

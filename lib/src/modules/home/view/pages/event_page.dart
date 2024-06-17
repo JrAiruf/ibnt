@@ -12,7 +12,7 @@ class _EventPageState extends State<EventPage> {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final authBloc = context.read<AuthBloc>();
+    
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final titleFontSize = height * 0.035;
@@ -20,7 +20,7 @@ class _EventPageState extends State<EventPage> {
     final pagePadding = width * 0.035;
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: AppDrawer(authBloc: authBloc),
+      drawer: const AppDrawer(),
       appBar: AppBarWidget(preferredSize: Size(width, height * 0.08)),
       body: SizedBox(
         height: height,
@@ -50,7 +50,8 @@ class _EventPageState extends State<EventPage> {
               ),
               SizedBox(height: height * 0.02),
               EventTypeWidget(
-                event: HomeEventEntity(),
+                memberId: "ID",
+                event: EventEntity(),
                 editable: true,
               ),
               const AppDateWidget(),

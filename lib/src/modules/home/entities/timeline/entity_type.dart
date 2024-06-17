@@ -1,1 +1,1 @@
-enum EntityType { event, post, message }
+enum EntityType { event, message }

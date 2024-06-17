@@ -43,7 +43,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 border: Border(
                   top: BorderSide(
                     color: Colors.black,
-                    width: 0.5,
+                    width: 0.3,
                   ),
                 ),
               ),

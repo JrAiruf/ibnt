@@ -1,3 +1,4 @@
+export 'package:ibnt/src/app_imports.dart';
 export 'package:ibnt/src/shared/themes/app_themes.dart';
 export 'package:ibnt/src/shared/errors/base_exception.dart';
 export 'package:ibnt/src/shared/enums/user_role.dart';
@@ -9,3 +10,4 @@ export 'package:ibnt/src/shared/widgets/form/text_field_label.dart';
 export 'package:ibnt/src/shared/widgets/appbar/app_bar_widget.dart';
 export 'package:ibnt/src/shared/widgets/navigation/app_nav_bar_widget.dart';
 export 'package:ibnt/src/shared/widgets/navigation/app_drawer.dart';
+export 'package:ibnt/src/shared/utils/logger.dart';
