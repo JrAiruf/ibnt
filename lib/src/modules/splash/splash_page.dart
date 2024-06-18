@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, use_build_context_synchronously
+
 import 'package:ibnt/src/modules/splash/splash_imports.dart';
 
 class SplashPage extends StatefulWidget {
@@ -8,16 +10,18 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  late TokenVerifierBloc bloc;
+  late String? token;
+
   @override
   void initState() {
     super.initState();
+    bloc = context.read<TokenVerifierBloc>();
     Future.microtask(() async {
       var prefereces = await SharedPreferences.getInstance();
-      var token = prefereces.getString("token");
-      await Future.delayed(const Duration(seconds: 3));
+      token = prefereces.getString("token");
       if (token != null) {
-        await setUserTokenToGlobalVariable(token);
-        Modular.to.navigate('/auth/home/');
+        bloc.add(VerifyTokenEvent(token ?? ""));
       } else {
         Modular.to.navigate('/auth/');
       }
@@ -26,9 +30,23 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: LogoWidget(key: Key("logo_widget")),
+    return Scaffold(
+      body: BlocConsumer(
+        bloc: bloc,
+        listener: (context, state) async {
+          if (state is TokenVerifierSuccessState) {
+            await setUserTokenToGlobalVariable(token!);
+            Modular.to.navigate('/auth/home/');
+          }
+          if (state is TokenVerifierFailureState) {
+            Modular.to.navigate('/auth/');
+          }
+        },
+        builder: (context, state) {
+          return const Center(
+            child: LogoWidget(key: Key("logo_widget")),
+          );
+        },
       ),
     );
   }

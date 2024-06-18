@@ -9,3 +9,7 @@ class AuthException extends AppException {
 class CreateMemberException extends AuthException {
   CreateMemberException({required super.exception});
 }
+
+class InvalidTokenException extends AuthException {
+  InvalidTokenException({required super.exception});
+}
