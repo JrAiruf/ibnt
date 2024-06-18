@@ -10,6 +10,10 @@ class CreateMemberException extends AuthException {
   CreateMemberException({required super.exception});
 }
 
+class CreateApiUserException extends AuthException {
+  CreateApiUserException({required super.exception});
+}
+
 class InvalidTokenException extends AuthException {
   InvalidTokenException({required super.exception});
 }

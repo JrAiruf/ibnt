@@ -94,9 +94,10 @@ class BibleMessagesRepository implements IBibleMessagesRepository {
   Future<int> chapterSelector(String book) async {
     try {
       final randomValues = Random();
-      final booksResponse = await _appClient.get(
-        "$BIBLE_API_URL/books/$book",
-      ) as Response;
+      final booksResponse = await _appClient.get("$BIBLE_API_URL/books/$book", headers: {
+        "content-type": "application/json",
+        "authorization": "Bearer $bible_api_user_token",
+      }) as Response;
       if (booksResponse.statusCode == StatusCodes.OK) {
         final bookMap = jsonDecode(booksResponse.body) as Map<String, dynamic>;
         int generatedChapter = randomValues.nextInt(bookMap["chapters"]);
@@ -115,7 +116,10 @@ class BibleMessagesRepository implements IBibleMessagesRepository {
       final random = Random();
       final versesList = <String>[];
 
-      final response = await _appClient.get("$BIBLE_API_URL/verses/$bibleVersion/$book/$chapter") as Response;
+      final response = await _appClient.get("$BIBLE_API_URL/verses/$bibleVersion/$book/$chapter", headers: {
+        "content-type": "application/json",
+        "authorization": "Bearer $bible_api_user_token",
+      }) as Response;
       if (response.statusCode == StatusCodes.OK) {
         final verseMap = jsonDecode(response.body) as Map<String, dynamic>;
         final chapterVerses = verseMap["verses"] as List;

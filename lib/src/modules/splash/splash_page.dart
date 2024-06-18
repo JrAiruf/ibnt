@@ -12,6 +12,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   late TokenVerifierBloc bloc;
   late String? token;
+  String bibleApitoken = "";
 
   @override
   void initState() {
@@ -20,6 +21,7 @@ class _SplashPageState extends State<SplashPage> {
     Future.microtask(() async {
       var prefereces = await SharedPreferences.getInstance();
       token = prefereces.getString("token");
+      bibleApitoken = prefereces.getString("bible_api_user_token") ?? bibleApitoken;
       if (token != null) {
         bloc.add(VerifyTokenEvent(token ?? ""));
       } else {
@@ -35,7 +37,7 @@ class _SplashPageState extends State<SplashPage> {
         bloc: bloc,
         listener: (context, state) async {
           if (state is TokenVerifierSuccessState) {
-            await setUserTokenToGlobalVariable(token!);
+            await setUserTokenToGlobalVariable(token!, bibleApitoken);
             Modular.to.navigate('/auth/home/');
           }
           if (state is TokenVerifierFailureState) {

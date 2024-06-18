@@ -6,6 +6,7 @@ export 'package:ibnt/src/modules/auth/view/pages/recovery_password_page.dart';
 export 'package:ibnt/src/modules/auth/view/pages/register_page.dart';
 export 'package:ibnt/src/modules/auth/view/pages/send_email_page.dart';
 export 'package:ibnt/src/modules/auth/entities/auth_response_entity.dart';
+export 'package:ibnt/src/modules/auth/entities/bible_api_user_entity.dart';
 export 'package:ibnt/src/modules/auth/exceptions/auth_exception.dart';
 export 'package:ibnt/src/modules/auth/interfaces/iauth_repository.dart';
 export 'package:ibnt/src/modules/auth/data/auth_repository.dart';

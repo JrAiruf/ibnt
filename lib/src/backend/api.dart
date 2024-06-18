@@ -4,10 +4,13 @@ import 'package:ibnt/src/app_imports.dart';
 const API_URL = "https://ibnt-api.up.railway.app/api";
 const BIBLE_API_URL = "https://www.abibliadigital.com.br/api";
 String user_token = "";
+String bible_api_user_token = "";
 
-Future<void> setUserTokenToGlobalVariable(String token) async {
-    user_token = token;
-    log("USER_BEARER_TOKEN: $user_token");
+Future<void> setUserTokenToGlobalVariable(String token, String bibleApitoken) async {
+  user_token = token;
+  log("USER_BEARER_TOKEN: $user_token");
+  bible_api_user_token = bibleApitoken;
+  log("API_USER_TOKEN: $bible_api_user_token");
 }
 
 abstract class StatusCodes {

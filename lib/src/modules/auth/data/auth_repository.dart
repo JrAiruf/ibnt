@@ -32,6 +32,13 @@ class AuthRepository implements IAuthRepository {
           role: userRole,
           token: body["credential"]["token"],
         );
+        
+        await createBibleApiUser(BibleApiUserEntity(
+          name: newUserEntity.fullName,
+          email: newUserEntity.credential.email,
+          password: authResponseEntity.id!,
+        ));
+
         await prefereces.setString("token", authResponseEntity.token!);
         await prefereces.setString("user", authResponseEntity.toJson());
         return right(authResponseEntity);
@@ -189,5 +196,26 @@ class AuthRepository implements IAuthRepository {
     var prefereces = await SharedPreferences.getInstance();
     await prefereces.clear();
     await _googleSignIn.signOut();
+  }
+
+  Future<Either<AuthException, void>> createBibleApiUser(BibleApiUserEntity apiUserEntity) async {
+    try {
+      var prefereces = await SharedPreferences.getInstance();
+      final response = await _appClient.post(
+        '$BIBLE_API_URL/users',
+        apiUserEntity.toMap(),
+        headers: {"content-type": "application/json"},
+      ) as Response;
+      if (response.statusCode == StatusCodes.OK) {
+        final apiResponse = jsonDecode(response.body) as Map;
+        final apiUserToken = apiResponse["token"];
+        await prefereces.setString('bible_api_user_token', apiUserToken);
+        return right(null);
+      } else {
+        return left(CreateApiUserException(exception: "Erro no cadastro automático na API da bíblia."));
+      }
+    } catch (e) {
+      return left(CreateApiUserException(exception: "Erro no cadastro automático na API da bíblia."));
+    }
   }
 }
