@@ -6,7 +6,7 @@ class AppModule extends Module {
   void exportedBinds(Injector i) {
     i.add<AppClient>(AppHttpClient.new);
     i.addSingleton<GoogleSignIn>(() => GoogleSignIn());
-    i.addInstance<FirebaseAuth>(FirebaseAuth.instance);
+    i.addInstance<FirebaseAuth>(FirebaseAuth.instance); 
   }
 
   @override
