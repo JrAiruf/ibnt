@@ -13,12 +13,6 @@ class SplashModule extends Module {
 
   @override
   void routes(RouteManager r) {
-    r.child(
-      '/',
-      child: (_) => BlocProvider(
-        create: (_) => Modular.get<TokenVerifierBloc>(),
-        child: const SplashPage(),
-      ),
-    );
+    r.child('/', child: (_) => BlocProvider(create: (_) => Modular.get<TokenVerifierBloc>(), child: const SplashPage()));
   }
 }
