@@ -1,4 +1,3 @@
-import 'package:ibnt/src/modules/splash/data/splash_repository.dart';
 import 'package:ibnt/src/modules/splash/splash_imports.dart';
 
 class AppClientMock extends Mock implements AppClient {}

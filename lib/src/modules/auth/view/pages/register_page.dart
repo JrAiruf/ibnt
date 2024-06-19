@@ -75,7 +75,7 @@ class RegisterPageState extends State<RegisterPage> {
                           SizedBox(height: height * 0.025),
                           BlocConsumer(
                             bloc: createUserBloc,
-                            listener: (context, state) {
+                            listener: (context, state) async {
                               if (state is CreateUserFailureState) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -88,7 +88,8 @@ class RegisterPageState extends State<RegisterPage> {
                                 );
                               }
                               if (state is CreateUserSuccessState) {
-                                Modular.to.navigate('/home/');
+                                await setUserTokenToGlobalVariable(state.authResponse.token!, null);
+                                Modular.to.navigate('/auth/home/');
                               }
                             },
                             builder: (context, state) {

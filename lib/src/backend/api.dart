@@ -6,11 +6,13 @@ const BIBLE_API_URL = "https://www.abibliadigital.com.br/api";
 String user_token = "";
 String bible_api_user_token = "";
 
-Future<void> setUserTokenToGlobalVariable(String token, String bibleApitoken) async {
+Future<void> setUserTokenToGlobalVariable(String token, String? bibleApitoken) async {
   user_token = token;
   log("USER_BEARER_TOKEN: $user_token");
-  bible_api_user_token = bibleApitoken;
-  log("API_USER_TOKEN: $bible_api_user_token");
+  if (bibleApitoken != null) {
+    bible_api_user_token = bibleApitoken;
+    log("API_USER_TOKEN: $bible_api_user_token");
+  }
 }
 
 abstract class StatusCodes {
