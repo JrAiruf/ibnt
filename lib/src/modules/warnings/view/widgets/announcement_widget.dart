@@ -1,8 +1,11 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:ibnt/src/modules/warnings/warnings_imports.dart';
 
 class AnnouncementWidget extends StatelessWidget {
-  const AnnouncementWidget({super.key});
+  AnnouncementWidget({required this.announcement, super.key});
 
+  AnnouncementEntity announcement;
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
@@ -32,7 +35,7 @@ class AnnouncementWidget extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    "${DateTime.now().day}",
+                    announcement.dateString.split("/")[1],
                     style: TextStyle(fontSize: dateFontSize, fontWeight: FontWeight.w300),
                   ),
                 ),
@@ -53,7 +56,7 @@ class AnnouncementWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Segunda - feira",
+                      announcement.setAnnouncementWeekDay(announcement.dateString),
                       style: TextStyle(
                         fontSize: titleFontSize,
                       ),
@@ -71,12 +74,12 @@ class AnnouncementWidget extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: height * 0.015),
                   child: Text(
-                    "Subida ao Monte",
+                    announcement.title,
                     style: TextStyle(fontSize: eventTitleFontSize, fontWeight: FontWeight.w400),
                   ),
                 ),
                 Text(
-                  "O local de saída é a praçã, próxima a casa do irmão Wagner. Os irmãos se reúnem aproximadamente às 19:15, e partem para o monte às 19:30.",
+                  announcement.description,
                   style: TextStyle(
                     fontSize: eventContentFontSize,
                   ),

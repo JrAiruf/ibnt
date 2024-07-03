@@ -10,14 +10,14 @@ class MessageGenerationPage extends StatefulWidget {
 int _pageIndex = 2;
 final bibleVersions = ["acf", "apee", "bbe", "kjv", "nvi", "ra", "rvr"];
 final testaments = ["VT", "NT"];
-late NewMessageEntity newMessage;
+late NewMessageEntity newGeneratedMessage;
 
 class _MessageGenerationPageState extends State<MessageGenerationPage> {
   @override
   void initState() {
     super.initState();
     String memberId = Modular.args.params["memberId"];
-    newMessage = NewMessageEntity(memberId: memberId);
+    newGeneratedMessage = NewMessageEntity(memberId: memberId);
   }
 
   @override
@@ -57,7 +57,7 @@ class _MessageGenerationPageState extends State<MessageGenerationPage> {
                 items: [...bibleVersions],
                 fieldLabel: "Versão",
                 hintText: "Escolha a versão",
-                onChanged: (value) => newMessage.bibleVersion = value ?? "",
+                onChanged: (value) => newGeneratedMessage.bibleVersion = value ?? "",
               ),
               SizedBox(height: height * 0.01),
               AppDropDown<String>(
@@ -65,7 +65,7 @@ class _MessageGenerationPageState extends State<MessageGenerationPage> {
                 fieldLabel: "Testamento",
                 hintText: "Escolha o Testamento",
                 onChanged: (value) {
-                  newMessage.testment = value ?? "";
+                  newGeneratedMessage.testment = value ?? "";
                   bookCubit.setBooksList(value ?? "VT");
                 },
               ),
@@ -85,7 +85,7 @@ class _MessageGenerationPageState extends State<MessageGenerationPage> {
                             hintText: "Escolha o Livro",
                             onChanged: (value) {
                               var abbreviation = state.where((book) => book.name == value).first.abbrev;
-                              newMessage.book = abbreviation.pt;
+                              newGeneratedMessage.book = abbreviation.pt;
                             },
                           );
                   }),
@@ -122,7 +122,7 @@ class _MessageGenerationPageState extends State<MessageGenerationPage> {
                       backgroundColor: AppThemes.primaryColor1,
                       fontSize: buttonFontSize,
                       text: "Gerar Mensagem Automática",
-                      onTap: () => bibleMessagesBloc.add(GenerateMessageEvent(newMessage)),
+                      onTap: () => bibleMessagesBloc.add(GenerateMessageEvent(newGeneratedMessage)),
                     );
                   }),
               SizedBox(height: height * 0.04),

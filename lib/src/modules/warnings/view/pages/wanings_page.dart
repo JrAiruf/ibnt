@@ -8,12 +8,20 @@ class WarningsPage extends StatefulWidget {
 }
 
 class _WarningsPageState extends State<WarningsPage> {
+  final _memberId = Modular.args.params["memberId"];
+  @override
+  void initState() {
+    super.initState();
+    final announcementsBloc = context.read<AnnouncementsBloc>();
+    announcementsBloc.add(GetAllAnnouncementsEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
-   
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final pagePadding = width * 0.035;
+    final announcementsBloc = context.read<AnnouncementsBloc>();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -24,22 +32,38 @@ class _WarningsPageState extends State<WarningsPage> {
         width: width,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: pagePadding),
-          child: Column(
-            children: [
-              const MonthTitleWidget(),
-              Expanded(
-                child: ListView(
-                  children: const [
-                    AnnouncementWidget(),
-                    AnnouncementWidget(),
-                    AnnouncementWidget(),
-                    AnnouncementWidget(),
-                    AnnouncementWidget(),
-                    AnnouncementWidget(),
+          child: BlocBuilder(
+            bloc: announcementsBloc,
+            builder: (context, state) {
+              if (state is AnnouncementsLoadingState) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is AnnouncementsSuccessState) {
+                final announcements = state.announcements;
+                return Column(
+                  children: [
+                    MonthTitleWidget(month: DateTime.now().month),
+                    Expanded(
+                      child: RefreshIndicator(
+                        onRefresh: () async => announcementsBloc.add(GetAllAnnouncementsEvent()),
+                        child: ListView.builder(
+                          itemCount: announcements.length,
+                          itemBuilder: (_, i) {
+                            final announcement = announcements[i];
+                            return AnnouncementWidget(
+                              announcement: announcement,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                   ],
-                ),
-              ),
-            ],
+                );
+              }
+              return Container();
+            },
           ),
         ),
       ),
@@ -47,7 +71,7 @@ class _WarningsPageState extends State<WarningsPage> {
         padding: EdgeInsets.only(bottom: height * 0.025),
         child: FloatingActionButton(
           onPressed: () {
-            Modular.to.pushNamed("./add_warnings");
+            Modular.to.pushNamed("./add_warnings/$_memberId");
           },
           backgroundColor: AppThemes.primaryColor1,
           child: const Icon(

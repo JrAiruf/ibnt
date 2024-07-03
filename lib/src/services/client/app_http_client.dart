@@ -8,6 +8,7 @@ class AppHttpClient implements AppClient {
     logger(
       url: url,
       method: response.request?.method.toUpperCase() ?? "",
+      statusCode: response.statusCode,
       logValue: response.body,
     );
     return response;
@@ -19,6 +20,7 @@ class AppHttpClient implements AppClient {
     logger(
       url: url,
       method: response.request?.method.toUpperCase() ?? "",
+      statusCode: response.statusCode,
       logValue: response.body,
     );
     return response;
@@ -30,6 +32,7 @@ class AppHttpClient implements AppClient {
     logger(
       url: url,
       method: response.request?.method.toUpperCase() ?? "",
+      statusCode: response.statusCode,
       logValue: response.body,
     );
     return response;
@@ -41,6 +44,7 @@ class AppHttpClient implements AppClient {
     logger(
       url: url,
       method: response.request?.method.toUpperCase() ?? "",
+      statusCode: response.statusCode,
       logValue: response.body,
     );
     return response;

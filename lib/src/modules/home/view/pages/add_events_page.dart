@@ -11,7 +11,6 @@ class _AddEventsPageState extends State<AddEventsPage> {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final titleFontSize = height * 0.04;

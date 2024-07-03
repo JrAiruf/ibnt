@@ -22,14 +22,11 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  late UserBloc userBloc;
-  late HomeBloc homeBloc;
-
   @override
   void initState() {
     super.initState();
-    userBloc = context.read<UserBloc>();
-    homeBloc = context.read<HomeBloc>();
+    final userBloc = context.read<UserBloc>();
+    final homeBloc = context.read<HomeBloc>();
 
     Future.delayed(const Duration(milliseconds: 200)).whenComplete(() async {
       await _setUserData();
@@ -47,6 +44,8 @@ class _HomePageState extends State<HomePage> {
     final titleFontSize = height * 0.035;
     final pagePadding = width * 0.035;
 
+    final userBloc = context.read<UserBloc>();
+    final homeBloc = context.read<HomeBloc>();
     final eventsReactionsBloc = context.read<EventsReactionsBloc>();
     final bibleMessagesReactionsBloc = context.read<BibleMessagesReactionsBloc>();
 
@@ -94,30 +93,34 @@ class _HomePageState extends State<HomePage> {
                         }
                         if (state is HomeSuccessState) {
                           final timeLine = state.timelineEntity.timeline;
-                          return Expanded(
-                            child: ListView.builder(
-                              itemCount: timeLine.length,
-                              itemBuilder: (_, i) {
-                                var timeLineData = timeLine[i];
-                                if (timeLineData.type == EntityType.event) {
-                                  final event = timeLineData as EventEntity;
-                                  return EventTypeWidget(memberId: _memberId, event: event);
-                                }
-                                if (timeLineData.type == EntityType.message) {
-                                  final message = timeLineData as MessageEntity;
-                                  return MessageTypeWidget(
-                                    message: message,
-                                    memberId: _memberId,
-                                    memberName: userBloc.user.fullName ?? "",
-                                  );
-                                }
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 2.5),
-                                  child: Container(height: height * 0.15, color: AppThemes.secondaryColor1),
+                          return timeLine.isNotEmpty
+                              ? Expanded(
+                                  child: ListView.builder(
+                                    itemCount: timeLine.length,
+                                    itemBuilder: (_, i) {
+                                      var timeLineData = timeLine[i];
+                                      if (timeLineData.type == EntityType.event) {
+                                        final event = timeLineData as EventEntity;
+                                        return EventTypeWidget(memberId: _memberId, event: event);
+                                      }
+                                      if (timeLineData.type == EntityType.message) {
+                                        final message = timeLineData as MessageEntity;
+                                        return MessageTypeWidget(
+                                          message: message,
+                                          memberId: _memberId,
+                                          memberName: userBloc.user.fullName ?? "",
+                                        );
+                                      }
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 2.5),
+                                        child: Container(height: height * 0.15, color: AppThemes.secondaryColor1),
+                                      );
+                                    },
+                                  ),
+                                )
+                              : const Center(
+                                  child: TransparentLogoWidget(),
                                 );
-                              },
-                            ),
-                          );
                         }
                         return Container();
                       },

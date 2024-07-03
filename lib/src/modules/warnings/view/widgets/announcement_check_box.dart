@@ -8,6 +8,7 @@ class AnnouncementCheckBox extends StatefulWidget {
 }
 
 class _AnnouncementCheckBoxState extends State<AnnouncementCheckBox> {
+  bool boxValue = false;
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
@@ -16,7 +17,13 @@ class _AnnouncementCheckBoxState extends State<AnnouncementCheckBox> {
     final fontSize = height * 0.02;
     return Row(
       children: [
-        Checkbox(value: true, onChanged: (value) {}),
+        Checkbox(
+            value: boxValue,
+            onChanged: (value) {
+              setState(() {
+                boxValue = !boxValue;
+              });
+            }),
         SizedBox(width: itemSpacing),
         Text("Fixar no quadro de avisos", style: TextStyle(fontSize: fontSize)),
       ],

@@ -1,20 +1,20 @@
+library biblemessages;
+
 export 'package:ibnt/src/app_imports.dart';
 export 'package:ibnt/src/modules/bible_messages/bible_messages_module.dart';
 export 'package:ibnt/src/modules/bible_messages/view/pages/add_messages_page.dart';
 export 'package:ibnt/src/modules/bible_messages/view/pages/message_page.dart';
 export 'package:ibnt/src/modules/bible_messages/view/pages/messages_page.dart';
-export 'package:ibnt/src/modules/bible_messages/view/pages/message_generation_page.dart' hide newMessage;
+export 'package:ibnt/src/modules/bible_messages/view/pages/message_generation_page.dart';
 export 'package:ibnt/src/modules/bible_messages/entities/bible_message_type.dart';
 export 'package:ibnt/src/modules/bible_messages/entities/bible_message_entity.dart';
 export 'package:ibnt/src/modules/bible_messages/entities/new_message_entity.dart';
 export 'package:ibnt/src/modules/bible_messages/exceptions/bible_message_exception.dart';
 export 'package:ibnt/src/modules/bible_messages/view/widgets/bible_message_widget.dart';
-export 'package:ibnt/src/shared/widgets/form/app_search_widget.dart';
 export 'package:ibnt/src/modules/bible_messages/interfaces/ibible_messages_repository.dart';
 export 'package:ibnt/src/mocks/mocked_class.dart';
 export 'package:ibnt/src/modules/bible_messages/data/bible_messages_repository.dart';
 export 'package:ibnt/src/modules/bible_messages/data/bible_books.dart';
-export 'package:ibnt/src/shared/widgets/form/app_drop_down.dart';
 export 'package:ibnt/src/modules/bible_messages/entities/bible_book_entity.dart';
 export 'package:ibnt/src/modules/bible_messages/blocs/bible_book_cubit/bible_book_cubit.dart';
 export 'package:ibnt/src/modules/bible_messages/blocs/bible_messages_bloc/bible_messages_bloc.dart';

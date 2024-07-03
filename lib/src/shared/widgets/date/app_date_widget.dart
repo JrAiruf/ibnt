@@ -1,18 +1,20 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: constant_identifier_names
 
 import 'package:ibnt/src/shared/shared_imports.dart';
 
 class AppDateWidget extends StatelessWidget {
-  const AppDateWidget({super.key});
-
+  const AppDateWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<AnnouncementDateCubit>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final weekDayContainerHeight = height * 0.06;
     final monthDayContainerSize = height * 0.05;
     final labelFontSize = height * 0.03;
     final monthDayFontSize = height * 0.025;
+    final currentMonth = DateTime.now().month;
     final list = getMonthDays();
     return SizedBox(
       height: height * 0.45,
@@ -29,7 +31,7 @@ class AppDateWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                _getMonthName(),
+                getMonthName(currentMonth),
                 style: TextStyle(
                   fontSize: labelFontSize,
                 ),
@@ -66,35 +68,50 @@ class AppDateWidget extends StatelessWidget {
                   ),
                   SizedBox(height: height * 0.001),
                   Expanded(
-                    child: GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: list.length,
-                      semanticChildCount: list.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: DaysOfWeek.values.length,
-                        mainAxisExtent: monthDayContainerSize,
-                        mainAxisSpacing: 2,
-                      ),
-                      itemBuilder: (_, i) {
-                        var monthDay = list[i];
-                        return InkWell(
-                          onTap: () {},
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: monthDay == 0
-                                  ? null
-                                  : Border.all(
-                                      color: AppThemes.primaryColor1,
-                                    ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                monthDay == 0 ? "" : "$monthDay",
-                                style: TextStyle(color: AppThemes.primaryColor1, fontWeight: FontWeight.w400, fontSize: monthDayFontSize),
-                              ),
-                            ),
+                    child: BlocBuilder<AnnouncementDateCubit, AnnouncementDate>(
+                      bloc: cubit,
+                      builder: (context, state) {
+                        final announcement = state;
+                        if (cubit.loading) {
+                          return const Center(child: CircularProgressIndicator());
+                        }
+                        return GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: list.length,
+                          semanticChildCount: list.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: DaysOfWeek.values.length,
+                            mainAxisExtent: monthDayContainerSize,
+                            mainAxisSpacing: 2,
                           ),
+                          itemBuilder: (_, i) {
+                            var monthDay = list[i];
+                            final selectedDay = announcement.day == monthDay;
+                            return InkWell(
+                              onTap: () => cubit.changeAnnouncementDate(monthDay),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: selectedDay ? AppThemes.primaryColor1 : Colors.white,
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: monthDay == 0
+                                      ? null
+                                      : Border.all(
+                                          color: AppThemes.primaryColor1,
+                                        ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    monthDay == 0 ? "" : "$monthDay",
+                                    style: TextStyle(
+                                      color: selectedDay ? Colors.white : AppThemes.primaryColor1,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: monthDayFontSize,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                         );
                       },
                     ),
@@ -111,7 +128,7 @@ class AppDateWidget extends StatelessWidget {
   List<int> getMonthDays() {
     final date = DateTime.now();
     List<int> month = [];
-    var monthSize = _getInDaysMonth(date.month);
+    var monthSize = getTotalDaysInCurrentMonth(date.month);
     for (var i = 0; i < monthSize; i++) {
       month.add(i + 1);
     }
@@ -122,54 +139,7 @@ class AppDateWidget extends StatelessWidget {
     return month;
   }
 
-  String _getMonthName() {
-    final date = DateTime.now();
-    String monthName = "";
-    switch (date.month) {
-      case 1:
-        monthName = MonthName.Janeiro.name;
-        break;
-      case 2:
-        monthName = MonthName.Fevereiro.name;
-        break;
-      case 3:
-        monthName = MonthName.Marco.name.replaceAll("c", "ç");
-        break;
-      case 4:
-        monthName = MonthName.Abril.name;
-        break;
-      case 5:
-        monthName = MonthName.Maio.name;
-        break;
-      case 6:
-        monthName = MonthName.Junho.name;
-        break;
-      case 7:
-        monthName = MonthName.Julho.name;
-        break;
-      case 8:
-        monthName = MonthName.Agosto.name;
-        break;
-      case 9:
-        monthName = MonthName.Setembro.name;
-        break;
-      case 10:
-        monthName = MonthName.Outubro.name;
-        break;
-      case 11:
-        monthName = MonthName.Novembro.name;
-        break;
-      case 12:
-        monthName = MonthName.Dezembro.name;
-        break;
-
-      default:
-        monthName = "";
-    }
-    return monthName;
-  }
-
-  int _getInDaysMonth(int referenceMonth) {
+  int getTotalDaysInCurrentMonth(int referenceMonth) {
     final date = DateTime.now();
     int daysInMonth = DateTimeRange(
       start: DateTime(date.year, referenceMonth),
@@ -177,29 +147,4 @@ class AppDateWidget extends StatelessWidget {
     ).duration.inDays;
     return daysInMonth;
   }
-}
-
-enum DaysOfWeek {
-  Dom,
-  Seg,
-  Ter,
-  Qua,
-  Qui,
-  Sex,
-  Sab;
-}
-
-enum MonthName {
-  Janeiro,
-  Fevereiro,
-  Marco,
-  Abril,
-  Maio,
-  Junho,
-  Julho,
-  Agosto,
-  Setembro,
-  Outubro,
-  Novembro,
-  Dezembro;
 }

@@ -88,7 +88,7 @@ class _AppNavBarWidgetState extends State<AppNavBarWidget> {
         Modular.to.navigate('/auth/home/bible_messages/$_memberId');
         break;
       case 3:
-        Modular.to.navigate('/auth/home/warnings/');
+        Modular.to.navigate('/auth/home/warnings/$_memberId');
         break;
     }
   }

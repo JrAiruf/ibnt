@@ -5,13 +5,36 @@ class WarningsModule extends Module {
   List<Module> get imports => [
         HomeModule(),
       ];
+
+  @override
+  void binds(Injector i) {
+    i.addSingleton<IWarningsRepository>(WarningsRepository.new);
+    i.add<AnnouncementsBloc>(AnnouncementsBloc.new);
+    i.add<CreateAnnouncementBloc>(CreateAnnouncementBloc.new);
+    i.add<AnnouncementDateCubit>(AnnouncementDateCubit.new);
+  }
+
   @override
   void routes(RouteManager r) {
-    r.child('/',
-        child: (_) =>  const WarningsPage(),
+    r.child(
+      '/:memberId',
+      child: (_) => MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => Modular.get<CreateAnnouncementBloc>()),
+          BlocProvider(create: (_) => Modular.get<AnnouncementsBloc>()),
+        ],
+        child: const WarningsPage(),
+      ),
     );
-    r.child('/add_warnings',
-        child: (_) => const AddWarningsPage(),
+    r.child(
+      '/add_warnings/:memberId',
+      child: (_) => MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => Modular.get<CreateAnnouncementBloc>()),
+          BlocProvider(create: (_) => Modular.get<AnnouncementDateCubit>()),
+        ],
+        child: const AddWarningsPage(),
+      ),
     );
   }
 }

@@ -16,15 +16,15 @@ class UserBloc extends Bloc<UserEvents, UserStates> {
     final result = await _repository.getMemberById(event.memberId);
     result.fold(
       (left) => state(GetUserFailureUserState(left.exception)),
-      (right) => state(GetUserSuccessState(right)),
+      (right) {
+        if (right.userCredential!.role == UserRole.admin) {
+          user = right as AdminEntity;
+          return state(GetUserSuccessState(user));
+        } else {
+          user = right as MemberEntity;
+          return state(GetUserSuccessState(user));
+        }
+      },
     );
-    final userResult = result.fold((left) => null, (right) => right);
-    if (userResult != null) {
-      if (userResult.role == UserRole.admin) {
-        user = userResult as AdminEntity;
-      } else {
-        user = userResult as MemberEntity;
-      }
-    }
   }
 }

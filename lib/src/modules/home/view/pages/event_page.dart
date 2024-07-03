@@ -1,6 +1,5 @@
 import 'package:ibnt/src/modules/home/home_imports.dart';
 
-
 class EventPage extends StatefulWidget {
   const EventPage({super.key});
 
@@ -12,7 +11,6 @@ class _EventPageState extends State<EventPage> {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final titleFontSize = height * 0.035;

@@ -16,7 +16,7 @@ class BibleMessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    user = user.role == UserRole.admin ? user as AdminEntity : user as MemberEntity;
+    user = user.userCredential?.role == UserRole.admin ? user as AdminEntity : user as MemberEntity;
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final widgetHeight = height * 0.2;
@@ -48,9 +48,9 @@ class BibleMessageWidget extends StatelessWidget {
                       height: imageContainerSize,
                       width: imageContainerSize,
                       decoration: BoxDecoration(
-                        border: !createdMessage ? Border.all(color: AppThemes.primaryColor1, width: 2) : null,
+                        border: !createdMessage || user.profileImage == null ? Border.all(color: AppThemes.primaryColor1, width: 2) : null,
                         shape: BoxShape.circle,
-                        image: createdMessage
+                        image: createdMessage && user.profileImage != null
                             ? DecorationImage(
                                 fit: BoxFit.fill,
                                 image: NetworkImage(
