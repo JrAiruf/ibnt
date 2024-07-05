@@ -44,7 +44,7 @@ class _AddMessagesPageState extends State<AddMessagesPage> {
               ),
               const Spacer(),
               Text(
-                "Aqui você pode criar novas mensagens e abençoar os irmãos através da palavra, ou gerar uma nova mensagem bíblica automática. Após a criação, sua mensagem poderá ser compartilhada.",
+                "Aqui você pode criar uma nova mensagem, ou gerá-la automaticamente. Após a criação, a nova mensagem permanecerá em sua lista pessoal e poderá ser compartilhada na linha do tempo.",
                 style: TextStyle(fontSize: textFontSize, height: 0),
               ),
               SizedBox(height: pageCenterSpacing),
