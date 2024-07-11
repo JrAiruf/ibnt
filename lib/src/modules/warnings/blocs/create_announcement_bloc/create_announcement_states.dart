@@ -20,5 +20,10 @@ final class CreateAnnouncementFailureState extends CreateAnnouncementStates {
 final class CreateAnnouncementSuccessState extends CreateAnnouncementStates {
   final AnnouncementEntity announcement;
 
-  CreateAnnouncementSuccessState(this.announcement);
+  const CreateAnnouncementSuccessState(this.announcement);
+}
+
+final class CreateAnnouncementsListSuccessState extends CreateAnnouncementStates {
+
+  const CreateAnnouncementsListSuccessState();
 }
