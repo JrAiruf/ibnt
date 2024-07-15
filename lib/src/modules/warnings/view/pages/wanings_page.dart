@@ -9,11 +9,36 @@ class WarningsPage extends StatefulWidget {
 
 class _WarningsPageState extends State<WarningsPage> {
   final _memberId = Modular.args.params["memberId"];
+
   @override
   void initState() {
     super.initState();
     final announcementsBloc = context.read<AnnouncementsBloc>();
-    announcementsBloc.add(GetAllAnnouncementsEvent());
+    final createAnnouncementBloc = context.read<CreateAnnouncementBloc>();
+
+    if (!createAnnouncementBloc.isClosed) {
+      createAnnouncementBloc.stream.listen(
+        (state) {
+          if (state is CreateAnnouncementSuccessState) {
+            announcementsBloc.add(GetAllAnnouncementsEvent());
+          }
+          if (state is CreateAnnouncementsListSuccessState) {
+            announcementsBloc.add(GetAllAnnouncementsEvent());
+          }
+        },
+      );
+    }
+    if (!announcementsBloc.isClosed) {
+      announcementsBloc.add(GetAllAnnouncementsEvent());
+      announcementsBloc.stream.listen(
+        (state) {
+          if (state is DeleteAnnouncementSuccessState) {
+            announcementsBloc.add(GetAllAnnouncementsEvent());
+            print(state);
+          }
+        },
+      );
+    }
   }
 
   @override
@@ -21,7 +46,7 @@ class _WarningsPageState extends State<WarningsPage> {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final pagePadding = width * 0.035;
-    final announcementsBloc = context.read<AnnouncementsBloc>();
+    final announcementsBloc = context.watch<AnnouncementsBloc>();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -35,6 +60,7 @@ class _WarningsPageState extends State<WarningsPage> {
           child: BlocBuilder(
             bloc: announcementsBloc,
             builder: (context, state) {
+              print(announcementsBloc.state);
               if (state is AnnouncementsLoadingState) {
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -54,6 +80,7 @@ class _WarningsPageState extends State<WarningsPage> {
                             final announcement = announcements[i];
                             return AnnouncementWidget(
                               announcement: announcement,
+                              onTap: () => Modular.to.pushNamed("./warning/$_memberId", arguments: announcement),
                             );
                           },
                         ),
@@ -70,9 +97,7 @@ class _WarningsPageState extends State<WarningsPage> {
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: height * 0.025),
         child: FloatingActionButton(
-          onPressed: () {
-            Modular.to.pushNamed("./add_warnings/$_memberId");
-          },
+          onPressed: () => Modular.to.pushNamed("./add_warnings/$_memberId"),
           backgroundColor: AppThemes.primaryColor1,
           child: const Icon(
             Icons.add,

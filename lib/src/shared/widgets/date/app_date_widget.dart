@@ -7,7 +7,7 @@ class AppDateWidget extends StatelessWidget {
   const AppDateWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<AnnouncementDateCubit>();
+    final cubit = context.read<DateCubit>();
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final weekDayContainerHeight = height * 0.06;
@@ -15,7 +15,7 @@ class AppDateWidget extends StatelessWidget {
     final labelFontSize = height * 0.03;
     final monthDayFontSize = height * 0.025;
     final currentMonth = DateTime.now().month;
-    final list = getMonthDays();
+    final list = getMonthDays(currentMonth);
     return SizedBox(
       height: height * 0.45,
       width: width,
@@ -25,7 +25,7 @@ class AppDateWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Data",
+                "Mês atual",
                 style: TextStyle(
                   fontSize: labelFontSize,
                 ),
@@ -68,7 +68,7 @@ class AppDateWidget extends StatelessWidget {
                   ),
                   SizedBox(height: height * 0.001),
                   Expanded(
-                    child: BlocBuilder<AnnouncementDateCubit, AnnouncementDate>(
+                    child: BlocBuilder<DateCubit, DateModel>(
                       bloc: cubit,
                       builder: (context, state) {
                         final announcement = state;
@@ -78,7 +78,6 @@ class AppDateWidget extends StatelessWidget {
                         return GridView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: list.length,
-                          semanticChildCount: list.length,
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: DaysOfWeek.values.length,
                             mainAxisExtent: monthDayContainerSize,
@@ -123,28 +122,5 @@ class AppDateWidget extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  List<int> getMonthDays() {
-    final date = DateTime.now();
-    List<int> month = [];
-    var monthSize = getTotalDaysInCurrentMonth(date.month);
-    for (var i = 0; i < monthSize; i++) {
-      month.add(i + 1);
-    }
-    var dayInWeekIndex = DateTime(date.year, date.month).weekday + 1;
-    for (var i = 1; i < dayInWeekIndex; i++) {
-      month.insert(0, 0);
-    }
-    return month;
-  }
-
-  int getTotalDaysInCurrentMonth(int referenceMonth) {
-    final date = DateTime.now();
-    int daysInMonth = DateTimeRange(
-      start: DateTime(date.year, referenceMonth),
-      end: DateTime(date.year, referenceMonth + 1),
-    ).duration.inDays;
-    return daysInMonth;
   }
 }

@@ -39,7 +39,7 @@ class AppHttpClient implements AppClient {
   }
 
   @override
-  Future<Response> delete(String url, Object body, {Map<String, String>? headers}) async {
+  Future<Response> delete(String url, {Object? body, Map<String, String>? headers}) async {
     final response = await http.delete(Uri.parse(url), body: jsonEncode(body), headers: headers);
     logger(
       url: url,

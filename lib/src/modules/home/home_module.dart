@@ -14,6 +14,7 @@ class HomeModule extends Module {
     i.add(HomeBloc.new);
     i.add(EventsReactionsBloc.new);
     i.add(BibleMessagesReactionsBloc.new);
+    i.add(DateCubit.new);
   }
 
   @override
@@ -29,7 +30,12 @@ class HomeModule extends Module {
     );
     r.child(
       '/add_events',
-      child: (_) => const AddEventsPage(),
+      child: (_) => MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => Modular.get<DateCubit>()),
+        ],
+        child: const AddEventsPage(),
+      ),
     );
     r.child(
       '/event',

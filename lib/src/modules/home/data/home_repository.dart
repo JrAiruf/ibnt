@@ -232,7 +232,7 @@ class HomeRepository implements IHomeRepository {
   @override
   Future<Either<HomeException, List<EventReactionResponse>>> removeEventReaction(RemoveReactionEntity reaction) async {
     try {
-      final response = await _appClient.delete("$API_URL/reactions/remove-reaction", reaction.toMap(), headers: {
+      final response = await _appClient.delete("$API_URL/reactions/remove-reaction", body: reaction.toMap(), headers: {
         "content-type": "application/json",
         "authorization": "Bearer $user_token",
       }) as Response;
@@ -251,7 +251,7 @@ class HomeRepository implements IHomeRepository {
   @override
   Future<Either<HomeException, List<BibleMessageReactionResponse>>> removeBibleMessageReaction(RemoveReactionEntity reaction) async {
     try {
-      final response = await _appClient.delete("$API_URL/reactions/remove-reaction", reaction.toMap(), headers: {
+      final response = await _appClient.delete("$API_URL/reactions/remove-reaction", body: reaction.toMap(), headers: {
         "content-type": "application/json",
         "authorization": "Bearer $user_token",
       }) as Response;

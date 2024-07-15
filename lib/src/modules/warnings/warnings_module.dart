@@ -11,7 +11,8 @@ class WarningsModule extends Module {
     i.addSingleton<IWarningsRepository>(WarningsRepository.new);
     i.add<AnnouncementsBloc>(AnnouncementsBloc.new);
     i.add<CreateAnnouncementBloc>(CreateAnnouncementBloc.new);
-    i.add<AnnouncementDateCubit>(AnnouncementDateCubit.new);
+    i.add<AnnouncementCubit>(AnnouncementCubit.new);
+    i.add<DateCubit>(DateCubit.new);
   }
 
   @override
@@ -31,9 +32,19 @@ class WarningsModule extends Module {
       child: (_) => MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => Modular.get<CreateAnnouncementBloc>()),
-          BlocProvider(create: (_) => Modular.get<AnnouncementDateCubit>()),
+          BlocProvider(create: (_) => Modular.get<DateCubit>()),
         ],
         child: const AddWarningsPage(),
+      ),
+    );
+    r.child(
+      '/warning/:memberId',
+      child: (_) => MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => Modular.get<AnnouncementsBloc>()),
+          BlocProvider(create: (_) => Modular.get<AnnouncementCubit>()),
+        ],
+        child: AnnouncementPage(announcement: r.args.data),
       ),
     );
   }
