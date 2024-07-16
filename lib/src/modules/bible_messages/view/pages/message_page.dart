@@ -21,6 +21,8 @@ class _MessagePageState extends State<MessagePage> {
     final textFontSize = height * 0.023;
     final buttonFontSize = height * 0.02;
 
+    final bloc = context.read<BibleMessagesBloc>();
+
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: const AppDrawer(),
@@ -70,12 +72,28 @@ class _MessagePageState extends State<MessagePage> {
                       ),
                     ),
                     SizedBox(height: height * 0.04),
-                    AppButton(
-                      primaryColor: Colors.white,
-                      backgroundColor: AppThemes.primaryColor1,
-                      fontSize: buttonFontSize,
-                      text: "Compartilhar",
-                      onTap: () {},
+                    BlocConsumer(
+                      bloc: bloc,
+                      listener: (context, state) {
+                        if (state is PostBibleMessageToTimelineFailureState) {
+                          callAppToast(context, state.exception);
+                        }
+                        if (state is PostBibleMessageToTimelineSuccessState) {
+                          Modular.to.navigate('/auth/home/');
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is BibleMessagesLoadingState) {
+                          return const Center(child: CircularProgressIndicator());
+                        }
+                        return AppButton(
+                          primaryColor: Colors.white,
+                          backgroundColor: AppThemes.primaryColor1,
+                          fontSize: buttonFontSize,
+                          text: "Compartilhar",
+                          onTap: () => bloc.add(PostMessageToTimelineEvent(widget.message)),
+                        );
+                      },
                     ),
                   ],
                 ),

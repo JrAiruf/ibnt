@@ -14,31 +14,7 @@ class _WarningsPageState extends State<WarningsPage> {
   void initState() {
     super.initState();
     final announcementsBloc = context.read<AnnouncementsBloc>();
-    final createAnnouncementBloc = context.read<CreateAnnouncementBloc>();
-
-    if (!createAnnouncementBloc.isClosed) {
-      createAnnouncementBloc.stream.listen(
-        (state) {
-          if (state is CreateAnnouncementSuccessState) {
-            announcementsBloc.add(GetAllAnnouncementsEvent());
-          }
-          if (state is CreateAnnouncementsListSuccessState) {
-            announcementsBloc.add(GetAllAnnouncementsEvent());
-          }
-        },
-      );
-    }
-    if (!announcementsBloc.isClosed) {
-      announcementsBloc.add(GetAllAnnouncementsEvent());
-      announcementsBloc.stream.listen(
-        (state) {
-          if (state is DeleteAnnouncementSuccessState) {
-            announcementsBloc.add(GetAllAnnouncementsEvent());
-            print(state);
-          }
-        },
-      );
-    }
+    announcementsBloc.add(GetAllAnnouncementsEvent());
   }
 
   @override
@@ -60,7 +36,6 @@ class _WarningsPageState extends State<WarningsPage> {
           child: BlocBuilder(
             bloc: announcementsBloc,
             builder: (context, state) {
-              print(announcementsBloc.state);
               if (state is AnnouncementsLoadingState) {
                 return const Center(
                   child: CircularProgressIndicator(),

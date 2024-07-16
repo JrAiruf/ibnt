@@ -30,3 +30,11 @@ final class UpdateBibleMessageSuccessState extends BibleMessagesStates {
 
   UpdateBibleMessageSuccessState(this.message);
 }
+
+final class PostBibleMessageToTimelineFailureState extends BibleMessagesStates {
+  final String exception;
+
+  PostBibleMessageToTimelineFailureState(this.exception);
+}
+
+final class PostBibleMessageToTimelineSuccessState extends BibleMessagesStates {}

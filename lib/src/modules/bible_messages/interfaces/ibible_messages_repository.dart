@@ -5,4 +5,5 @@ abstract class IBibleMessagesRepository {
   Future<Either<BibleMessageException, BibleMessageEntity>> generateBibleMessage(NewMessageEntity message);
   Future<Either<BibleMessageException, List<BibleMessageEntity>>> getMemberMessages(String memberId);
   Future<Either<BibleMessageException, BibleMessageEntity>> updateBibleMessage(BibleMessageEntity message);
+  Future<(BibleMessageException?, void)> postBibleMessageInTimeline(BibleMessageEntity message);
 }

@@ -60,9 +60,13 @@ class BibleMessagesModule extends Module {
 
     r.child(
       '/message',
-      child: (_) => MessagePage(
-        message: r.args.data["message"],
-      ),
+      child: (_) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => Modular.get<BibleMessagesBloc>()),
+          ],
+          child: MessagePage(
+            message: r.args.data["message"],
+          )),
     );
   }
 }

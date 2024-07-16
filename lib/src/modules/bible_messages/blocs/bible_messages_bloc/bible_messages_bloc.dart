@@ -8,6 +8,7 @@ class BibleMessagesBloc extends Bloc<BibleMessagesEvents, BibleMessagesStates> {
     on<CreateMessageEvent>(_mapCreateMessageEventToState);
     on<GenerateMessageEvent>(_mapGenerateMessageEventToState);
     on<UpdateMessageEvent>(_mapUpdateMessageEventToState);
+    on<PostMessageToTimelineEvent>(_mapPostMessageToTimelineEventToState);
   }
 
   final IBibleMessagesRepository _repository;
@@ -37,5 +38,15 @@ class BibleMessagesBloc extends Bloc<BibleMessagesEvents, BibleMessagesStates> {
       (left) => state(UpdateBibleMessageFailureState(left.exception)),
       (right) => state(UpdateBibleMessageSuccessState(right)),
     );
+  }
+
+  Future<void> _mapPostMessageToTimelineEventToState(PostMessageToTimelineEvent event, Emitter<BibleMessagesStates> state) async {
+    state(BibleMessagesLoadingState());
+    final result = await _repository.postBibleMessageInTimeline(event.message);
+    result.$1 != null
+        ? //
+        state(PostBibleMessageToTimelineFailureState(result.$1!.exception))
+        : //
+        state(PostBibleMessageToTimelineSuccessState());
   }
 }

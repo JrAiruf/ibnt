@@ -91,6 +91,23 @@ class BibleMessagesRepository implements IBibleMessagesRepository {
     }
   }
 
+  @override
+  Future<(BibleMessageException?, void)> postBibleMessageInTimeline(BibleMessageEntity message) async {
+    try {
+      final response = await _appClient.post("$API_URL/timeline/message/${message.id}", {}, headers: {
+        "Content-Type": "Application/json",
+        "Authorization": "Bearer $user_token",
+      }) as Response;
+      if (response.statusCode == StatusCodes.BAD_REQUEST) {
+        return (PostMessageToTimelineException(exception: "A mensagem já existe na timeline."), null);
+      } else {
+        return (null, null);
+      }
+    } on BibleMessageException catch (e) {
+      return (PostMessageToTimelineException(exception: "Não foi possível postar a mensagem na timeline. $e"), null);
+    }
+  }
+
   Future<int> chapterSelector(String book) async {
     try {
       final randomValues = Random();

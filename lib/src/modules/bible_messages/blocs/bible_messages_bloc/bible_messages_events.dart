@@ -23,3 +23,9 @@ class UpdateMessageEvent implements BibleMessagesEvents {
 
   UpdateMessageEvent(this.message);
 }
+
+class PostMessageToTimelineEvent implements BibleMessagesEvents {
+  final BibleMessageEntity message;
+
+  PostMessageToTimelineEvent(this.message);
+}

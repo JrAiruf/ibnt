@@ -33,3 +33,7 @@ class GetMessagesException extends BibleMessageException {
 class UpdateMessageException extends BibleMessageException {
   UpdateMessageException({required super.exception});
 }
+
+class PostMessageToTimelineException extends BibleMessageException {
+  PostMessageToTimelineException({required super.exception});
+}
