@@ -65,4 +65,15 @@ class AnnouncementEntity {
     int month = int.parse(date.split('/')[0]);
     return month;
   }
+
+  AnnouncementEntity copyWith(AnnouncementEntity copy) {
+    return AnnouncementEntity(
+      id: copy.id,
+      title: copy.title,
+      memberId: copy.memberId,
+      description: copy.description,
+      dateString: copy.dateString,
+      fixedWarning: copy.fixedWarning,
+    );
+  }
 }

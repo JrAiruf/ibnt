@@ -21,7 +21,6 @@ class _CreateMessagePageState extends State<CreateMessagePage> {
 
   @override
   Widget build(BuildContext context) {
-    
     final bibleMessagesBloc = context.read<BibleMessagesBloc>();
 
     final height = MediaQuery.sizeOf(context).height;
@@ -38,7 +37,7 @@ class _CreateMessagePageState extends State<CreateMessagePage> {
       appBar: AppBarWidget(preferredSize: Size(width, height * 0.08)),
       body: SingleChildScrollView(
         child: SizedBox(
-          height:  height * 0.8,
+          height: height * 0.8,
           width: width,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: pagePadding),
@@ -97,20 +96,7 @@ class _CreateMessagePageState extends State<CreateMessagePage> {
                   bloc: bibleMessagesBloc,
                   listener: (_, state) {
                     if (state is BibleMessagesFailureState) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          margin: EdgeInsets.symmetric(vertical: height * 0.116, horizontal: 10),
-                          behavior: SnackBarBehavior.floating,
-                          backgroundColor: AppThemes.secondaryColor1,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-                          content: Center(
-                            child: Text(
-                              state.exception,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      );
+                      callAppToast(context, state.exception);
                     }
                     if (state is BibleMessagesSuccessState) {
                       Modular.to.pushNamed("../message", arguments: {"message": state.message});

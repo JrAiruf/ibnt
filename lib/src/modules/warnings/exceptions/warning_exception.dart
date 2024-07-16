@@ -13,3 +13,7 @@ class CreateAnnouncementException extends WarningException {
 class GetAnnouncementsException extends WarningException {
   GetAnnouncementsException({required super.exception});
 }
+
+class DeleteAnnouncementException extends WarningException {
+  DeleteAnnouncementException({required super.exception});
+}

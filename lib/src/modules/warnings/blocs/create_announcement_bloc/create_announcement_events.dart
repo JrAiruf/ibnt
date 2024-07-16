@@ -12,3 +12,9 @@ final class CreateAnnouncementEvent extends CreateAnnouncementEvents {
 
   const CreateAnnouncementEvent(this.announcement);
 }
+
+final class CreateAnnouncementsListEvent extends CreateAnnouncementEvents {
+  final AnnouncementEntity announcement;
+
+  const CreateAnnouncementsListEvent(this.announcement);
+}

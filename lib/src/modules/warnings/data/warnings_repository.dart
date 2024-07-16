@@ -24,6 +24,27 @@ class WarningsRepository implements IWarningsRepository {
   }
 
   @override
+  Future<(WarningException?, void)> createAnnouncements(AnnouncementEntity announcement) async {
+    try {
+      final annoucementsList = fulfillMonthAnnouncements(announcement, 7);
+
+      final mapList = annoucementsList.map((e) => e.creationMap()).toList();
+
+      final response = await _appClient.post("$API_URL/announcements/list", mapList, headers: {
+        "content-type": "application/json",
+        "authorization": "Bearer $user_token",
+      }) as Response;
+      if (response.statusCode == StatusCodes.CREATED) {
+        return (null, null);
+      } else {
+        return (CreateAnnouncementException(exception: "Não foi possível adicionar anúncios em série. Erro: ${response.body}"), null);
+      }
+    } catch (e) {
+      return (CreateAnnouncementException(exception: "Erro: $e"), null);
+    }
+  }
+
+  @override
   Future<(WarningException?, List<AnnouncementEntity>)> getAnnouncements() async {
     try {
       final List<AnnouncementEntity> announcements = [];
@@ -53,5 +74,41 @@ class WarningsRepository implements IWarningsRepository {
         <AnnouncementEntity>[],
       );
     }
+  }
+
+  @override
+  Future<(WarningException?, void)> deleteAnnouncement(AnnouncementEntity announcement) async {
+    try {
+      final response = await _appClient.delete("$API_URL/announcements/${announcement.id}", headers: {
+        "content-type": "application/json",
+        "authorization": "Bearer $user_token",
+      }) as Response;
+      if (response.statusCode != StatusCodes.OK) {
+        return (DeleteAnnouncementException(exception: "Não foi possível deletar o anúncio. Erro: ${response.body}"), null);
+      } else {
+        return (null, null);
+      }
+    } catch (e) {
+      return (DeleteAnnouncementException(exception: "Erro: $e"), null);
+    }
+  }
+
+  List<AnnouncementEntity> fulfillMonthAnnouncements(AnnouncementEntity announcement, int daysRange) {
+    List<AnnouncementEntity> announcementsList = [];
+    announcementsList.add(announcement);
+    int announcementDay = int.parse(announcement.dateString.split("/").last);
+    final announcementMonth = int.parse(announcement.dateString.split("/")[1]);
+    final announcementYear = int.parse(announcement.dateString.split("/").first);
+    final daysInMonth = getTotalDaysInCurrentMonth(announcementMonth);
+    do {
+      AnnouncementEntity updatedAnnouncement = announcement.copyWith(announcement);
+      announcementDay = announcementDay + daysRange;
+      updatedAnnouncement.dateString = "$announcementYear/$announcementMonth/$announcementDay";
+      updatedAnnouncement.fixedWarning = true;
+      announcementsList.add(updatedAnnouncement);
+      log("${announcementsList.map((e) => e.toMap()).toList()}");
+    } while (announcementDay + daysRange <= daysInMonth);
+
+    return announcementsList;
   }
 }

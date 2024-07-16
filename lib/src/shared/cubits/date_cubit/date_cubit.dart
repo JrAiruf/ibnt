@@ -1,19 +1,19 @@
 import 'package:ibnt/src/modules/warnings/warnings_imports.dart';
 
-class AnnouncementDateCubit extends Cubit<AnnouncementDate> {
-  AnnouncementDateCubit() : super(AnnouncementDate());
+class DateCubit extends Cubit<DateModel> {
+  DateCubit() : super(DateModel());
 
   bool loading = false;
   void changeAnnouncementDate(int day) {
     final date = DateTime.now();
-    final announcementDate = AnnouncementDate(
+    final newDate = DateModel(
       day: day,
       month: date.month,
       year: date.year,
     );
     loading = true;
     state.day = day;
-    emit(announcementDate);
+    emit(newDate);
     loading = false;
   }
 }

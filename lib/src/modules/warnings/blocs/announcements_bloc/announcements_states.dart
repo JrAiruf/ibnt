@@ -22,3 +22,5 @@ final class AnnouncementsSuccessState extends AnnouncementsStates {
 
   const AnnouncementsSuccessState(this.announcements);
 }
+
+final class DeleteAnnouncementSuccessState extends AnnouncementsStates {}

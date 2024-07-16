@@ -12,9 +12,9 @@ class NewMessageEntity {
   final String memberId;
 
   NewMessageEntity({
-    this.bibleVersion = "nvi",
-    this.testment = "VT",
-    this.book = "gn",
+    this.bibleVersion = "",
+    this.testment = "",
+    this.book = "",
     this.title,
     this.content,
     this.baseText,
@@ -51,4 +51,8 @@ class NewMessageEntity {
   String toJson() => json.encode(toMap());
 
   factory NewMessageEntity.fromJson(String source) => NewMessageEntity.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  bool validMessage() {
+    return bibleVersion.isNotEmpty && testment.isNotEmpty && book.isNotEmpty;
+  }
 }

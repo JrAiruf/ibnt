@@ -1,8 +1,28 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ibnt/src/app_imports.dart';
 import 'package:ibnt/src/mocks/bible_messages_mocks.dart';
 
-void main() {
+class DateTest {
+  int? day = 0;
+  DateTest({
+    this.day,
+  });
+  void incrementAnnouncementDay(int dateDay, String announcement) {
+    List<String> announcementsList = [];
+    final daysInMonth = getTotalDaysInCurrentMonth(DateTime.now().month);
+    announcement = "{'announcement' : $dateDay}";
+    announcementsList.add(announcement);
+    do {
+      dateDay = dateDay + 7;
+      day = dateDay;
+      announcement = "{'announcement' : $day}";
+      announcementsList.add(announcement);
+      log("$announcementsList");
+    } while (dateDay + 7 <= daysInMonth);
+  }
+}
 
+void main() {
   late AppHttpClientMock client;
   late BibleMessagesRepository repository;
   setUp(
@@ -145,6 +165,15 @@ void main() {
           expect(result.isNotEmpty, equals(true));
         },
       );
+    },
+  );
+
+  test(
+    'Should increment the number of days in a specific date by 7 each time, until the number reaches the end of the month.',
+    () {
+      final testDate = DateTest();
+      testDate.incrementAnnouncementDay(12, "announcement");
+      expect(testDate.day, equals(26));
     },
   );
 }

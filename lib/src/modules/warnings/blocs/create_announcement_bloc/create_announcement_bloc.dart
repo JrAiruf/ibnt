@@ -6,6 +6,7 @@ part 'create_announcement_states.dart';
 class CreateAnnouncementBloc extends Bloc<CreateAnnouncementEvents, CreateAnnouncementStates> {
   CreateAnnouncementBloc(this._repository) : super(CreateAnnouncementInitialState()) {
     on<CreateAnnouncementEvent>(_mapCreateAnnouncementEventToState);
+    on<CreateAnnouncementsListEvent>(_mapCreateAnnouncementsListEventToState);
   }
 
   final IWarningsRepository _repository;
@@ -16,6 +17,16 @@ class CreateAnnouncementBloc extends Bloc<CreateAnnouncementEvents, CreateAnnoun
       state(CreateAnnouncementFailureState(exception.exception));
     } else {
       state(CreateAnnouncementSuccessState(announcement!));
+    }
+  }
+
+  Future<void> _mapCreateAnnouncementsListEventToState(CreateAnnouncementsListEvent event, Emitter<CreateAnnouncementStates> state) async {
+    state(CreateAnnouncementLoadingState());
+    final (exception) = await _repository.createAnnouncements(event.announcement);
+    if (exception.$1 != null) {
+      state(CreateAnnouncementFailureState(exception.$1!.exception));
+    } else {
+      state(const CreateAnnouncementsListSuccessState());
     }
   }
 }

@@ -27,9 +27,9 @@ class _AddWarningsPageState extends State<AddWarningsPage> {
     final pagePadding = width * 0.035;
 
     final currentMonth = DateTime.now().month;
-    final createAnnouncementBloc = context.read<CreateAnnouncementBloc>();
+    final createAnnouncementBloc = context.watch<CreateAnnouncementBloc>();
 
-    final cubit = context.read<AnnouncementDateCubit>();
+    final cubit = context.watch<DateCubit>();
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: const AppDrawer(),
@@ -60,7 +60,7 @@ class _AddWarningsPageState extends State<AddWarningsPage> {
                 ),
               ),
               const AppDateWidget(),
-              const AnnouncementCheckBox(),
+              AnnouncementCheckBox(announcement: newAnnouncement),
               SizedBox(height: height * 0.025),
               BlocConsumer(
                 bloc: createAnnouncementBloc,
@@ -81,7 +81,10 @@ class _AddWarningsPageState extends State<AddWarningsPage> {
                       ),
                     );
                   }
-                  if (state is CreateAnnouncementLoadingState) {
+                  if (state is CreateAnnouncementSuccessState) {
+                    Modular.to.navigate('/auth/home/warnings/$_memberId');
+                  }
+                  if (state is CreateAnnouncementsListSuccessState) {
                     Modular.to.navigate('/auth/home/warnings/$_memberId');
                   }
                 },
@@ -98,7 +101,11 @@ class _AddWarningsPageState extends State<AddWarningsPage> {
                         newAnnouncement.dateString = "$year/$month/$day";
                         newAnnouncement.memberId = _memberId;
 
-                        createAnnouncementBloc.add(CreateAnnouncementEvent(newAnnouncement));
+                        newAnnouncement.fixedWarning
+                            ? //
+                            createAnnouncementBloc.add(CreateAnnouncementsListEvent(newAnnouncement))
+                            : //
+                            createAnnouncementBloc.add(CreateAnnouncementEvent(newAnnouncement));
                       }
                     },
                     height: 60,

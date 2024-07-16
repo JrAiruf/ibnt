@@ -22,7 +22,6 @@ class _MessageGenerationPageState extends State<MessageGenerationPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     final bibleMessagesBloc = context.read<BibleMessagesBloc>();
     final bookCubit = context.read<BibleBookCubit>();
 
@@ -94,23 +93,10 @@ class _MessageGenerationPageState extends State<MessageGenerationPage> {
                   bloc: bibleMessagesBloc,
                   listener: (_, state) {
                     if (state is BibleMessagesFailureState) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          margin: EdgeInsets.symmetric(vertical: height * 0.116, horizontal: 10),
-                          behavior: SnackBarBehavior.floating,
-                          backgroundColor: AppThemes.secondaryColor1,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-                          content: Center(
-                            child: Text(
-                              state.exception,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      );
+                      callAppToast(context, state.exception);
                     }
                     if (state is BibleMessagesSuccessState) {
-                      Modular.to.pushNamed("../message", arguments: {"message":state.message});
+                      Modular.to.pushNamed("../message", arguments: {"message": state.message});
                     }
                   },
                   builder: (_, state) {
@@ -122,7 +108,11 @@ class _MessageGenerationPageState extends State<MessageGenerationPage> {
                       backgroundColor: AppThemes.primaryColor1,
                       fontSize: buttonFontSize,
                       text: "Gerar Mensagem Automática",
-                      onTap: () => bibleMessagesBloc.add(GenerateMessageEvent(newGeneratedMessage)),
+                      onTap: () => newGeneratedMessage.validMessage()
+                          ? //
+                          bibleMessagesBloc.add(GenerateMessageEvent(newGeneratedMessage))
+                          : //
+                          callAppToast(context, "Por favor, preencha os campos."),
                     );
                   }),
               SizedBox(height: height * 0.04),
