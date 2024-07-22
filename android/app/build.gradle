@@ -29,7 +29,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace 'com.example.ibnt'
+    namespace 'br.com.jr.ibnt'
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
@@ -47,7 +47,7 @@ android {
     }
 
     defaultConfig {
-        applicationId 'com.example.ibnt'
+        applicationId 'br.com.jr.ibnt'
         minSdkVersion 19
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
